@@ -1,0 +1,181 @@
+{
+ "schema": "apsr-relabel-typeacc-bootstrap-v1",
+ "unit": "frame (box level for comparison only)",
+ "definition": "type accuracy on manual boxes localised by both arms, relabel - raw, points",
+ "cells": {
+  "scene_s1337_standard": {
+   "point_pp": -0.694,
+   "n_frames": 66,
+   "n_frames_with_both": 66,
+   "n_boxes_both": 144,
+   "ci95_frame": [
+    -5.72,
+    3.97
+   ],
+   "p_le_zero_frame": 0.658,
+   "ci95_box": [
+    -6.27,
+    4.86
+   ],
+   "draws": 2000,
+   "seed": 20260902
+  },
+  "scene_s1337_ood": {
+   "point_pp": 9.058,
+   "n_frames": 75,
+   "n_frames_with_both": 75,
+   "n_boxes_both": 276,
+   "ci95_frame": [
+    5.42,
+    12.92
+   ],
+   "p_le_zero_frame": 0.0,
+   "ci95_box": [
+    3.62,
+    14.49
+   ],
+   "draws": 2000,
+   "seed": 20260902
+  },
+  "scene_s3407_standard": {
+   "point_pp": -3.546,
+   "n_frames": 66,
+   "n_frames_with_both": 66,
+   "n_boxes_both": 141,
+   "ci95_frame": [
+    -9.09,
+    1.49
+   ],
+   "p_le_zero_frame": 0.9255,
+   "ci95_box": [
+    -8.51,
+    1.42
+   ],
+   "draws": 2000,
+   "seed": 20260902
+  },
+  "scene_s3407_ood": {
+   "point_pp": 6.429,
+   "n_frames": 75,
+   "n_frames_with_both": 75,
+   "n_boxes_both": 280,
+   "ci95_frame": [
+    2.12,
+    11.03
+   ],
+   "p_le_zero_frame": 0.004,
+   "ci95_box": [
+    0.36,
+    12.86
+   ],
+   "draws": 2000,
+   "seed": 20260902
+  },
+  "scene_s4567_standard": {
+   "point_pp": -5.147,
+   "n_frames": 66,
+   "n_frames_with_both": 66,
+   "n_boxes_both": 136,
+   "ci95_frame": [
+    -11.35,
+    0.79
+   ],
+   "p_le_zero_frame": 0.9625,
+   "ci95_box": [
+    -11.03,
+    0.0
+   ],
+   "draws": 2000,
+   "seed": 20260902
+  },
+  "scene_s4567_ood": {
+   "point_pp": -12.851,
+   "n_frames": 75,
+   "n_frames_with_both": 75,
+   "n_boxes_both": 249,
+   "ci95_frame": [
+    -18.18,
+    -7.79
+   ],
+   "p_le_zero_frame": 1.0,
+   "ci95_box": [
+    -18.07,
+    -7.23
+   ],
+   "draws": 2000,
+   "seed": 20260902
+  },
+  "scene136_s1337_standard": {
+   "point_pp": 3.448,
+   "n_frames": 66,
+   "n_frames_with_both": 66,
+   "n_boxes_both": 145,
+   "ci95_frame": [
+    -1.3,
+    7.78
+   ],
+   "p_le_zero_frame": 0.0885,
+   "ci95_box": [
+    -1.38,
+    8.97
+   ],
+   "draws": 2000,
+   "seed": 20260902
+  },
+  "scene136_s1337_ood": {
+   "point_pp": 2.996,
+   "n_frames": 75,
+   "n_frames_with_both": 75,
+   "n_boxes_both": 267,
+   "ci95_frame": [
+    -1.12,
+    7.35
+   ],
+   "p_le_zero_frame": 0.095,
+   "ci95_box": [
+    -2.62,
+    8.61
+   ],
+   "draws": 2000,
+   "seed": 20260902
+  },
+  "scene136_s5678_standard": {
+   "point_pp": -2.857,
+   "n_frames": 66,
+   "n_frames_with_both": 66,
+   "n_boxes_both": 140,
+   "ci95_frame": [
+    -8.28,
+    2.17
+   ],
+   "p_le_zero_frame": 0.8965,
+   "ci95_box": [
+    -8.57,
+    3.57
+   ],
+   "draws": 2000,
+   "seed": 20260902
+  },
+  "scene136_s5678_ood": {
+   "point_pp": 14.388,
+   "n_frames": 75,
+   "n_frames_with_both": 75,
+   "n_boxes_both": 278,
+   "ci95_frame": [
+    8.79,
+    19.86
+   ],
+   "p_le_zero_frame": 0.0,
+   "ci95_box": [
+    7.55,
+    21.22
+   ],
+   "draws": 2000,
+   "seed": 20260902
+  }
+ },
+ "arms": [
+  "relabel",
+  "scenevote"
+ ]
+}

@@ -1,0 +1,1986 @@
+{
+ "schema": "labelnoise-figure-source-v1",
+ "generated_by": "<workspace>/paper_work_v4/figures/labelnoise_v1/build_source.py",
+ "matching_code": {
+  "module": "<workspace>/paper_work_v4/relabel_v1/relabel_multiview_v1.py",
+  "sha256": "b076972773625144946470cf84dc9dfc96cff3c30c748e3f13903180e4fd3ea0",
+  "functions_imported": [
+   "frame_affine",
+   "warp_box",
+   "iou"
+  ],
+  "orb_features": 1500,
+  "ratio_test": 0.75,
+  "ransac_reproj_threshold": 3,
+  "box_mask_dilation": 1.2,
+  "min_inlier_share": 0.5,
+  "iou_link": 0.5,
+  "iou_rule": "strictly greater than iou_link, greedy over frame-f boxes in file order"
+ },
+ "inputs": {
+  "manifest": "<workspace>/pair_manifest_v1/PAIR_MANIFEST.jsonl",
+  "manifest_sha256": "06179f5a60a70d75d16fe138f0b6a09e72d4874d05740071c94f4285307a493d",
+  "images": "<workspace>/yolo_head_v1/images/train",
+  "labels": "<workspace>/yolo_head_v1/labels/train",
+  "frame_size_px": [
+   1280,
+   720
+  ],
+  "class_names": [
+   "shot",
+   "whisky",
+   "water",
+   "beer",
+   "wine",
+   "high"
+  ]
+ },
+ "train_registered": {
+  "adjacent_frame_pairs": 2280,
+  "frame_pairs_registered": 1748,
+  "boxes": 4336,
+  "tracks_union_find": 1561,
+  "scenes": 95,
+  "matched_pairs": 2775,
+  "flips": 502,
+  "flip_rate_pct": 18.09,
+  "agreeing_pairs_per_type_diagonal": {
+   "shot": 237,
+   "whisky": 584,
+   "water": 368,
+   "beer": 358,
+   "wine": 420,
+   "high": 306
+  },
+  "flip_pairs_unordered": {
+   "shot / whisky": 137,
+   "whisky / water": 117,
+   "water / beer": 89,
+   "beer / wine": 51,
+   "wine / high": 42,
+   "whisky / beer": 22,
+   "water / wine": 16,
+   "shot / water": 11,
+   "whisky / wine": 5,
+   "beer / high": 5,
+   "shot / wine": 4,
+   "shot / beer": 3
+  },
+  "matrix_symmetric_rows_then_cols": [
+   [
+    237,
+    137,
+    11,
+    3,
+    4,
+    0
+   ],
+   [
+    137,
+    584,
+    117,
+    22,
+    5,
+    0
+   ],
+   [
+    11,
+    117,
+    368,
+    89,
+    16,
+    0
+   ],
+   [
+    3,
+    22,
+    89,
+    358,
+    51,
+    5
+   ],
+   [
+    4,
+    5,
+    16,
+    51,
+    420,
+    42
+   ],
+   [
+    0,
+    0,
+    0,
+    5,
+    42,
+    306
+   ]
+  ],
+  "matrix_ordered_f_rows_fplus1_cols": [
+   [
+    237,
+    64,
+    6,
+    1,
+    2,
+    0
+   ],
+   [
+    73,
+    584,
+    58,
+    7,
+    3,
+    0
+   ],
+   [
+    5,
+    59,
+    368,
+    47,
+    10,
+    0
+   ],
+   [
+    2,
+    15,
+    42,
+    358,
+    27,
+    1
+   ],
+   [
+    2,
+    2,
+    6,
+    24,
+    420,
+    23
+   ],
+   [
+    0,
+    0,
+    0,
+    4,
+    19,
+    306
+   ]
+  ],
+  "matrix_note": "symmetric[i][j] (i != j) = number of matched adjacent-view pairs labelled type i in one view and type j in the other; symmetric[i][i] = matched pairs labelled i in both views. Row sum = boxes of type i that took part in a matched pair (counted once per pair).",
+  "class_names_in_order": [
+   "shot",
+   "whisky",
+   "water",
+   "beer",
+   "wine",
+   "high"
+  ]
+ },
+ "train_unregistered": {
+  "adjacent_frame_pairs": 2280,
+  "frame_pairs_registered": 0,
+  "boxes": 4336,
+  "tracks_union_find": 3434,
+  "scenes": 95,
+  "matched_pairs": 902,
+  "flips": 183,
+  "flip_rate_pct": 20.29,
+  "agreeing_pairs_per_type_diagonal": {
+   "shot": 31,
+   "whisky": 134,
+   "water": 98,
+   "beer": 163,
+   "wine": 153,
+   "high": 140
+  },
+  "flip_pairs_unordered": {
+   "whisky / water": 42,
+   "water / beer": 40,
+   "wine / high": 29,
+   "shot / whisky": 24,
+   "beer / wine": 23,
+   "water / wine": 5,
+   "water / high": 4,
+   "whisky / beer": 4,
+   "beer / high": 4,
+   "shot / water": 3,
+   "shot / beer": 3,
+   "whisky / wine": 2
+  },
+  "matrix_symmetric_rows_then_cols": [
+   [
+    31,
+    24,
+    3,
+    3,
+    0,
+    0
+   ],
+   [
+    24,
+    134,
+    42,
+    4,
+    2,
+    0
+   ],
+   [
+    3,
+    42,
+    98,
+    40,
+    5,
+    4
+   ],
+   [
+    3,
+    4,
+    40,
+    163,
+    23,
+    4
+   ],
+   [
+    0,
+    2,
+    5,
+    23,
+    153,
+    29
+   ],
+   [
+    0,
+    0,
+    4,
+    4,
+    29,
+    140
+   ]
+  ],
+  "matrix_ordered_f_rows_fplus1_cols": [
+   [
+    31,
+    11,
+    2,
+    1,
+    0,
+    0
+   ],
+   [
+    13,
+    134,
+    19,
+    2,
+    1,
+    0
+   ],
+   [
+    1,
+    23,
+    98,
+    21,
+    1,
+    2
+   ],
+   [
+    2,
+    2,
+    19,
+    163,
+    13,
+    0
+   ],
+   [
+    0,
+    1,
+    4,
+    10,
+    153,
+    15
+   ],
+   [
+    0,
+    0,
+    2,
+    4,
+    14,
+    140
+   ]
+  ],
+  "matrix_note": "symmetric[i][j] (i != j) = number of matched adjacent-view pairs labelled type i in one view and type j in the other; symmetric[i][i] = matched pairs labelled i in both views. Row sum = boxes of type i that took part in a matched pair (counted once per pair).",
+  "class_names_in_order": [
+   "shot",
+   "whisky",
+   "water",
+   "beer",
+   "wine",
+   "high"
+  ],
+  "note": "no registration; boxes of f compared to f+1 as released. This is the check quoted as '183 of 902' in DRAFT_sections_v10.tex."
+ },
+ "cross_check": {
+  "relabel_stats_v1_train": {
+   "frame_pairs_registered": 1748,
+   "boxes": 4336,
+   "tracks": 1561
+  },
+  "boxes_minus_tracks_from_relabel_stats": 2775,
+  "registered_matched_pairs_here": 2775,
+  "registered_frame_pairs_here": 1748,
+  "tracks_here": 1561,
+  "consistent_with_relabel_stats_v1": true,
+  "draft_v10_quote": "183 of 902 matched pairs (20.3%)",
+  "unregistered_matches_draft_v10": true
+ },
+ "example_selection": {
+  "rule": "for each target pair, registered flips whose two released boxes lie >= 0.02 (normalised) from every border, have area >= 0.01 (normalised) and registered IoU >= 0.6; ranked by the smaller of the two box areas, then IoU; the first is used unless 'override' names another candidate index with a reason",
+  "target_pairs": [
+   "water/whisky",
+   "beer/water",
+   "wine/high"
+  ],
+  "crop_rule": "square window of side 1.35 x max(box w, box h) px centred on the box, shifted inside the frame if needed, never rescaled",
+  "override": {
+   "water/whisky": {
+    "candidate_index": 3,
+    "reason": "whole glass visible and uncluttered in both views; ranked #0 (s35 f6-7) has the released box of view f stopping short of the mug body and a cluttered crop"
+   },
+   "beer/water": {
+    "candidate_index": 2,
+    "reason": "whole mug including its handle inside both crops; ranked #0 (s13 f15-16) sits at the frame edge so the crop is shifted and the mug rim touches the crop border"
+   },
+   "wine/high": {
+    "candidate_index": 2,
+    "reason": "visible viewpoint change between the two frames; ranked #0 (s15 f0-1) has identical box coordinates in both frames (IoU 1.00), which reads as a duplicate frame"
+   }
+  }
+ },
+ "example_candidates": {
+  "water/whisky": [
+   {
+    "pair": "whisky/water",
+    "scene": "035",
+    "frames": [
+     6,
+     7
+    ],
+    "iou_after_registration": 0.735,
+    "views": [
+     {
+      "view": "f",
+      "stem": "train_000806",
+      "image": "<workspace>/yolo_head_v1/images/train/train_000806.png",
+      "image_sha256": "03b376c4055b3b6b56a384848311c67a4dd03ad58ac7727c6db207bcd19fc7db",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_000806.txt",
+      "label_sha256": "aec68e0e0bc5fdff9a772cd9ffc9eafa702bc91174f009de6ce0d0c80663f8de",
+      "box_index_in_label_file": 1,
+      "released_label_line": "1 0.240625000 0.586111111 0.196875000 0.355555556",
+      "class_id": 1,
+      "class_name": "whisky",
+      "box_yolo_normalised": [
+       0.240625,
+       0.586111111,
+       0.196875,
+       0.355555556
+      ],
+      "box_xyxy_px": [
+       182.0,
+       294.0,
+       434.0,
+       550.0
+      ],
+      "crop_xyxy_px": [
+       135,
+       249,
+       481,
+       595
+      ]
+     },
+     {
+      "view": "f+1",
+      "stem": "train_000807",
+      "image": "<workspace>/yolo_head_v1/images/train/train_000807.png",
+      "image_sha256": "5fe63dc0a5fb6db972dfac722bf7bf1e603e8733aa2afd77835e34a401b5269f",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_000807.txt",
+      "label_sha256": "94d1bcfd86d71bc9c06e076467874dd8099d2b73375abd53f57fc880734cdda4",
+      "box_index_in_label_file": 1,
+      "released_label_line": "2 0.287500000 0.544444444 0.196875000 0.444444444",
+      "class_id": 2,
+      "class_name": "water",
+      "box_yolo_normalised": [
+       0.2875,
+       0.544444444,
+       0.196875,
+       0.444444444
+      ],
+      "box_xyxy_px": [
+       242.0,
+       232.0,
+       494.0,
+       552.0
+      ],
+      "crop_xyxy_px": [
+       152,
+       176,
+       584,
+       608
+      ]
+     }
+    ]
+   },
+   {
+    "pair": "whisky/water",
+    "scene": "326",
+    "frames": [
+     21,
+     22
+    ],
+    "iou_after_registration": 0.9303,
+    "views": [
+     {
+      "view": "f",
+      "stem": "train_002021",
+      "image": "<workspace>/yolo_head_v1/images/train/train_002021.png",
+      "image_sha256": "8a55e2aac12c94cf01a008bed93b777a3f32779b14ebdf7cc0a9c44499d451e9",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_002021.txt",
+      "label_sha256": "0d653baca61f7844ff0e4332561d5223a8f5aa83de2ffc931b12f54d44157baf",
+      "box_index_in_label_file": 0,
+      "released_label_line": "1 0.623437500 0.497222222 0.118750000 0.494444444",
+      "class_id": 1,
+      "class_name": "whisky",
+      "box_yolo_normalised": [
+       0.6234375,
+       0.497222222,
+       0.11875,
+       0.494444444
+      ],
+      "box_xyxy_px": [
+       722.0,
+       180.0,
+       874.0,
+       536.0
+      ],
+      "crop_xyxy_px": [
+       558,
+       117,
+       1039,
+       598
+      ]
+     },
+     {
+      "view": "f+1",
+      "stem": "train_002022",
+      "image": "<workspace>/yolo_head_v1/images/train/train_002022.png",
+      "image_sha256": "8e56a46aced3f5b00593890a626ba2bb1a8e504b46f35e93f423452e4c522e92",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_002022.txt",
+      "label_sha256": "60bfb215f39b8add353450e7dd0d278c104c4ec56a467a576a88d3f3a571fd0c",
+      "box_index_in_label_file": 0,
+      "released_label_line": "2 0.657031250 0.515277778 0.123437500 0.486111111",
+      "class_id": 2,
+      "class_name": "water",
+      "box_yolo_normalised": [
+       0.65703125,
+       0.515277778,
+       0.1234375,
+       0.486111111
+      ],
+      "box_xyxy_px": [
+       762.0,
+       196.0,
+       920.0,
+       546.0
+      ],
+      "crop_xyxy_px": [
+       605,
+       135,
+       1077,
+       607
+      ]
+     }
+    ]
+   },
+   {
+    "pair": "whisky/water",
+    "scene": "206",
+    "frames": [
+     0,
+     1
+    ],
+    "iou_after_registration": 0.9072,
+    "views": [
+     {
+      "view": "f",
+      "stem": "train_001575",
+      "image": "<workspace>/yolo_head_v1/images/train/train_001575.png",
+      "image_sha256": "38d57bb721dc4c840cb6cafffb8957db5dc130f76db303437f69462d8bf51d68",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_001575.txt",
+      "label_sha256": "17ac4eb7ec766de3ddf864d136854af0137418e4b274c562d98d17c2b92f9f15",
+      "box_index_in_label_file": 1,
+      "released_label_line": "1 0.830468750 0.348611111 0.157812500 0.358333333",
+      "class_id": 1,
+      "class_name": "whisky",
+      "box_yolo_normalised": [
+       0.83046875,
+       0.348611111,
+       0.1578125,
+       0.358333333
+      ],
+      "box_xyxy_px": [
+       962.0,
+       122.0,
+       1164.0,
+       380.0
+      ],
+      "crop_xyxy_px": [
+       889,
+       77,
+       1237,
+       425
+      ]
+     },
+     {
+      "view": "f+1",
+      "stem": "train_001576",
+      "image": "<workspace>/yolo_head_v1/images/train/train_001576.png",
+      "image_sha256": "505f2815f03a95fe72d740462d68a85b224d973546ef5e79e3696d93540dd03d",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_001576.txt",
+      "label_sha256": "66c126fb24b9b2a5ec6532fcbc6d22b353b147c2ef0eed89c36db3d9d231161c",
+      "box_index_in_label_file": 1,
+      "released_label_line": "2 0.844531250 0.355555556 0.160937500 0.361111111",
+      "class_id": 2,
+      "class_name": "water",
+      "box_yolo_normalised": [
+       0.84453125,
+       0.355555556,
+       0.1609375,
+       0.361111111
+      ],
+      "box_xyxy_px": [
+       978.0,
+       126.0,
+       1184.0,
+       386.0
+      ],
+      "crop_xyxy_px": [
+       906,
+       81,
+       1257,
+       432
+      ]
+     }
+    ]
+   },
+   {
+    "pair": "whisky/water",
+    "scene": "021",
+    "frames": [
+     6,
+     7
+    ],
+    "iou_after_registration": 0.9249,
+    "views": [
+     {
+      "view": "f",
+      "stem": "train_000481",
+      "image": "<workspace>/yolo_head_v1/images/train/train_000481.png",
+      "image_sha256": "623b1c7da1c528c70f85893e24695ee3d542c1a5aaee2a96a043020b85f1bc77",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_000481.txt",
+      "label_sha256": "70b27209e70c44267ded15fcf4bf73e8264984e0cfcdc97b22c9d4b5fb5f93e3",
+      "box_index_in_label_file": 1,
+      "released_label_line": "1 0.189843750 0.433333333 0.176562500 0.316666667",
+      "class_id": 1,
+      "class_name": "whisky",
+      "box_yolo_normalised": [
+       0.18984375,
+       0.433333333,
+       0.1765625,
+       0.316666667
+      ],
+      "box_xyxy_px": [
+       130.0,
+       198.0,
+       356.0,
+       426.0
+      ],
+      "crop_xyxy_px": [
+       89,
+       158,
+       397,
+       466
+      ]
+     },
+     {
+      "view": "f+1",
+      "stem": "train_000482",
+      "image": "<workspace>/yolo_head_v1/images/train/train_000482.png",
+      "image_sha256": "faf047ba573447e8e52a7ed4b4bc0dfdb498a8bae0f049aa5709afddfcb1d0c8",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_000482.txt",
+      "label_sha256": "3acfbf2548691144a4f08d5327f991362abe572b114eafccd1a99325b9c8a7a6",
+      "box_index_in_label_file": 1,
+      "released_label_line": "2 0.232031250 0.337500000 0.173437500 0.319444444",
+      "class_id": 2,
+      "class_name": "water",
+      "box_yolo_normalised": [
+       0.23203125,
+       0.3375,
+       0.1734375,
+       0.319444444
+      ],
+      "box_xyxy_px": [
+       186.0,
+       128.0,
+       408.0,
+       358.0
+      ],
+      "crop_xyxy_px": [
+       142,
+       88,
+       452,
+       398
+      ]
+     }
+    ],
+    "chosen_candidate_index": 3,
+    "override_reason": "whole glass visible and uncluttered in both views; ranked #0 (s35 f6-7) has the released box of view f stopping short of the mug body and a cluttered crop"
+   },
+   {
+    "pair": "water/whisky",
+    "scene": "021",
+    "frames": [
+     7,
+     8
+    ],
+    "iou_after_registration": 0.8831,
+    "views": [
+     {
+      "view": "f",
+      "stem": "train_000482",
+      "image": "<workspace>/yolo_head_v1/images/train/train_000482.png",
+      "image_sha256": "faf047ba573447e8e52a7ed4b4bc0dfdb498a8bae0f049aa5709afddfcb1d0c8",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_000482.txt",
+      "label_sha256": "3acfbf2548691144a4f08d5327f991362abe572b114eafccd1a99325b9c8a7a6",
+      "box_index_in_label_file": 1,
+      "released_label_line": "2 0.232031250 0.337500000 0.173437500 0.319444444",
+      "class_id": 2,
+      "class_name": "water",
+      "box_yolo_normalised": [
+       0.23203125,
+       0.3375,
+       0.1734375,
+       0.319444444
+      ],
+      "box_xyxy_px": [
+       186.0,
+       128.0,
+       408.0,
+       358.0
+      ],
+      "crop_xyxy_px": [
+       142,
+       88,
+       452,
+       398
+      ]
+     },
+     {
+      "view": "f+1",
+      "stem": "train_000483",
+      "image": "<workspace>/yolo_head_v1/images/train/train_000483.png",
+      "image_sha256": "54e3ab4314140625dfdb24650bfa90ad4ce849df27c454c72847978fe4b7c353",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_000483.txt",
+      "label_sha256": "82c1b8d07d85e431355834e08fef13ac4241251543a4d09e46390acf3ac2fec1",
+      "box_index_in_label_file": 0,
+      "released_label_line": "1 0.314062500 0.194444444 0.165625000 0.333333333",
+      "class_id": 1,
+      "class_name": "whisky",
+      "box_yolo_normalised": [
+       0.3140625,
+       0.194444444,
+       0.165625,
+       0.333333333
+      ],
+      "box_xyxy_px": [
+       296.0,
+       20.0,
+       508.0,
+       260.0
+      ],
+      "crop_xyxy_px": [
+       240,
+       0,
+       564,
+       324
+      ]
+     }
+    ]
+   },
+   {
+    "pair": "whisky/water",
+    "scene": "015",
+    "frames": [
+     23,
+     24
+    ],
+    "iou_after_registration": 0.8955,
+    "views": [
+     {
+      "view": "f",
+      "stem": "train_000348",
+      "image": "<workspace>/yolo_head_v1/images/train/train_000348.png",
+      "image_sha256": "c6586df70352383713278b464ce9bd3a40d4916698a3c6fc7cb36da56c2dbc2f",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_000348.txt",
+      "label_sha256": "bb51b5dcbdf2499a3a59bee5e819f7d485dbc3b5b7968ebaeb05df04273e9b7d",
+      "box_index_in_label_file": 2,
+      "released_label_line": "1 0.657812500 0.425000000 0.140625000 0.388888889",
+      "class_id": 1,
+      "class_name": "whisky",
+      "box_yolo_normalised": [
+       0.6578125,
+       0.425,
+       0.140625,
+       0.388888889
+      ],
+      "box_xyxy_px": [
+       752.0,
+       166.0,
+       932.0,
+       446.0
+      ],
+      "crop_xyxy_px": [
+       653,
+       117,
+       1031,
+       495
+      ]
+     },
+     {
+      "view": "f+1",
+      "stem": "train_000349",
+      "image": "<workspace>/yolo_head_v1/images/train/train_000349.png",
+      "image_sha256": "e4f312354e570957aa11d86292380ea426173a96511661804842dbcde839a51f",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_000349.txt",
+      "label_sha256": "ddb6718b12efe7ee9034f9eb5fff52679e99ac8593798c5b2b862c37476d911d",
+      "box_index_in_label_file": 2,
+      "released_label_line": "2 0.689062500 0.463888889 0.146875000 0.372222222",
+      "class_id": 2,
+      "class_name": "water",
+      "box_yolo_normalised": [
+       0.6890625,
+       0.463888889,
+       0.146875,
+       0.372222222
+      ],
+      "box_xyxy_px": [
+       788.0,
+       200.0,
+       976.0,
+       468.0
+      ],
+      "crop_xyxy_px": [
+       701,
+       153,
+       1063,
+       515
+      ]
+     }
+    ]
+   }
+  ],
+  "beer/water": [
+   {
+    "pair": "beer/water",
+    "scene": "013",
+    "frames": [
+     15,
+     16
+    ],
+    "iou_after_registration": 0.8442,
+    "views": [
+     {
+      "view": "f",
+      "stem": "train_000290",
+      "image": "<workspace>/yolo_head_v1/images/train/train_000290.png",
+      "image_sha256": "a52770f31f1087435299ad8778705277c9581e22ee15b2d4cda7465fa6891f4c",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_000290.txt",
+      "label_sha256": "cfd2de7f7b688583861c373a2f0dc7c3b8195c4692982a9594635d8530befa8f",
+      "box_index_in_label_file": 1,
+      "released_label_line": "3 0.761718750 0.298611111 0.198437500 0.419444444",
+      "class_id": 3,
+      "class_name": "beer",
+      "box_yolo_normalised": [
+       0.76171875,
+       0.298611111,
+       0.1984375,
+       0.419444444
+      ],
+      "box_xyxy_px": [
+       848.0,
+       64.0,
+       1102.0,
+       366.0
+      ],
+      "crop_xyxy_px": [
+       771,
+       11,
+       1179,
+       419
+      ]
+     },
+     {
+      "view": "f+1",
+      "stem": "train_000291",
+      "image": "<workspace>/yolo_head_v1/images/train/train_000291.png",
+      "image_sha256": "c2d73789906731dcee2ee047c4f4ee1c1e6cc7a8656060243468349cf1e0905d",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_000291.txt",
+      "label_sha256": "7a2976a4e95667a49047b8b6e2e0c7d435b4907702901d5c4703f5f66b5c33d2",
+      "box_index_in_label_file": 1,
+      "released_label_line": "2 0.853906250 0.390277778 0.220312500 0.402777778",
+      "class_id": 2,
+      "class_name": "water",
+      "box_yolo_normalised": [
+       0.85390625,
+       0.390277778,
+       0.2203125,
+       0.402777778
+      ],
+      "box_xyxy_px": [
+       952.0,
+       136.0,
+       1234.0,
+       426.0
+      ],
+      "crop_xyxy_px": [
+       888,
+       85,
+       1280,
+       477
+      ]
+     }
+    ]
+   },
+   {
+    "pair": "water/beer",
+    "scene": "013",
+    "frames": [
+     10,
+     11
+    ],
+    "iou_after_registration": 0.7682,
+    "views": [
+     {
+      "view": "f",
+      "stem": "train_000285",
+      "image": "<workspace>/yolo_head_v1/images/train/train_000285.png",
+      "image_sha256": "a38c915378abf6b46e57b7ae54f376e58715cebcfd7293ae1ea79605bef1d2d8",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_000285.txt",
+      "label_sha256": "f3dc451ea9a9a561bfafd8039ca8c65903b2af7c6f20f555888242d60cafd868",
+      "box_index_in_label_file": 2,
+      "released_label_line": "2 0.203125000 0.584722222 0.215625000 0.375000000",
+      "class_id": 2,
+      "class_name": "water",
+      "box_yolo_normalised": [
+       0.203125,
+       0.584722222,
+       0.215625,
+       0.375
+      ],
+      "box_xyxy_px": [
+       122.0,
+       286.0,
+       398.0,
+       556.0
+      ],
+      "crop_xyxy_px": [
+       74,
+       234,
+       447,
+       607
+      ]
+     },
+     {
+      "view": "f+1",
+      "stem": "train_000286",
+      "image": "<workspace>/yolo_head_v1/images/train/train_000286.png",
+      "image_sha256": "d62b850be08dc3b0a22398634c59585b214c16c95c413734cb5d6f0acf77dfd4",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_000286.txt",
+      "label_sha256": "dbe9b2b752a90150d0562b283e8cc4c7abdd032a7df9f062826529108c536e67",
+      "box_index_in_label_file": 1,
+      "released_label_line": "3 0.301562500 0.418055556 0.193750000 0.397222222",
+      "class_id": 3,
+      "class_name": "beer",
+      "box_yolo_normalised": [
+       0.3015625,
+       0.418055556,
+       0.19375,
+       0.397222222
+      ],
+      "box_xyxy_px": [
+       262.0,
+       158.0,
+       510.0,
+       444.0
+      ],
+      "crop_xyxy_px": [
+       193,
+       108,
+       579,
+       494
+      ]
+     }
+    ]
+   },
+   {
+    "pair": "water/beer",
+    "scene": "002",
+    "frames": [
+     18,
+     19
+    ],
+    "iou_after_registration": 0.8767,
+    "views": [
+     {
+      "view": "f",
+      "stem": "train_000043",
+      "image": "<workspace>/yolo_head_v1/images/train/train_000043.png",
+      "image_sha256": "df7f3d74086c226b5d0be6962200802aab3fdab32c32b50dd813115637529d21",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_000043.txt",
+      "label_sha256": "c63e6fdb89f4244f4576cc3037c3dfb307df71270f033da9469e8059a5f708b2",
+      "box_index_in_label_file": 1,
+      "released_label_line": "2 0.142968750 0.373611111 0.235937500 0.336111111",
+      "class_id": 2,
+      "class_name": "water",
+      "box_yolo_normalised": [
+       0.14296875,
+       0.373611111,
+       0.2359375,
+       0.336111111
+      ],
+      "box_xyxy_px": [
+       32.0,
+       148.0,
+       334.0,
+       390.0
+      ],
+      "crop_xyxy_px": [
+       0,
+       65,
+       408,
+       473
+      ]
+     },
+     {
+      "view": "f+1",
+      "stem": "train_000044",
+      "image": "<workspace>/yolo_head_v1/images/train/train_000044.png",
+      "image_sha256": "9909174f53990765156c127b8d37ea144442d225f30dd29dceba8f13d32d9725",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_000044.txt",
+      "label_sha256": "5b680b85a6c1567b6116b2907c782b39261ecb5f7cd9ae6333ec76b97c0a49cf",
+      "box_index_in_label_file": 1,
+      "released_label_line": "3 0.206250000 0.370833333 0.221875000 0.336111111",
+      "class_id": 3,
+      "class_name": "beer",
+      "box_yolo_normalised": [
+       0.20625,
+       0.370833333,
+       0.221875,
+       0.336111111
+      ],
+      "box_xyxy_px": [
+       122.0,
+       146.0,
+       406.0,
+       388.0
+      ],
+      "crop_xyxy_px": [
+       72,
+       75,
+       455,
+       458
+      ]
+     }
+    ],
+    "chosen_candidate_index": 2,
+    "override_reason": "whole mug including its handle inside both crops; ranked #0 (s13 f15-16) sits at the frame edge so the crop is shifted and the mug rim touches the crop border"
+   },
+   {
+    "pair": "beer/water",
+    "scene": "002",
+    "frames": [
+     19,
+     20
+    ],
+    "iou_after_registration": 0.8937,
+    "views": [
+     {
+      "view": "f",
+      "stem": "train_000044",
+      "image": "<workspace>/yolo_head_v1/images/train/train_000044.png",
+      "image_sha256": "9909174f53990765156c127b8d37ea144442d225f30dd29dceba8f13d32d9725",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_000044.txt",
+      "label_sha256": "5b680b85a6c1567b6116b2907c782b39261ecb5f7cd9ae6333ec76b97c0a49cf",
+      "box_index_in_label_file": 1,
+      "released_label_line": "3 0.206250000 0.370833333 0.221875000 0.336111111",
+      "class_id": 3,
+      "class_name": "beer",
+      "box_yolo_normalised": [
+       0.20625,
+       0.370833333,
+       0.221875,
+       0.336111111
+      ],
+      "box_xyxy_px": [
+       122.0,
+       146.0,
+       406.0,
+       388.0
+      ],
+      "crop_xyxy_px": [
+       72,
+       75,
+       455,
+       458
+      ]
+     },
+     {
+      "view": "f+1",
+      "stem": "train_000045",
+      "image": "<workspace>/yolo_head_v1/images/train/train_000045.png",
+      "image_sha256": "07bf83f999f026e04bea91cd9939daedcd30add6ca597328fa4ec9c421e0cd79",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_000045.txt",
+      "label_sha256": "bf4f76cd166222e8da0dd355915d4453988544e68b854f8dbcb87d01a6654cca",
+      "box_index_in_label_file": 1,
+      "released_label_line": "2 0.253906250 0.387500000 0.210937500 0.336111111",
+      "class_id": 2,
+      "class_name": "water",
+      "box_yolo_normalised": [
+       0.25390625,
+       0.3875,
+       0.2109375,
+       0.336111111
+      ],
+      "box_xyxy_px": [
+       190.0,
+       158.0,
+       460.0,
+       400.0
+      ],
+      "crop_xyxy_px": [
+       143,
+       97,
+       507,
+       461
+      ]
+     }
+    ]
+   },
+   {
+    "pair": "water/beer",
+    "scene": "133",
+    "frames": [
+     6,
+     7
+    ],
+    "iou_after_registration": 0.9267,
+    "views": [
+     {
+      "view": "f",
+      "stem": "train_001131",
+      "image": "<workspace>/yolo_head_v1/images/train/train_001131.png",
+      "image_sha256": "d0c6265ebf0b0448922693d7783eb372cbf90b9d88feeb84cf2b682823d6d89a",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_001131.txt",
+      "label_sha256": "5133a8c134c6eae9f72673d0c2a57fdcbb252758c25c2b32f2a9a509cb4c039c",
+      "box_index_in_label_file": 1,
+      "released_label_line": "2 0.131250000 0.384722222 0.221875000 0.319444444",
+      "class_id": 2,
+      "class_name": "water",
+      "box_yolo_normalised": [
+       0.13125,
+       0.384722222,
+       0.221875,
+       0.319444444
+      ],
+      "box_xyxy_px": [
+       26.0,
+       162.0,
+       310.0,
+       392.0
+      ],
+      "crop_xyxy_px": [
+       0,
+       85,
+       383,
+       468
+      ]
+     },
+     {
+      "view": "f+1",
+      "stem": "train_001132",
+      "image": "<workspace>/yolo_head_v1/images/train/train_001132.png",
+      "image_sha256": "733b409cea683ad9782d448beeb49a08626f1ffc0ae85858c9089f8a431b431a",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_001132.txt",
+      "label_sha256": "ec6d90d572c9cfa6713ade7fbe3859d6a490bd0bc59fda29bbf33f1615bd130a",
+      "box_index_in_label_file": 0,
+      "released_label_line": "3 0.187500000 0.268055556 0.212500000 0.330555556",
+      "class_id": 3,
+      "class_name": "beer",
+      "box_yolo_normalised": [
+       0.1875,
+       0.268055556,
+       0.2125,
+       0.330555556
+      ],
+      "box_xyxy_px": [
+       104.0,
+       74.0,
+       376.0,
+       312.0
+      ],
+      "crop_xyxy_px": [
+       56,
+       10,
+       423,
+       377
+      ]
+     }
+    ]
+   },
+   {
+    "pair": "beer/water",
+    "scene": "202",
+    "frames": [
+     20,
+     21
+    ],
+    "iou_after_registration": 0.8963,
+    "views": [
+     {
+      "view": "f",
+      "stem": "train_001495",
+      "image": "<workspace>/yolo_head_v1/images/train/train_001495.png",
+      "image_sha256": "43c650471f36f62e6abdcdf8adf390b5707f64040dafb07b27b5c30d10076df2",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_001495.txt",
+      "label_sha256": "8cf99949eff3d37fd3abe3c23206e4595289d2c9317305258c2bf32fd03c0448",
+      "box_index_in_label_file": 1,
+      "released_label_line": "3 0.157812500 0.276388889 0.203125000 0.325000000",
+      "class_id": 3,
+      "class_name": "beer",
+      "box_yolo_normalised": [
+       0.1578125,
+       0.276388889,
+       0.203125,
+       0.325
+      ],
+      "box_xyxy_px": [
+       72.0,
+       82.0,
+       332.0,
+       316.0
+      ],
+      "crop_xyxy_px": [
+       26,
+       24,
+       377,
+       375
+      ]
+     },
+     {
+      "view": "f+1",
+      "stem": "train_001496",
+      "image": "<workspace>/yolo_head_v1/images/train/train_001496.png",
+      "image_sha256": "cde320f4d64cdc1f66c08b2d76747f9d96d4983c4e0f3dd24ac7f889c5bb01bd",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_001496.txt",
+      "label_sha256": "f1ffecb55036baad510e014cd9c1c48f050caaebf4b4aa7fd9fdfa7c3d6c4521",
+      "box_index_in_label_file": 1,
+      "released_label_line": "2 0.207031250 0.284722222 0.192187500 0.319444444",
+      "class_id": 2,
+      "class_name": "water",
+      "box_yolo_normalised": [
+       0.20703125,
+       0.284722222,
+       0.1921875,
+       0.319444444
+      ],
+      "box_xyxy_px": [
+       142.0,
+       90.0,
+       388.0,
+       320.0
+      ],
+      "crop_xyxy_px": [
+       99,
+       39,
+       431,
+       371
+      ]
+     }
+    ]
+   }
+  ],
+  "wine/high": [
+   {
+    "pair": "wine/high",
+    "scene": "015",
+    "frames": [
+     0,
+     1
+    ],
+    "iou_after_registration": 0.9998,
+    "views": [
+     {
+      "view": "f",
+      "stem": "train_000325",
+      "image": "<workspace>/yolo_head_v1/images/train/train_000325.png",
+      "image_sha256": "1b34baa3b9e5016d439161f7b2abced93b600f29812fc3d3ee96edcdad59644c",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_000325.txt",
+      "label_sha256": "e09976b81faf9d509a58f7aef04fa3f73a9e772ebd05c0a6bfdfad54306703fe",
+      "box_index_in_label_file": 0,
+      "released_label_line": "4 0.305468750 0.248611111 0.145312500 0.397222222",
+      "class_id": 4,
+      "class_name": "wine",
+      "box_yolo_normalised": [
+       0.30546875,
+       0.248611111,
+       0.1453125,
+       0.397222222
+      ],
+      "box_xyxy_px": [
+       298.0,
+       36.0,
+       484.0,
+       322.0
+      ],
+      "crop_xyxy_px": [
+       198,
+       0,
+       584,
+       386
+      ]
+     },
+     {
+      "view": "f+1",
+      "stem": "train_000326",
+      "image": "<workspace>/yolo_head_v1/images/train/train_000326.png",
+      "image_sha256": "2fa4abd28bcf409908a4b007c4bc9728bc24151d7c56a46234d3aaf0e7f06a35",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_000326.txt",
+      "label_sha256": "631bc523fb7a490dabe1b8e6d4088ff5645d8ca4a1cd8a281123a3bb39e4c2f3",
+      "box_index_in_label_file": 0,
+      "released_label_line": "5 0.305468750 0.248611111 0.145312500 0.397222222",
+      "class_id": 5,
+      "class_name": "high",
+      "box_yolo_normalised": [
+       0.30546875,
+       0.248611111,
+       0.1453125,
+       0.397222222
+      ],
+      "box_xyxy_px": [
+       298.0,
+       36.0,
+       484.0,
+       322.0
+      ],
+      "crop_xyxy_px": [
+       198,
+       0,
+       584,
+       386
+      ]
+     }
+    ]
+   },
+   {
+    "pair": "high/wine",
+    "scene": "015",
+    "frames": [
+     1,
+     2
+    ],
+    "iou_after_registration": 0.977,
+    "views": [
+     {
+      "view": "f",
+      "stem": "train_000326",
+      "image": "<workspace>/yolo_head_v1/images/train/train_000326.png",
+      "image_sha256": "2fa4abd28bcf409908a4b007c4bc9728bc24151d7c56a46234d3aaf0e7f06a35",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_000326.txt",
+      "label_sha256": "631bc523fb7a490dabe1b8e6d4088ff5645d8ca4a1cd8a281123a3bb39e4c2f3",
+      "box_index_in_label_file": 0,
+      "released_label_line": "5 0.305468750 0.248611111 0.145312500 0.397222222",
+      "class_id": 5,
+      "class_name": "high",
+      "box_yolo_normalised": [
+       0.30546875,
+       0.248611111,
+       0.1453125,
+       0.397222222
+      ],
+      "box_xyxy_px": [
+       298.0,
+       36.0,
+       484.0,
+       322.0
+      ],
+      "crop_xyxy_px": [
+       198,
+       0,
+       584,
+       386
+      ]
+     },
+     {
+      "view": "f+1",
+      "stem": "train_000327",
+      "image": "<workspace>/yolo_head_v1/images/train/train_000327.png",
+      "image_sha256": "4ba07215065d50d3d80d779db527f0eb0797d5a5da3fa68c8841fcc08879263b",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_000327.txt",
+      "label_sha256": "89dc47385ab4e38cc9d1eab8f437cbcdc1219017ec050ec3235e34f5ab4e2eb3",
+      "box_index_in_label_file": 0,
+      "released_label_line": "4 0.319531250 0.243055556 0.142187500 0.397222222",
+      "class_id": 4,
+      "class_name": "wine",
+      "box_yolo_normalised": [
+       0.31953125,
+       0.243055556,
+       0.1421875,
+       0.397222222
+      ],
+      "box_xyxy_px": [
+       318.0,
+       32.0,
+       500.0,
+       318.0
+      ],
+      "crop_xyxy_px": [
+       216,
+       0,
+       602,
+       386
+      ]
+     }
+    ]
+   },
+   {
+    "pair": "wine/high",
+    "scene": "131",
+    "frames": [
+     0,
+     1
+    ],
+    "iou_after_registration": 0.9075,
+    "views": [
+     {
+      "view": "f",
+      "stem": "train_001075",
+      "image": "<workspace>/yolo_head_v1/images/train/train_001075.png",
+      "image_sha256": "96671542a6b1f63e2c5eba387f8e8ffdd56f7910c7dfd7ede1f11b8800f5fa70",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_001075.txt",
+      "label_sha256": "d381aa065c5746b8f87df063daf535881767e6cefa5a8e22cac4976bf881accf",
+      "box_index_in_label_file": 0,
+      "released_label_line": "4 0.677343750 0.652777778 0.145312500 0.377777778",
+      "class_id": 4,
+      "class_name": "wine",
+      "box_yolo_normalised": [
+       0.67734375,
+       0.652777778,
+       0.1453125,
+       0.377777778
+      ],
+      "box_xyxy_px": [
+       774.0,
+       334.0,
+       960.0,
+       606.0
+      ],
+      "crop_xyxy_px": [
+       684,
+       287,
+       1051,
+       654
+      ]
+     },
+     {
+      "view": "f+1",
+      "stem": "train_001076",
+      "image": "<workspace>/yolo_head_v1/images/train/train_001076.png",
+      "image_sha256": "0f484a335e464c6df378c77b99dea5206e8efe318a5c2950c46f248ccd64d7a8",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_001076.txt",
+      "label_sha256": "733adf74ff598be93b19db00ee69c8d91d5f461b126ffe118c22eb56be5bf30c",
+      "box_index_in_label_file": 0,
+      "released_label_line": "5 0.693750000 0.656944444 0.153125000 0.380555556",
+      "class_id": 5,
+      "class_name": "high",
+      "box_yolo_normalised": [
+       0.69375,
+       0.656944444,
+       0.153125,
+       0.380555556
+      ],
+      "box_xyxy_px": [
+       790.0,
+       336.0,
+       986.0,
+       610.0
+      ],
+      "crop_xyxy_px": [
+       703,
+       288,
+       1073,
+       658
+      ]
+     }
+    ],
+    "chosen_candidate_index": 2,
+    "override_reason": "visible viewpoint change between the two frames; ranked #0 (s15 f0-1) has identical box coordinates in both frames (IoU 1.00), which reads as a duplicate frame"
+   },
+   {
+    "pair": "wine/high",
+    "scene": "140",
+    "frames": [
+     0,
+     1
+    ],
+    "iou_after_registration": 0.9557,
+    "views": [
+     {
+      "view": "f",
+      "stem": "train_001300",
+      "image": "<workspace>/yolo_head_v1/images/train/train_001300.png",
+      "image_sha256": "760f1a860bf0e1dabee21832bb0656982ff51eaf9dcb428a7ec6a69d2cb61229",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_001300.txt",
+      "label_sha256": "3a21856d49d578312e491107e7a30b3bb0e37ddb934ff0165f769a7e6082b11e",
+      "box_index_in_label_file": 0,
+      "released_label_line": "4 0.392187500 0.525000000 0.140625000 0.394444444",
+      "class_id": 4,
+      "class_name": "wine",
+      "box_yolo_normalised": [
+       0.3921875,
+       0.525,
+       0.140625,
+       0.394444444
+      ],
+      "box_xyxy_px": [
+       412.0,
+       236.0,
+       592.0,
+       520.0
+      ],
+      "crop_xyxy_px": [
+       310,
+       186,
+       693,
+       569
+      ]
+     },
+     {
+      "view": "f+1",
+      "stem": "train_001301",
+      "image": "<workspace>/yolo_head_v1/images/train/train_001301.png",
+      "image_sha256": "df07fd8c7a53cbdaf99bce370b9ca7ae48809789ad6b6c6f10e5ed944eaf66f7",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_001301.txt",
+      "label_sha256": "3cd4f3b8e85d5e185a668b35bfe19419e6ed05cd89c45ca70199902994f25996",
+      "box_index_in_label_file": 0,
+      "released_label_line": "5 0.410937500 0.516666667 0.134375000 0.394444444",
+      "class_id": 5,
+      "class_name": "high",
+      "box_yolo_normalised": [
+       0.4109375,
+       0.516666667,
+       0.134375,
+       0.394444444
+      ],
+      "box_xyxy_px": [
+       440.0,
+       230.0,
+       612.0,
+       514.0
+      ],
+      "crop_xyxy_px": [
+       334,
+       181,
+       717,
+       564
+      ]
+     }
+    ]
+   },
+   {
+    "pair": "wine/high",
+    "scene": "135",
+    "frames": [
+     0,
+     1
+    ],
+    "iou_after_registration": 0.9324,
+    "views": [
+     {
+      "view": "f",
+      "stem": "train_001175",
+      "image": "<workspace>/yolo_head_v1/images/train/train_001175.png",
+      "image_sha256": "9723094a423912244ac76e65312cae62cd5a3af0093eb385858c6882f4358ba4",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_001175.txt",
+      "label_sha256": "6d51b8ad15ae69474748bd20f7652672e3aad8b81c14cdb63b3b1b7068a34c3d",
+      "box_index_in_label_file": 1,
+      "released_label_line": "4 0.640625000 0.658333333 0.137500000 0.377777778",
+      "class_id": 4,
+      "class_name": "wine",
+      "box_yolo_normalised": [
+       0.640625,
+       0.658333333,
+       0.1375,
+       0.377777778
+      ],
+      "box_xyxy_px": [
+       732.0,
+       338.0,
+       908.0,
+       610.0
+      ],
+      "crop_xyxy_px": [
+       636,
+       290,
+       1003,
+       657
+      ]
+     },
+     {
+      "view": "f+1",
+      "stem": "train_001176",
+      "image": "<workspace>/yolo_head_v1/images/train/train_001176.png",
+      "image_sha256": "1470c16c18d537bab36bfb83578a2ae45824b38d1e142838082e8ba5d7554371",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_001176.txt",
+      "label_sha256": "ad8c26e9afd1645c6b29c1b71909a9d6a7db17b35ce9c64993936ad27ca811ec",
+      "box_index_in_label_file": 1,
+      "released_label_line": "5 0.655468750 0.659722222 0.145312500 0.380555556",
+      "class_id": 5,
+      "class_name": "high",
+      "box_yolo_normalised": [
+       0.65546875,
+       0.659722222,
+       0.1453125,
+       0.380555556
+      ],
+      "box_xyxy_px": [
+       746.0,
+       338.0,
+       932.0,
+       612.0
+      ],
+      "crop_xyxy_px": [
+       654,
+       290,
+       1024,
+       660
+      ]
+     }
+    ]
+   },
+   {
+    "pair": "wine/high",
+    "scene": "140",
+    "frames": [
+     3,
+     4
+    ],
+    "iou_after_registration": 0.9194,
+    "views": [
+     {
+      "view": "f",
+      "stem": "train_001303",
+      "image": "<workspace>/yolo_head_v1/images/train/train_001303.png",
+      "image_sha256": "6455a752fceb42176d934643b08900e199b7bdb898e3318a25f868a5c6128ed0",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_001303.txt",
+      "label_sha256": "9a6a46577c9004796e8f74dca160fc683b0b0629f6b5d74866189caf57051d83",
+      "box_index_in_label_file": 0,
+      "released_label_line": "4 0.463281250 0.488888889 0.123437500 0.400000000",
+      "class_id": 4,
+      "class_name": "wine",
+      "box_yolo_normalised": [
+       0.46328125,
+       0.488888889,
+       0.1234375,
+       0.4
+      ],
+      "box_xyxy_px": [
+       514.0,
+       208.0,
+       672.0,
+       496.0
+      ],
+      "crop_xyxy_px": [
+       398,
+       158,
+       787,
+       547
+      ]
+     },
+     {
+      "view": "f+1",
+      "stem": "train_001304",
+      "image": "<workspace>/yolo_head_v1/images/train/train_001304.png",
+      "image_sha256": "43dfd0582722d7953221cbcc95f82f97153c17561b462da5dddb7a6aacbdc763",
+      "label_file": "<workspace>/yolo_head_v1/labels/train/train_001304.txt",
+      "label_sha256": "aba6ca2f78e7cf1b040e3146f7f838a47771b068213f990f514856b560e1c188",
+      "box_index_in_label_file": 0,
+      "released_label_line": "5 0.492187500 0.450000000 0.121875000 0.400000000",
+      "class_id": 5,
+      "class_name": "high",
+      "box_yolo_normalised": [
+       0.4921875,
+       0.45,
+       0.121875,
+       0.4
+      ],
+      "box_xyxy_px": [
+       552.0,
+       180.0,
+       708.0,
+       468.0
+      ],
+      "crop_xyxy_px": [
+       436,
+       130,
+       825,
+       519
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "examples": {
+  "water/whisky": {
+   "pair": "whisky/water",
+   "scene": "021",
+   "frames": [
+    6,
+    7
+   ],
+   "iou_after_registration": 0.9249,
+   "views": [
+    {
+     "view": "f",
+     "stem": "train_000481",
+     "image": "<workspace>/yolo_head_v1/images/train/train_000481.png",
+     "image_sha256": "623b1c7da1c528c70f85893e24695ee3d542c1a5aaee2a96a043020b85f1bc77",
+     "label_file": "<workspace>/yolo_head_v1/labels/train/train_000481.txt",
+     "label_sha256": "70b27209e70c44267ded15fcf4bf73e8264984e0cfcdc97b22c9d4b5fb5f93e3",
+     "box_index_in_label_file": 1,
+     "released_label_line": "1 0.189843750 0.433333333 0.176562500 0.316666667",
+     "class_id": 1,
+     "class_name": "whisky",
+     "box_yolo_normalised": [
+      0.18984375,
+      0.433333333,
+      0.1765625,
+      0.316666667
+     ],
+     "box_xyxy_px": [
+      130.0,
+      198.0,
+      356.0,
+      426.0
+     ],
+     "crop_xyxy_px": [
+      89,
+      158,
+      397,
+      466
+     ]
+    },
+    {
+     "view": "f+1",
+     "stem": "train_000482",
+     "image": "<workspace>/yolo_head_v1/images/train/train_000482.png",
+     "image_sha256": "faf047ba573447e8e52a7ed4b4bc0dfdb498a8bae0f049aa5709afddfcb1d0c8",
+     "label_file": "<workspace>/yolo_head_v1/labels/train/train_000482.txt",
+     "label_sha256": "3acfbf2548691144a4f08d5327f991362abe572b114eafccd1a99325b9c8a7a6",
+     "box_index_in_label_file": 1,
+     "released_label_line": "2 0.232031250 0.337500000 0.173437500 0.319444444",
+     "class_id": 2,
+     "class_name": "water",
+     "box_yolo_normalised": [
+      0.23203125,
+      0.3375,
+      0.1734375,
+      0.319444444
+     ],
+     "box_xyxy_px": [
+      186.0,
+      128.0,
+      408.0,
+      358.0
+     ],
+     "crop_xyxy_px": [
+      142,
+      88,
+      452,
+      398
+     ]
+    }
+   ],
+   "chosen_candidate_index": 3,
+   "override_reason": "whole glass visible and uncluttered in both views; ranked #0 (s35 f6-7) has the released box of view f stopping short of the mug body and a cluttered crop"
+  },
+  "beer/water": {
+   "pair": "water/beer",
+   "scene": "002",
+   "frames": [
+    18,
+    19
+   ],
+   "iou_after_registration": 0.8767,
+   "views": [
+    {
+     "view": "f",
+     "stem": "train_000043",
+     "image": "<workspace>/yolo_head_v1/images/train/train_000043.png",
+     "image_sha256": "df7f3d74086c226b5d0be6962200802aab3fdab32c32b50dd813115637529d21",
+     "label_file": "<workspace>/yolo_head_v1/labels/train/train_000043.txt",
+     "label_sha256": "c63e6fdb89f4244f4576cc3037c3dfb307df71270f033da9469e8059a5f708b2",
+     "box_index_in_label_file": 1,
+     "released_label_line": "2 0.142968750 0.373611111 0.235937500 0.336111111",
+     "class_id": 2,
+     "class_name": "water",
+     "box_yolo_normalised": [
+      0.14296875,
+      0.373611111,
+      0.2359375,
+      0.336111111
+     ],
+     "box_xyxy_px": [
+      32.0,
+      148.0,
+      334.0,
+      390.0
+     ],
+     "crop_xyxy_px": [
+      0,
+      65,
+      408,
+      473
+     ]
+    },
+    {
+     "view": "f+1",
+     "stem": "train_000044",
+     "image": "<workspace>/yolo_head_v1/images/train/train_000044.png",
+     "image_sha256": "9909174f53990765156c127b8d37ea144442d225f30dd29dceba8f13d32d9725",
+     "label_file": "<workspace>/yolo_head_v1/labels/train/train_000044.txt",
+     "label_sha256": "5b680b85a6c1567b6116b2907c782b39261ecb5f7cd9ae6333ec76b97c0a49cf",
+     "box_index_in_label_file": 1,
+     "released_label_line": "3 0.206250000 0.370833333 0.221875000 0.336111111",
+     "class_id": 3,
+     "class_name": "beer",
+     "box_yolo_normalised": [
+      0.20625,
+      0.370833333,
+      0.221875,
+      0.336111111
+     ],
+     "box_xyxy_px": [
+      122.0,
+      146.0,
+      406.0,
+      388.0
+     ],
+     "crop_xyxy_px": [
+      72,
+      75,
+      455,
+      458
+     ]
+    }
+   ],
+   "chosen_candidate_index": 2,
+   "override_reason": "whole mug including its handle inside both crops; ranked #0 (s13 f15-16) sits at the frame edge so the crop is shifted and the mug rim touches the crop border"
+  },
+  "wine/high": {
+   "pair": "wine/high",
+   "scene": "131",
+   "frames": [
+    0,
+    1
+   ],
+   "iou_after_registration": 0.9075,
+   "views": [
+    {
+     "view": "f",
+     "stem": "train_001075",
+     "image": "<workspace>/yolo_head_v1/images/train/train_001075.png",
+     "image_sha256": "96671542a6b1f63e2c5eba387f8e8ffdd56f7910c7dfd7ede1f11b8800f5fa70",
+     "label_file": "<workspace>/yolo_head_v1/labels/train/train_001075.txt",
+     "label_sha256": "d381aa065c5746b8f87df063daf535881767e6cefa5a8e22cac4976bf881accf",
+     "box_index_in_label_file": 0,
+     "released_label_line": "4 0.677343750 0.652777778 0.145312500 0.377777778",
+     "class_id": 4,
+     "class_name": "wine",
+     "box_yolo_normalised": [
+      0.67734375,
+      0.652777778,
+      0.1453125,
+      0.377777778
+     ],
+     "box_xyxy_px": [
+      774.0,
+      334.0,
+      960.0,
+      606.0
+     ],
+     "crop_xyxy_px": [
+      684,
+      287,
+      1051,
+      654
+     ]
+    },
+    {
+     "view": "f+1",
+     "stem": "train_001076",
+     "image": "<workspace>/yolo_head_v1/images/train/train_001076.png",
+     "image_sha256": "0f484a335e464c6df378c77b99dea5206e8efe318a5c2950c46f248ccd64d7a8",
+     "label_file": "<workspace>/yolo_head_v1/labels/train/train_001076.txt",
+     "label_sha256": "733adf74ff598be93b19db00ee69c8d91d5f461b126ffe118c22eb56be5bf30c",
+     "box_index_in_label_file": 0,
+     "released_label_line": "5 0.693750000 0.656944444 0.153125000 0.380555556",
+     "class_id": 5,
+     "class_name": "high",
+     "box_yolo_normalised": [
+      0.69375,
+      0.656944444,
+      0.153125,
+      0.380555556
+     ],
+     "box_xyxy_px": [
+      790.0,
+      336.0,
+      986.0,
+      610.0
+     ],
+     "crop_xyxy_px": [
+      703,
+      288,
+      1073,
+      658
+     ]
+    }
+   ],
+   "chosen_candidate_index": 2,
+   "override_reason": "visible viewpoint change between the two frames; ranked #0 (s15 f0-1) has identical box coordinates in both frames (IoU 1.00), which reads as a duplicate frame"
+  }
+ },
+ "manual_official_splits": {
+  "official_standard_manual": {
+   "matched_pairs": 93,
+   "flips": 0,
+   "registered_frame_pairs": 38,
+   "matrix_symmetric": [
+    [
+     8,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     16,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     22,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     19,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     17,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0,
+     11
+    ]
+   ],
+   "note": "same construction as LABEL_NOISE_DIAGNOSTIC_V1.json (COCO xywh boxes)"
+  },
+  "official_ood_manual": {
+   "matched_pairs": 316,
+   "flips": 1,
+   "registered_frame_pairs": 63,
+   "matrix_symmetric": [
+    [
+     65,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     36,
+     1,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     51,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     69,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     30,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0,
+     64
+    ]
+   ],
+   "note": "same construction as LABEL_NOISE_DIAGNOSTIC_V1.json (COCO xywh boxes)"
+  }
+ },
+ "elapsed_s": 85.7
+}

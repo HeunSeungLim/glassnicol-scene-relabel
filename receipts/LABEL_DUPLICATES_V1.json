@@ -1,0 +1,116 @@
+{
+ "schema": "apsr-label-duplicates-v1",
+ "definition": "pairs of released training boxes in ONE frame with IoU > 0.5",
+ "pairs": 53,
+ "frames": 51,
+ "frames_total": 2375,
+ "different_type": 44,
+ "manual_standard_pairs": 0,
+ "manual_ood_pairs": 0,
+ "scenes_with_any_overlap_iou03": [
+  "002",
+  "003",
+  "005",
+  "009",
+  "010",
+  "011",
+  "012",
+  "013",
+  "014",
+  "016",
+  "018",
+  "021",
+  "022",
+  "025",
+  "027",
+  "029",
+  "032",
+  "034",
+  "035",
+  "122",
+  "123",
+  "125",
+  "142",
+  "144",
+  "202",
+  "206",
+  "209",
+  "210",
+  "324",
+  "330"
+ ],
+ "examples": [
+  {
+   "scene": "002",
+   "frame": 18,
+   "iou": 0.876,
+   "types": [
+    "whisky",
+    "beer"
+   ]
+  },
+  {
+   "scene": "002",
+   "frame": 21,
+   "iou": 0.55,
+   "types": [
+    "wine",
+    "water"
+   ]
+  },
+  {
+   "scene": "002",
+   "frame": 22,
+   "iou": 0.548,
+   "types": [
+    "high",
+    "water"
+   ]
+  },
+  {
+   "scene": "003",
+   "frame": 19,
+   "iou": 1.0,
+   "types": [
+    "wine",
+    "shot"
+   ]
+  },
+  {
+   "scene": "003",
+   "frame": 20,
+   "iou": 0.984,
+   "types": [
+    "wine",
+    "shot"
+   ]
+  },
+  {
+   "scene": "003",
+   "frame": 22,
+   "iou": 0.988,
+   "types": [
+    "wine",
+    "shot"
+   ]
+  },
+  {
+   "scene": "005",
+   "frame": 6,
+   "iou": 0.59,
+   "types": [
+    "beer",
+    "wine"
+   ]
+  },
+  {
+   "scene": "005",
+   "frame": 7,
+   "iou": 0.544,
+   "types": [
+    "whisky",
+    "beer"
+   ]
+  }
+ ]
+}

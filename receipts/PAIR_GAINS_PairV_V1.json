@@ -1,0 +1,58 @@
+{
+ "standard|shot/whisky": {
+  "scene_s1337": -2.0,
+  "scene_s3407": 0.0,
+  "scene_s4567": -2.33,
+  "scene136_s1337": -8.33,
+  "scene136_s5678": 4.08
+ },
+ "standard|whisky/water": {
+  "scene_s1337": -12.96,
+  "scene_s3407": -1.89,
+  "scene_s4567": -1.92,
+  "scene136_s1337": 17.86,
+  "scene136_s5678": 8.62
+ },
+ "standard|water/beer": {
+  "scene_s1337": -10.91,
+  "scene_s3407": 12.96,
+  "scene_s4567": 0.0,
+  "scene136_s1337": 25.81,
+  "scene136_s5678": 6.67
+ },
+ "standard|wine/high": {
+  "scene_s1337": 2.63,
+  "scene_s3407": 5.13,
+  "scene_s4567": -12.2,
+  "scene136_s1337": -5.0,
+  "scene136_s5678": 14.29
+ },
+ "ood|shot/whisky": {
+  "scene_s1337": -12.73,
+  "scene_s3407": -30.91,
+  "scene_s4567": 21.95,
+  "scene136_s1337": -13.79,
+  "scene136_s5678": 23.64
+ },
+ "ood|whisky/water": {
+  "scene_s1337": -3.75,
+  "scene_s3407": 13.75,
+  "scene_s4567": 2.5,
+  "scene136_s1337": 0.0,
+  "scene136_s5678": -3.7
+ },
+ "ood|water/beer": {
+  "scene_s1337": 6.61,
+  "scene_s3407": 36.8,
+  "scene_s4567": -2.56,
+  "scene136_s1337": 24.6,
+  "scene136_s5678": 13.71
+ },
+ "ood|wine/high": {
+  "scene_s1337": -12.87,
+  "scene_s3407": 1.94,
+  "scene_s4567": 0.0,
+  "scene136_s1337": 4.55,
+  "scene136_s5678": -13.0
+ }
+}

@@ -1,0 +1,119 @@
+{
+ "hops": 3,
+ "tol": 0.4,
+ "standard": {
+  "boxes": 167,
+  "chains": 26,
+  "boxes_in_chains_ge3": 161,
+  "median_len_of_boxes": 10.0,
+  "disagreeing_boxes": 2,
+  "disagree_pct": 1.2,
+  "pairs": [
+   [
+    "wine/high",
+    2
+   ]
+  ],
+  "len_hist": [
+   [
+    1,
+    2
+   ],
+   [
+    2,
+    2
+   ],
+   [
+    3,
+    4
+   ],
+   [
+    4,
+    2
+   ],
+   [
+    5,
+    3
+   ],
+   [
+    6,
+    2
+   ],
+   [
+    7,
+    3
+   ],
+   [
+    8,
+    1
+   ],
+   [
+    10,
+    1
+   ],
+   [
+    11,
+    1
+   ],
+   [
+    12,
+    2
+   ],
+   [
+    13,
+    2
+   ],
+   [
+    14,
+    1
+   ]
+  ]
+ },
+ "ood": {
+  "boxes": 351,
+  "chains": 32,
+  "boxes_in_chains_ge3": 347,
+  "median_len_of_boxes": 15.0,
+  "disagreeing_boxes": 0,
+  "disagree_pct": 0.0,
+  "pairs": [],
+  "len_hist": [
+   [
+    2,
+    2
+   ],
+   [
+    3,
+    6
+   ],
+   [
+    6,
+    5
+   ],
+   [
+    7,
+    1
+   ],
+   [
+    10,
+    4
+   ],
+   [
+    15,
+    6
+   ],
+   [
+    17,
+    1
+   ],
+   [
+    19,
+    3
+   ],
+   [
+    22,
+    4
+   ]
+  ]
+ }
+}

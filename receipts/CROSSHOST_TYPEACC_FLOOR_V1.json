@@ -1,0 +1,16 @@
+{
+  "schema": "apsr-crosshost-typeacc-floor-v1",
+  "contrast": "relabel minus raw, box-level type accuracy, seed 1337",
+  "cells": {
+    "standard": {
+      "H200": -4.2,
+      "RTX": 6.67,
+      "swing": 10.86
+    },
+    "ood": {
+      "H200": -4.33,
+      "RTX": 9.93,
+      "swing": 14.26
+    }
+  }
+}

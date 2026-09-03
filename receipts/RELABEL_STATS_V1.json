@@ -1,0 +1,104 @@
+{
+  "schema": "apsr-multiview-relabel-v1",
+  "iou_link": 0.5,
+  "splits": {
+    "train": {
+      "frame_pairs_registered": 1748,
+      "boxes": 4336,
+      "tracks": 1561,
+      "track_length": {
+        "median": 1,
+        "mean": 2.78,
+        "max": 14,
+        "singletons": 878
+      },
+      "boxes_in_tracks_ge3": 3084,
+      "relabelled": 364,
+      "relabelled_pct": 8.39,
+      "ambiguous_left_as_is": 190,
+      "top_relabel_directions": [
+        [
+          "shot->whisky",
+          61
+        ],
+        [
+          "whisky->water",
+          49
+        ],
+        [
+          "water->beer",
+          36
+        ],
+        [
+          "whisky->shot",
+          30
+        ],
+        [
+          "water->whisky",
+          30
+        ],
+        [
+          "beer->wine",
+          25
+        ],
+        [
+          "beer->water",
+          24
+        ],
+        [
+          "wine->high",
+          23
+        ]
+      ]
+    },
+    "val": {
+      "frame_pairs_registered": 80,
+      "boxes": 263,
+      "tracks": 109,
+      "track_length": {
+        "median": 1,
+        "mean": 2.41,
+        "max": 11,
+        "singletons": 69
+      },
+      "boxes_in_tracks_ge3": 170,
+      "relabelled": 25,
+      "relabelled_pct": 9.51,
+      "ambiguous_left_as_is": 7,
+      "top_relabel_directions": [
+        [
+          "wine->high",
+          6
+        ],
+        [
+          "water->beer",
+          3
+        ],
+        [
+          "whisky->water",
+          2
+        ],
+        [
+          "whisky->wine",
+          2
+        ],
+        [
+          "water->whisky",
+          2
+        ],
+        [
+          "shot->whisky",
+          2
+        ],
+        [
+          "whisky->beer",
+          2
+        ],
+        [
+          "beer->wine",
+          2
+        ]
+      ]
+    }
+  }
+}

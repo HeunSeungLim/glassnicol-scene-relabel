@@ -1,0 +1,243 @@
+{
+  "schema": "apsr-scene-relabel-v1",
+  "hops": 1,
+  "tol_of_width": 0.5,
+  "cue": "base",
+  "splits": {
+    "train": {
+      "boxes": 4336,
+      "chains": 893,
+      "chain_length_hist": [
+        [
+          1,
+          296
+        ],
+        [
+          2,
+          109
+        ],
+        [
+          3,
+          70
+        ],
+        [
+          4,
+          52
+        ],
+        [
+          5,
+          38
+        ],
+        [
+          6,
+          36
+        ],
+        [
+          7,
+          37
+        ],
+        [
+          8,
+          41
+        ],
+        [
+          9,
+          45
+        ],
+        [
+          10,
+          38
+        ],
+        [
+          11,
+          43
+        ],
+        [
+          12,
+          27
+        ],
+        [
+          13,
+          32
+        ],
+        [
+          14,
+          23
+        ],
+        [
+          15,
+          5
+        ],
+        [
+          16,
+          1
+        ]
+      ],
+      "median_chain_len_of_boxes": 9.0,
+      "boxes_in_chains_ge3": 3822,
+      "frame_pairs_tried": 2280,
+      "frame_pairs_registered": 2194,
+      "links": 3443,
+      "links_refused_same_frame": 0,
+      "changed_boxes": 472,
+      "changed_pct": 10.89,
+      "tied_boxes": 197,
+      "top_directions": [
+        [
+          "shot->whisky",
+          81
+        ],
+        [
+          "whisky->water",
+          60
+        ],
+        [
+          "water->beer",
+          46
+        ],
+        [
+          "water->whisky",
+          44
+        ],
+        [
+          "whisky->shot",
+          36
+        ],
+        [
+          "wine->high",
+          33
+        ],
+        [
+          "beer->wine",
+          29
+        ],
+        [
+          "beer->water",
+          28
+        ],
+        [
+          "water->wine",
+          17
+        ],
+        [
+          "shot->water",
+          16
+        ]
+      ]
+    },
+    "val": {
+      "boxes": 263,
+      "chains": 52,
+      "chain_length_hist": [
+        [
+          1,
+          18
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          7,
+          4
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          9,
+          2
+        ],
+        [
+          10,
+          2
+        ],
+        [
+          11,
+          2
+        ],
+        [
+          13,
+          2
+        ],
+        [
+          14,
+          2
+        ],
+        [
+          15,
+          1
+        ]
+      ],
+      "median_chain_len_of_boxes": 8,
+      "boxes_in_chains_ge3": 241,
+      "frame_pairs_tried": 120,
+      "frame_pairs_registered": 118,
+      "links": 211,
+      "links_refused_same_frame": 0,
+      "changed_boxes": 29,
+      "changed_pct": 11.03,
+      "tied_boxes": 29,
+      "top_directions": [
+        [
+          "wine->high",
+          7
+        ],
+        [
+          "whisky->water",
+          3
+        ],
+        [
+          "beer->high",
+          3
+        ],
+        [
+          "shot->whisky",
+          3
+        ],
+        [
+          "water->beer",
+          3
+        ],
+        [
+          "whisky->wine",
+          2
+        ],
+        [
+          "water->whisky",
+          2
+        ],
+        [
+          "whisky->beer",
+          2
+        ],
+        [
+          "beer->wine",
+          2
+        ],
+        [
+          "water->wine",
+          1
+        ]
+      ]
+    }
+  },
+  "elapsed_s": 47.6
+}

@@ -1,0 +1,128 @@
+{
+  "official_standard_MANUAL": {
+    "adjacent_pairs_matched": 93,
+    "registered_frame_pairs": 38,
+    "type_flips": 0,
+    "flip_rate_pct": 0.0,
+    "top_pairs": []
+  },
+  "official_ood_MANUAL": {
+    "adjacent_pairs_matched": 316,
+    "registered_frame_pairs": 63,
+    "type_flips": 1,
+    "flip_rate_pct": 0.3,
+    "top_pairs": [
+      [
+        [
+          "water",
+          "whisky"
+        ],
+        1
+      ]
+    ]
+  },
+  "training_AUTO": {
+    "unregistered_iou_matching": {
+      "matched": 902,
+      "flips": 183,
+      "flip_rate_pct": 20.3,
+      "note": "first inline check; quoted in PREREGISTRATION_RELABEL_V1.md"
+    },
+    "registered_matching": {
+      "matched": 2775,
+      "flips": 502,
+      "flip_rate_pct": 18.1,
+      "note": "the method's own matching (background ORB+RANSAC affine, IoU>0.5); consistent with RELABEL_STATS_V1: 4336 boxes - 1561 chains = 2775 links",
+      "top_pairs": {
+        "shot/whisky": 137,
+        "whisky/water": 117,
+        "water/beer": 89,
+        "beer/wine": 51,
+        "wine/high": 42,
+        "whisky/beer": 22,
+        "water/wine": 16,
+        "shot/water": 11
+      }
+    },
+    "paper_uses": "registered figure 18.1% / 502 / 2775; the preregistration's 20.3% is acknowledged as the unregistered count"
+  },
+  "heldout_rescore": {
+    "type_ids_changed_pct": 10.0,
+    "typeacc_delta_same_preds": {
+      "transparent": [
+        1.1,
+        1.0,
+        2.0
+      ],
+      "coated": [
+        0.9,
+        -0.3,
+        2.2
+      ]
+    },
+    "note": "same predictions scored against raw vs relabelled held-out labels; 5/6 agree more with relabelled"
+  },
+  "class_prior_bias": {
+    "class_share_pct": {
+      "raw_train": {
+        "shot": 15.0,
+        "whisky": 25.9,
+        "water": 17.0,
+        "beer": 14.6,
+        "wine": 16.7,
+        "high": 10.8
+      },
+      "relabel_train": {
+        "shot": 14.1,
+        "whisky": 25.9,
+        "water": 17.3,
+        "beer": 14.6,
+        "wine": 17.0,
+        "high": 11.1
+      },
+      "manual_test": {
+        "shot": 18.9,
+        "whisky": 13.5,
+        "water": 17.8,
+        "beer": 21.6,
+        "wine": 11.8,
+        "high": 16.4
+      }
+    },
+    "shot_to_whisky_ratio": {
+      "raw_train": 0.58,
+      "relabel_train": 0.54,
+      "manual_test": 1.4
+    },
+    "reading": "The auto-labeller systematically prefers whisky over shot (and under-counts beer/high). Majority voting over views removes per-view random flips but inherits any consistent lean, so it cannot repair this pair; the 136 seed-1337 cell shows exactly that split: water/beer +25.8/+24.6 pp, whisky/water +17.9/0.0, shot/whisky -8.3/-13.8."
+  },
+  "host136_seed1337_relabel_cell": {
+    "status": "REGENERATED from final checkpoint",
+    "type_accuracy_pp": {
+      "standard": {
+        "raw": 76.0,
+        "relabel": 82.7
+      },
+      "ood": {
+        "raw": 71.3,
+        "relabel": 81.2
+      }
+    },
+    "ci95_pp": {
+      "standard": [
+        -0.67,
+        14.0
+      ],
+      "ood": [
+        4.78,
+        15.07
+      ]
+    },
+    "note": "earlier entry (76.0->82.7 / 71.3->81.2) came from a mid-training checkpoint and is superseded"
+  },
+  "manual_labels_registered": {
+    "standard": "0/93",
+    "ood": "1/316 (0.3%)",
+    "note": "measured with the same registered procedure"
+  }
+}
