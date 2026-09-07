@@ -1,0 +1,82 @@
+{
+ "code_known_heights": [
+  5.0,
+  9.0,
+  11.0,
+  13.0,
+  17.5,
+  22.0
+ ],
+ "code_tolerance_cm": 3,
+ "code_files": [
+  "process.py",
+  "utils/thresholding.py"
+ ],
+ "paper_cm_mentions": [
+  "35 cm",
+  "55 cm"
+ ],
+ "paper_states_heights": false,
+ "paper_provides_base_points": true,
+ "no_base_points": {
+  "file": "coco_train_head_no_base_points.json",
+  "images": 2375,
+  "key_point": 0,
+  "glass_boxes": 4336,
+  "per_class": {
+   "beer_glass": 633,
+   "high_glass": 470,
+   "shot_glass": 649,
+   "water_glass": 738,
+   "whisky_glass": 1122,
+   "wine_glass": 724
+  }
+ },
+ "with_base_points": {
+  "file": "coco_train_head_with_base_points.json",
+  "images": 2375,
+  "key_point": 4318,
+  "glass_boxes": 4318,
+  "per_class": {
+   "beer_glass": 634,
+   "high_glass": 468,
+   "key_point": 4318,
+   "shot_glass": 638,
+   "water_glass": 736,
+   "whisky_glass": 1122,
+   "wine_glass": 720
+  }
+ },
+ "variant_box_difference": 18,
+ "preregistered_grid": {
+  "hops": [
+   "2",
+   "3",
+   "4"
+  ],
+  "tolerances": [
+   "0.25",
+   "0.3",
+   "0.4",
+   "0.5"
+  ]
+ },
+ "grid_logs": {
+  "count": 13,
+  "files": [
+   "SCENE_ASSOC_MANUAL_CHECK_V1_h1_t0.5.json",
+   "SCENE_ASSOC_MANUAL_CHECK_V1_h2_t0.25.json",
+   "SCENE_ASSOC_MANUAL_CHECK_V1_h2_t0.3.json",
+   "SCENE_ASSOC_MANUAL_CHECK_V1_h2_t0.4.json",
+   "SCENE_ASSOC_MANUAL_CHECK_V1_h2_t0.5.json",
+   "SCENE_ASSOC_MANUAL_CHECK_V1_h3_t0.25.json",
+   "SCENE_ASSOC_MANUAL_CHECK_V1_h3_t0.3.json",
+   "SCENE_ASSOC_MANUAL_CHECK_V1_h3_t0.4.json",
+   "SCENE_ASSOC_MANUAL_CHECK_V1_h3_t0.5.json",
+   "SCENE_ASSOC_MANUAL_CHECK_V1_h4_t0.25.json",
+   "SCENE_ASSOC_MANUAL_CHECK_V1_h4_t0.3.json",
+   "SCENE_ASSOC_MANUAL_CHECK_V1_h4_t0.4.json",
+   "SCENE_ASSOC_MANUAL_CHECK_V1_h4_t0.5.json"
+  ]
+ }
+}

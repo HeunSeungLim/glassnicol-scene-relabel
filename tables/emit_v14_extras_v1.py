@@ -6,7 +6,7 @@ from pathlib import Path
 from scipy import stats
 HERE = Path(__file__).resolve().parent; PAPER = HERE.parent
 sg = lambda v: ("$-$" + f"{abs(v):.1f}") if v < 0 else f"+{v:.1f}"
-HOST = {"scene": "H200", "scene136": "RTX"}
+HOST = {"scene": "A", "scene136": "B"}   # the paper names accelerators A and B; the machines are named in Section 3.1
 m = {}
 # (1) cells with intervals
 bt = json.load(open(HERE / "BOOT_TYPEACC_FRAMES_transparent_scenevote.json"))["cells"]
@@ -26,6 +26,15 @@ for gi, (host, rs) in enumerate(groups.items()):
     if gi: out.append("\\midrule")
     for k, r in enumerate(rs): out.append((f"\\multirow{{{len(rs)}}}{{*}}{{{HOST[host]}}} & " if k == 0 else "& ") + r)
 (PAPER / "cells_v14_rows.tex").write_text("\n".join(out) + "\n")
+# the printed table (cells_v14b) keeps point estimate and interval per split, dropping the vs-tracklet columns
+_b = []
+for _l in out:
+    if "&" not in _l: _b.append(_l); continue
+    _lead = "" if _l.lstrip().startswith("&") else None
+    _c = [c.strip() for c in _l.rstrip().rstrip("\\\\").split("&")]
+    if _lead == "": _c = [""] + _c[1:]
+    _b.append(" & ".join(_c[:4] + _c[5:7]).rstrip() + " \\\\")
+(PAPER / "cells_v14b_rows.tex").write_text("\n".join(_b) + "\n")
 excl_pos = sum(1 for k, c in bt.items() if c["ci95_frame"][0] > 0); excl_neg = sum(1 for k, c in bt.items() if c["ci95_frame"][1] < 0)
 m["SvExclPos"] = str(excl_pos); m["SvExclNeg"] = str(excl_neg); m["SvExclCases"] = str(len(bt))
 ood = {k: c for k, c in bt.items() if k.endswith("_ood")}
@@ -35,7 +44,12 @@ m["SvStdAbove"] = str(sum(1 for c in std.values() if c["ci95_frame"][0] > 0)); m
 from collections import Counter as _C
 cs = _C(int(l.split()[0]) for f in (HERE / "labels_scene/train").glob("*.txt") for l in f.read_text().splitlines() if l.strip())
 m["RatioSceneTrain"] = f"{cs[0]/cs[1]:.2f}"; m["WhiskyShareScene"] = f"{100*cs[1]/sum(cs.values()):.1f}"
-m["FlipNeighbourPct"] = f"{100*json.load(open(HERE / '../figures/labelnoise_v1/source_data.json')).get('neighbour_flip_share', 0):.0f}" if False else "87"
+_ln = json.load(open(HERE / "../figures/labelnoise_v1/source_data.json"))["train_registered"]
+_ix = {n: i for i, n in enumerate(_ln["class_names_in_order"])}
+_fp = _ln["flip_pairs_unordered"]; _tot = sum(_fp.values())
+_nb = sum(v for k, v in _fp.items() if abs(_ix[k.split(" / ")[0]] - _ix[k.split(" / ")[1]]) == 1)
+assert _tot == _ln["flips"], (_tot, _ln["flips"])
+m["FlipNeighbourPct"] = f"{100 * _nb / _tot:.0f}"
 # (2) across-cell t-intervals
 v = json.load(open(HERE / "SCENEVOTE_VERDICT_V1.json"))["contrasts"]
 def tci(x):

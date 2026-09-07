@@ -1,0 +1,199 @@
+\documentclass{article}
+\usepackage{spconf,amsmath,graphicx,booktabs,multirow,microtype,url,balance}
+\input{numbers.tex}
+% A rows file that ends in \\ cannot be followed by \bottomrule when read with \input
+% (the row's look-ahead crosses the file boundary); the primitive reader has no such problem.
+\makeatletter\newcommand{\inputrows}[1]{\@@input #1 }\makeatother
+
+% Float placement: full-width floats otherwise drift past the technical pages.
+\setcounter{topnumber}{3}\setcounter{bottomnumber}{2}\setcounter{totalnumber}{4}
+\setcounter{dbltopnumber}{3}
+\setlength{\floatsep}{9pt plus 2pt minus 2pt}\setlength{\textfloatsep}{10pt plus 2pt minus 3pt}\setlength{\dblfloatsep}{9pt plus 2pt minus 2pt}\setlength{\dbltextfloatsep}{10pt plus 2pt minus 3pt}
+\renewcommand{\topfraction}{0.92}\renewcommand{\bottomfraction}{0.7}
+\renewcommand{\textfraction}{0.06}\renewcommand{\floatpagefraction}{0.72}
+\renewcommand{\dbltopfraction}{0.92}\renewcommand{\dblfloatpagefraction}{0.72}
+
+\title{SCENE-LEVEL TYPE-CONSISTENT RELABELLING FOR TRANSPARENT GLASS DETECTION}
+\name{Heunseung Lim$^{*}$, Jinhoi Kim, Youngmin Son, Jihyeon Ryu, Seongwoong Kim, and Gichul Yoo$^{*}$%
+\thanks{$^{*}$Corresponding authors: Heunseung Lim and Gichul Yoo.}}
+\address{SK intellix}
+
+\begin{document}
+\ninept
+\maketitle
+
+\begin{abstract}
+GlassNICOL, a transparent-glass detection dataset, types each glass automatically from a depth-derived height in every view. Type is constant, so adjacent views should agree; the released training labels often disagree, while the hand-labelled test splits do not. We repair the labels with the structure that produced them. The scenes are static and only the camera moves, so every view of a glass is a view of one point on the table: we register views through the table plane, carry each box by its base point, chain the views of each glass, and give every box in a chain the chain's most frequent type. Detectors trained on the relabelled set, five (accelerator, seed) cells under a sealed protocol, gain out of distribution in type accuracy and six-class average precision over raw labels and over an adjacent-frame vote; on the standard split they gain nothing and lose about two points of recall. Only type ids change.
+\end{abstract}
+
+\begin{keywords}
+transparent object detection, label noise, multi-view consistency, relabelling, glass detection
+\end{keywords}
+
+\section{Introduction}
+\label{sec:intro}
+Transparent objects are expensive to label. Depth sensors return little through glass and boundaries are weak, so ground truth usually comes from a proxy the sensor can see. ClearGrasp swaps each object for a spray-painted copy~\cite{sajjan2020cleargrasp}; KeyPose labels keypoints in a few views and propagates them through known camera poses, using an opaque twin only for depth~\cite{liu2020keypose}; GlassNICOL photographs each tabletop scene in 25 views, records each scene again with the glasses capped to recover depth, and assigns each box a glass type by matching its depth-derived height to the nearest known glass~\cite{gajdosech2025glassnicol}. KeyPose checks its geometry across views; nothing checks that the type assigned in one view agrees with the next.
+
+We check. After registering adjacent training views and matching boxes, \FlipRateReg\% of matched box pairs that are the same physical glass carry a different type; the hand-labelled test splits pass the same test at \ManStdFlipRate\% and \ManOODFlipRate\% (Section~\ref{sec:noise}).
+
+The structure that produced the labels can also repair them, and the scene says how. A GlassNICOL scene is static: the glasses stand on the table and only the head camera moves. Every view of a glass is therefore a view of one point of the table plane, its base, and a homography of that plane carries points of it exactly from one view to another. We register views pairwise through the table plane, carry each box by its base point, link boxes whose base points coincide, and merge the links into one chain per glass across the scene; each chain gives its most frequent type to every box in it (Fig.~\ref{fig:flow}, Section~\ref{sec:method}). Our earlier baseline linked only adjacent frames by box overlap after a partial-affine warp, and a missed frame, a failed registration, or the parallax of a tall glass breaks such a chain, so its boxes get a median of \TrkMedianVotes{} votes. Registering through the table plane and carrying base points over two hops gives a median of \SceneMedianLen{} votes, and on the manual splits the chains merge no two glasses of different type. \SceneChangedPct\% of type ids change and no box moves.
+
+Contributions: (i) a measurement of type-label inconsistency in a released benchmark against its own manual test labels; (ii) a scene-level relabelling method that uses only the dataset's own views, associates through the support plane without using camera poses or depth, and changes type ids alone; (iii) evidence over five (accelerator, seed) cells on two accelerators, under a protocol fixed before training, against both the raw labels and the tracklet vote (Section~\ref{sec:results}).
+
+% spconf.sty does not define \paragraph, so run-in headings use \noindent\textbf.
+\noindent\textbf{Relation to prior work.} Repeat-factor sampling~\cite{gupta2019lvis} and data pruning~\cite{paul2021datadiet,sorscher2022pruning} choose which images the network sees and take every label as given; relabelling changes what a label says. Label noise is usually found from model confidence~\cite{northcutt2021confident,northcutt2021errors} or the training loss~\cite{schubert2024labelerrors}, or absorbed by robust training~\cite{song2023noisysurvey}, in detectors too~\cite{liu2022nlte}; we locate it from the capture geometry, without a model. Majority voting along tubelets or tracklets smooths a detector's output at test time~\cite{kang2016tcnn,han2016seqnms,tripathi2016propagation,chen2016pseudotracklet}, and offboard auto-labelling aggregates detections over a sequence into training labels~\cite{qi2021offboard}; we vote on a dataset's released labels, not on detections. Ground-plane homographies associate people across cameras by their feet~\cite{khan2006homography}; we use the table plane the same way, across the views of one moving camera. Label Fusion reprojects one 3D label into every frame~\cite{marion2018labelfusion}; GlassNICOL types each view separately, which is where the disagreement enters. KeyPose discards scans whose keypoints disagree~\cite{liu2020keypose}; we keep the frame and correct the label.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/figure_overview.png}
+\caption{Overview. Views of a static scene are registered through the table plane by background features; each box is carried by its base point, which lies on that plane, and linked to the box it lands on; union-find merges the links into one chain per glass, whose most frequent type replaces every type id in it; the relabelled set trains a detector scored on the hand-labelled splits. Photographs: views 6, 8 and 10 of one training scene with released boxes and types; inliers of the view 6 to 8 homography as displacement vectors; base points of view 6 carried into view 8 (open) and linked to those of view 8 (filled); view 6 with one colour per chain and a dashed box where the vote replaced the type; a scene-vote detector's boxes and types on a manual OOD test frame, manual boxes dashed; frame chosen where every manual box is detected with the correct type and nothing else; the pairs the vote does not fix are in Table~\ref{tab:pairs}. Photographs and overlays are real; the stage symbols are schematic.}
+\label{fig:flow}
+\end{figure*}
+
+\section{Proposed method}
+\label{sec:method}
+\subsection{Type labels disagree on the same object}
+\label{sec:noise}
+GlassNICOL assigns type automatically (we call this step the labeller): the height of a depth cluster above the table plane, measured in the capped pass, is matched to the nearest of six known glass heights (5, 9, 11, 13, 17.5 and 22\,cm) within 3\,cm; the heights and that tolerance are constants of the released labelling code rather than of the paper~\cite{gajdosech2025glassnicol}. Height is measured per view, but type is constant for the object, so one glass should carry one type across the 25 views of its scene. We take the \AdjFramePairs{} consecutive frame pairs of the training scenes, register frame $f$ to $f{+}1$ by background features, carry each box through the registration and match it to the box it overlaps in $f{+}1$ at intersection over union (IoU) above $0.5$; pairs whose registration fails are matched unwarped. Of the \FlipPairsReg{} matched pairs, \FlipCountReg{} (\FlipRateReg\%) carry a different type (Fig.~\ref{fig:noise}), \FlipNeighbourPct\% of them between glasses of neighbouring height.
+
+The hand-labelled official splits pass the same registered test: \ManStdFlips{} flips in \ManStdPairs{} matched pairs on the standard test, at most \ManOODFlips{} in \ManOODPairs{} (\ManOODFlipRate\%) on the out-of-distribution (OOD) test. The inconsistency is the labeller's, not the scenes'. The same labeller also places two boxes on one glass (IoU above 0.5) in \DupFrames{} of 2,375 training frames (\DupDiffType{} of \DupPairs{} such pairs with different types); the manual splits contain none.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figures/figure_labelnoise.pdf}
+  \caption{Automatic type labels are not constant on one object. (a) The same glass in adjacent training views $f$ and $f{+}1$, cropped from released frames with the released box and type. (b) Released types of the \FlipPairsReg{} box pairs matched across adjacent views after background registration, each unordered pair counted once; \FlipCountReg{} (\FlipRateReg\%) disagree, \FlipNeighbourPct\% of them between neighbouring heights. Manual test labels flip \ManStdFlips/\ManStdPairs{} and \ManOODFlips/\ManOODPairs.}
+  \label{fig:noise}
+\end{figure}
+
+The misreads mostly join neighbouring heights and mostly run downward. Treating the views of one glass on an adjacent-frame chain (the tracklets of Section~\ref{sec:vote}) as repeated readings and estimating the labeller's confusion by expectation--maximisation~\cite{dawid1979em}, a water glass is read as a shorter type in \EmDownWater\% of views and as a taller one in \EmUpWater\%, a beer glass \EmDownBeer\% against \EmUpBeer\%, a wine glass \EmDownWine\% against \EmUpWine\%, a highball \EmDownHigh\%; only the shot glass, which has no shorter type, is misread upward, as whisky in \EmUpShot\% (Table~\ref{tab:conf}).
+
+\begin{table}[t]
+\centering
+\caption{The labeller's confusion, estimated from adjacent-frame view chains by expectation--maximisation: percentage of views in which a glass of the true type (column) is read as each type (row). Misreads of every type but the shortest mostly go toward shorter glasses.}
+\label{tab:conf}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.0}
+
+\begin{tabular}{lrrrrrr}
+\toprule
+Read as & shot & whisky & water & beer & wine & high \\
+\midrule
+\inputrows{conf_v11_rows.tex}\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Association through the table plane}
+\label{sec:assoc}
+Frames $f$ and $f{+}k$ of a scene, $k\le\SceneHops$, are registered by background features: up to 1,500 ORB (oriented FAST and rotated BRIEF) features~\cite{rublee2011orb} are extracted outside the label boxes, which are dilated $1.2\times$ and masked out, matched under a $0.75$ ratio test, and a homography is fitted by RANSAC (random sample consensus)~\cite{fischler1981ransac} at a 3-pixel threshold and kept when at least 30 matches and half of them are inliers. The background is the table, so the homography is that plane's and carries points lying on it exactly. We take a glass's base point to be the bottom-centre of its box, an approximation the tolerance below absorbs; the rest of the box moves with parallax. The release annotates a base point per glass for the training split only, not for the hand-labelled splits where we check the association, so we read it off the box. Each box of $f$ is carried into $f{+}k$ by its base point and linked, one-to-one in order of distance, to the box whose base point lies within \SceneTol{} of the mean box width. Union-find merges links across the scene into chains, one glass seen in several views, under one constraint: a chain holds at most one box per frame, and a link that would violate it is refused (\SceneRefused{} of the links proposed by the \SceneRegPairs{} registered pairs).
+
+
+\begin{table}[t]
+\centering
+\caption{Association ablation on the training split: the first row is the earlier partial-affine, adjacent-frame baseline; the other rows use the homography registration and vary the linking cue (warped-box overlap or base point) and the hop count. Chains; median votes per box; boxes with three or more votes (\%); type ids changed (\%); manual-split checks on the standard (Std.) and OOD splits (first row: flips among matched adjacent-view pairs, Section~\ref{sec:noise}; other rows: disagreeing boxes).}
+\label{tab:assoc}
+\setlength{\tabcolsep}{2.5pt}
+\renewcommand{\arraystretch}{1.0}
+
+\begin{tabular}{lrrrrrr}
+\toprule
+Association & Chains & Votes & $\geq$3 & Chg. & Std. & OOD \\
+\midrule
+\inputrows{assoc_v14_rows.tex}\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Vote, coverage and validity}
+\label{sec:vote}
+Each chain takes its most frequent type (a plurality); ties are left unchanged. Only the type id changes: no box moves, no image is added or removed, and roster and hyperparameters are identical to the raw-label arm of Section~\ref{sec:results}. The association runs on all 95 training scenes (the detector roster below uses 70 of them, on which 11.7\% of type ids change; the other 25 stay out of training): \SceneRegPairs{} of \SceneTriedPairs{} frame pairs register; \ChainBoxes{} boxes fall into \SceneChains{} chains with a median of \SceneMedianLen{} views per box, \SceneBoxesGeThree{} boxes (\SceneBoxesGeThreePct\%) are voted on by three views or more, \SceneChanged{} boxes (\SceneChangedPct\%) change type and \SceneTied{} in tied chains keep their label. Table~\ref{tab:assoc} separates the ingredients: the adjacent-frame overlap vote of our earlier baseline, which registered \ChainFramePairsReg{} of \AdjFramePairs{} pairs by a partial-affine warp, gives \TrkChains{} chains, \TrkSingletons{} of them a single box, a median of \TrkMedianVotes{} votes per box, and changes \TrkChanged{} boxes (\TrkChangedPct\%). Under the homography registration, overlap linking over one hop already lengthens the chains; the base point and the second hop each add votes, and only their combination gives the most votes with no merged glasses of different type on either manual split. That baseline is the tracklet arm of Section~\ref{sec:results}. The validation split is left as released: checkpoint selection uses generic average precision (AP), so type ids never enter it.
+
+\noindent\textbf{Validity.} Manual types are constant per object, so on the hand-labelled splits every within-chain type disagreement is a merged pair of glasses. The association above produces \ManualChainStd{} disagreeing boxes on the standard split and \ManualChainOOD{} on the OOD split, with median chain lengths of \ManualMedianStd{} and \ManualMedianOOD{} (\ManualGeThreeStd{} and \ManualGeThreeOOD{} boxes in chains of three or more). The hop count and tolerance were chosen by this check on a grid of two to four hops and four tolerances before any scene-vote detector was trained, taking the loosest setting that disagrees nowhere on either split, so the zero above is an in-sample value: at the chosen tolerance, three and four hops leave four disagreements on the standard split and two hops none; a one-hop run made afterwards leaves two on the OOD split. The manual splits never enter training.
+
+\noindent\textbf{Scope.} A vote over views removes disagreement that varies by view and inherits whatever is constant across views, such as the class-share difference of Section~\ref{sec:limits}; Section~\ref{sec:pairs} scores each pair.
+
+\section{Experimental results}
+\label{sec:results}
+\subsection{Setup}
+\label{sec:setup}
+\noindent\textbf{Data.} The official GlassNICOL head-camera split~\cite{gajdosech2025glassnicol}: 2,375 training images from 95 scenes, 125 validation images, and hand-labelled standard and OOD tests (66 and 75 images, 3 scenes each). The training roster, fixed before this experiment, uses \ScenesTrain{} of the 95 scenes (\ImagesTrainScene{} images).
+
+\noindent\textbf{Detector and regime.} YOLO11n~\cite{jocher2024yolo11} (2.59M parameters~\cite{sapkota2025yolo}), $640\!\times\!640$ inputs, batch 64, AdamW~\cite{loshchilov2019adamw} at $\mathrm{lr}_0=10^{-3}$, cosine decay over \SceneEpochs{} epochs. All arms train under the same repeated-exposure regime: the \SceneRepeatSlots{} training images whose transparent and chalk-coated captures register by the same background matching appear twice, \SceneSlots{} slots and \SceneUpdates{} optimiser updates, and the arms differ only in training type ids: raw, tracklet vote, scene vote. Seeds 1337, 3407 and 4567 run on accelerator A (an H200 GPU) and seeds 1337 and 5678 on accelerator B (an RTX PRO 6000 GPU); a cell is one (accelerator, seed) set of the three arms, an arm being one label variant on the shared roster. On A the raw and scene-vote runs of a cell share a GPU and the tracklet run used another; on B all share one.
+
+\noindent\textbf{Scoring.} The checkpoint with the best validation generic AP is scored at confidence floor $0.001$ with non-maximum suppression (NMS) at IoU $0.7$: COCO (Common Objects in Context) box AP over IoU $0.50$--$0.95$~\cite{lin2014coco}; generic AP collapses the six types to one. Type accuracy is the fraction of ground-truth boxes localised by the compared arms (IoU $\geq0.5$, confidence $\geq0.25$) with the correct type; recall is the localised fraction per arm.
+
+\noindent\textbf{Protocol.} The comparison was preregistered before any scene-vote detector was trained: the three arms, the five cells, the checkpoint rule, the four metrics above, and four predictions, a positive mean type-accuracy gain over the raw labels on both splits (P1), an OOD gain exceeding the tracklet vote's (P2), recall and generic AP within two points (P3), and a positive OOD gain in at least \SvTypeOODVsRawPos{} of \SvCells{} cells (P4). The sealed protocol, every evaluation receipt and the code are at \url{https://github.com/HeunSeungLim/glassnicol-scene-relabel}. Every contrast is read as a mean over cells with the count of positive cells beside it~\cite{bouthillier2021variance}.
+
+\begin{table*}[t]
+\centering
+\caption{Raw, tracklet-vote and scene-vote training labels on the official test splits (manual labels), mean $\pm$ standard deviation over seeds per accelerator A or B (number of seeds in parentheses; with two seeds the deviation has one degree of freedom). Six: six-class AP; Gen: generic AP; Rec: localisation recall; Type: type accuracy on boxes localised by all three arms, a different box set from the pairwise contrasts of Table~\ref{tab:cells}; all in percent.}
+\label{tab:arms}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.0}
+
+\begin{tabular}{llrrrrrrrr}
+\toprule
+& & \multicolumn{4}{c}{Standard} & \multicolumn{4}{c}{OOD} \\
+\cmidrule(lr){3-6}\cmidrule(lr){7-10}
+Accel. (seeds) & Labels & Six & Gen & Rec & Type & Six & Gen & Rec & Type \\
+\midrule
+\input{arms_v13_rows.tex}
+\end{tabular}
+\end{table*}
+
+\begin{table}[t]
+\centering
+\caption{Type-accuracy gain of the scene vote in every (accelerator, seed) cell, in points on the manual boxes both compared arms localise: over the raw labels; 95\% paired frame-bootstrap interval (2,000 draws).}
+\label{tab:cells}
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.0}
+
+\begin{tabular}{llrlrl}
+\toprule
+& & \multicolumn{2}{c}{Standard} & \multicolumn{2}{c}{OOD} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}
+Accel. & Seed & Gain & 95\% interval & Gain & 95\% interval \\
+\midrule
+\inputrows{cells_v14b_rows.tex}\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Type-accuracy change of the scene vote over the raw labels on the manual test boxes of each confusable pair (localised by both arms): mean over the \SvCells{} cells and the number of positive cells.}
+\label{tab:pairs}
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.0}
+
+\begin{tabular}{lrrrr}
+\toprule
+& \multicolumn{2}{c}{Standard} & \multicolumn{2}{c}{OOD} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+Pair & Mean & Positive & Mean & Positive \\
+\midrule
+\inputrows{pairs_v13_rows.tex}\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{What the labels change}
+Table~\ref{tab:arms} pools the seeds per accelerator and Table~\ref{tab:cells} lists every cell. Two contrasts hold across cells. Out of distribution, six-class AP rises by \SvSixOODVsRawGain{} points over the raw labels in \SvSixOODVsRawPos{} of \SvCells{} cells (across-cell 95\% $t$-interval \SvSixOODVsRawCI) and by \SvSixOODVsTrkGain{} over the tracklet vote (\SvSixOODVsTrkCI), which the tracklet vote itself did not move (\SvSixOODTrkVsRawGain). On the standard split localisation recall falls in every cell, by 2.0 points on average (\SvRecStdVsRawCI). The type-accuracy gains are larger but less certain: out of distribution the scene vote gains \SvTypeOODVsRawGain{} points over the raw labels, positive in \SvTypeOODVsRawPos{} of \SvCells{} cells, with per-cell intervals, resampling test images, above zero in \SvOODAbove{} cells, reaching it in \SvOODStraddle{} and below it in \SvOODBelow{} (Table~\ref{tab:cells}); resampling whole scenes instead, of which each split has \SceneBootScenes, widens them until \SceneBootZero{} of \SceneBootCells{} include zero and an across-cell interval of \SvTypeOODVsRawCI{} (cell standard deviation \SvTypeOODVsRawSD); over the tracklet vote it gains \SvTypeOODVsTrkGain{} (\SvTypeOODVsTrkPos{} of \SvCells). On the standard split type accuracy changes by \SvTypeStdVsRawGain{} over the raw labels and \SvTypeStdVsTrkGain{} over the tracklet vote, with \SvStdAbove{} cell above zero and \SvStdBelow{} below, and six-class and generic AP change by \SvSixStdVsRawGain{} and \SvGenStdVsRawGain{} (\SvSixStdVsRawPos{} and \SvGenStdVsRawPos{} of \SvCells{} cells positive). The one cell that loses on both splits is seed 4567 on A, by eight and ten points; every other gains out of distribution by six or more.
+
+\noindent\textbf{Preregistered predictions.} P1 held: the mean type-accuracy gain over the raw labels is positive on both splits, \SvTypeStdVsRawGain{} and \SvTypeOODVsRawGain. P2 held: out of distribution the scene vote's gain exceeds the tracklet vote's gain of \SvTypeOODTrkVsRawGain. P4 held: \SvTypeOODVsRawPos{} of \SvCells{} OOD cells are positive. P3 did not hold: on the standard split localisation recall falls by 2.0 points, just past the two-point bound, and generic AP by 1.7; out of distribution both stay within it. Scoring the last epoch instead (post hoc, rows released with the code) gives, over the raw labels, type accuracy \SvLTypeStdVsRawGainL{} on the standard split (\SvLTypeStdVsRawPosL{} of \SvLCells{} cells, so P1 holds only under the preregistered rule) and \SvLTypeOODVsRawGainL{} out of distribution (\SvLTypeOODVsRawPosL{} of \SvLCells), six-class AP \SvLSixStdVsRawGainL{} and \SvLSixOODVsRawGainL, recall \SvLRecStdVsRawGainL{} and \SvLRecOODVsRawGainL{} (\SvLRecStdVsRawPosL{} and \SvLRecOODVsRawPosL{} of \SvLCells{} cells positive). The OOD gain holds under both rules; the standard-split recall loss does not. Under that rule the tracklet vote also gains out of distribution, six-class AP \TrkLSixOODVsRawGainL{} in \TrkLSixOODVsRawPosL{} of \SvLCells{} cells, so the separation between the two votes belongs to the preregistered checkpoint rule.
+
+\subsection{Where the vote helps and where it cannot}
+\label{sec:pairs}
+Table~\ref{tab:pairs} scores each confusable pair against the raw labels. Out of distribution every pair gains on average: whisky/water \PairSWhiskyOODMean{} points (\PairSWhiskyOODPos{} cells), wine/high \PairSWineOODMean{} (\PairSWineOODPos), water/beer \PairSWaterOODMean{} (\PairSWaterOODPos) and shot/whisky \PairSShotOODMean{} on average (\PairSShotOODPos), a mean carried by one cell at \PairSShotOODMax{} with a median of \PairSShotOODMedian; that is the pair whose share differs most between training and test and which the tracklet vote could not move. On the standard split the two shortest pairs lose, shot/whisky \PairSShotStdMean{} and whisky/water \PairSWhiskyStdMean, while water/beer and wine/high gain \PairSWaterStdMean{} and \PairSWineStdMean.
+
+\section{Discussion and limitations}
+\label{sec:limits}
+The vote does not bring class shares closer to the tests. Whisky is \WhiskyShareRaw\% of raw training boxes, \WhiskyShareStd\% of the standard test and \WhiskyShareOOD\% of the OOD test, and the shot:whisky ratio is \RatioRawTrain{} in raw training labels, \RatioSceneTrain{} after the scene vote, against \RatioManualStd{} and \RatioManualOOD{} in the tests. Decoding the chains under the confusion of Table~\ref{tab:conf} instead of by the most frequent type moves the ratio no closer; deciding whether the difference is the labeller's or the staging's needs the per-box height the labeller measured, which is not released; we did not recompute it from the released depth, nor run a pose-based reprojection baseline.
+
+The association is only as good as the table: frames without enough background features stay unlinked, a chain cannot vote on a glass the labeller never boxed, and the \DupFrames{} frames with two boxes on one glass are voted on as two objects.
+
+The gain is out of distribution; the standard-split costs are in Section~\ref{sec:results}. One seed on A loses on both splits, and with five cells the OOD type-accuracy mean sits inside the seed spread, so the six-class AP contrast carries the claim. The official test splits have three scenes each, and the tracklet contrast re-run for seed 1337 on accelerator B moved by \XHostTypeStd{} and \XHostTypeOOD{} type-accuracy points, so single cells are read against that swing. Checkpoint selection by validation generic AP ($r^2=\SelRsq$ with test six-class AP) is the same for every arm, so the arms differ only in their labels.
+
+\section{Conclusion}
+GlassNICOL's automatic type ids disagree on the same glass in \FlipRateReg\% of adjacent-view pairs; its hand labels do not. The table plane links the views of a glass, and a vote over them gives one type per object: \SceneChangedPct\% of type ids change and no box moves. Detectors trained on the corrected labels gain out of distribution, six-class AP by \SvSixOODVsRawGain{} points over the raw labels in every cell and \SvSixOODVsTrkGain{} over an adjacent-frame vote; the type-accuracy gains are larger but straddle zero across cells. On the standard split they gain nothing and lose two points of recall.
+
+\clearpage
+\bibliographystyle{IEEEbib}
+\bibliography{references}
+\end{document}

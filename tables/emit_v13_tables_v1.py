@@ -5,7 +5,9 @@ import json, re
 from pathlib import Path
 HERE = Path(__file__).resolve().parent; PAPER = HERE.parent
 # arms: group rows by accelerator
+ACCEL = {"H200": "A", "RTX": "B"}   # the paper names the accelerators A and B (Section 3.1)
 rows = [l for l in (PAPER / "arms_v12_rows.tex").read_text().splitlines() if l.strip() and not l.startswith("\\addlinespace")]
+rows = [re.sub(r"^(H200|RTX)", lambda m: ACCEL[m.group(1)], l) for l in rows]   # print A/B, not machine names
 groups = {}
 for l in rows:
     acc, rest = l.split(" & ", 1); groups.setdefault(acc, []).append(rest)
