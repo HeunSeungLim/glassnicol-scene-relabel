@@ -10,7 +10,9 @@ as an unexplained cost.  Two questions are answerable from receipts already in t
      as shorter than they are, so a repair should move ids up the height ladder; the two arms' label sets
      are on disk and the edits can simply be counted.
 
-Writes STD_LOSS_ANALYSIS_V18.json.  No GPU, no retraining, no re-inference.
+Writes STD_LOSS_ANALYSIS_V18.json.  No GPU, no retraining, no re-inference.  Unlike the figure
+scripts this one reads the full evaluation tree and both arms' label sets, so it runs in the
+workspace, not from the released repository alone; the released JSON is its output.
 """
 from __future__ import annotations
 import collections, json, statistics as st

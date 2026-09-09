@@ -84,6 +84,15 @@ def do_arms():
     return out
 
 
+def do_master():
+    """Merged results table: mark the four metric columns of each split, not the two delta columns."""
+    rows = [split_row(l) for l in (BUILD / "master_v18c_rows.tex").read_text().splitlines() if l.strip()]
+    marked = mark(rows, [1, 3, 4, 5, 6, 8, 9, 10])
+    out = [join_row(r) for r in marked]
+    (BUILD / "master_v18c_hl_rows.tex").write_text("\n".join(out) + "\n")
+    return out
+
+
 def do_baselines():
     """Comparison table: rank the two AP columns; leave the differences alone."""
     rows = [split_row(l) for l in (BUILD / "baselines_v18_rows.tex").read_text().splitlines() if l.strip()]
@@ -94,8 +103,5 @@ def do_baselines():
 
 
 if __name__ == "__main__":
-    for l in do_arms():
-        print(l)
-    print()
-    for l in do_baselines():
+    for l in do_master():
         print(l)

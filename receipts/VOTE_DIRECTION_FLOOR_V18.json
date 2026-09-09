@@ -1,0 +1,10 @@
+{
+ "schema": "apsr-vote-direction-floor-v18",
+ "note": "the shortest type can only be edited upward and the tallest only downward; the interior rate excludes both",
+ "changed": 535,
+ "forced_up_from_shortest": 119,
+ "forced_down_from_tallest": 21,
+ "interior": 395,
+ "interior_up": 247,
+ "interior_up_pct": 62.5
+}

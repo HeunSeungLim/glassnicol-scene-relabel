@@ -61,6 +61,17 @@ def main():
     m = {"VoteUpPct": f"{d['up_pct']:.1f}", "VoteOneStepPct": f"{d['one_step_pct']:.1f}",
          "VoteChangedBoxes": f"{d['changed']:,}", "ConfidFloorPct": f"{floor:.1f}",
          "AblOvOneVotes": f"{int(abl['median_chain_len_of_boxes'])}"}
+    # per-class AP changes: six-class AP is the mean over the six, so the split's headline number is the
+    # average of these and the sentence in Section 4 must not contradict them
+    s = json.loads((HERE / "STD_LOSS_ANALYSIS_V18.json").read_text())["splits"]
+    for split, tag in (("standard", "Std"), ("ood", "OOD")):
+        for name, v in s[split]["per_class"].items():
+            g = v["gain"]
+            m[f"Cls{tag}{name.capitalize()}"] = ("+" if g >= 0 else "$-$") + f"{abs(g):.1f}"
+    # the extreme types can only be edited one way, so the raw upward share has a floor built into it
+    fl = json.loads((HERE / "VOTE_DIRECTION_FLOOR_V18.json").read_text())
+    m["VoteInnerUpPct"] = f"{fl['interior_up_pct']:.1f}"
+    m["VoteInnerEdits"] = f"{fl['interior']:,}"
     q = json.loads((HERE / "QUALITATIVE_FIGURE_V18.json").read_text())
     m["QualCommonBoxes"] = str(q["denominator"]["boxes_localised_by_all_arms"])
     (HERE / "VOTE_DIRECTION_V18.json").write_text(json.dumps(

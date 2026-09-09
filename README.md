@@ -41,8 +41,10 @@ Not included: the GlassNICOL images and released labels (from the dataset author
 8. `python baselines/make_qualitative_v18.py` redraws Fig. 3. This one also needs the GlassNICOL test
    images; point `APSR_TEST_IMAGES` at the directory holding `072_000026.png` and `091_000020.png`.
    The default arguments produce the published two-row figure.
-9. `python baselines/analyse_std_loss_v18.py` reproduces the Section 4 decomposition of the standard-split
-   loss (six-class against generic AP, per class) and counts which way the vote moves a type id.
+9. `python baselines/analyse_std_loss_v18.py` reproduces the per-class breakdown behind Section 4 and
+   counts which way the vote moves a type id. This one needs the full evaluation tree and both label
+   sets, so it runs where steps 2-5 ran, not from this repository alone; its output is
+   `receipts/STD_LOSS_ANALYSIS_V18.json` and `receipts/VOTE_DIRECTION_V18.json`.
 
 `APSR_QUAL_DATA` overrides where steps 7 and 8 look for the predictions and the OOD annotation file.
 
