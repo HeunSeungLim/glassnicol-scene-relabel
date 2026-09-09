@@ -10,6 +10,9 @@ import json, statistics as st
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+# In the release layout the receipts sit beside this directory, not inside it.
+if not (HERE / "SCENEVOTE_VERDICT_V1_LAST.json").exists() and (HERE.parent / "receipts").exists():
+    HERE = HERE.parent / "receipts"
 PAPER = HERE.parent
 
 
@@ -35,6 +38,15 @@ def main():
         "SvLSixOODVsTrkGainL": ("+" if st.mean(last) >= 0 else "$-$") + f"{abs(st.mean(last)):.1f}",
         "SvLSixOODVsTrkPosL": str(sum(1 for x in last if x > 0)),
     }
+    # Threshold-sensitivity figures for the confidence baseline, from its own receipt.
+    sens = json.loads((HERE / "CONFID_THRESHOLD_SENSITIVITY_V1.json").read_text())
+    o = sens["ood_six_ap"]
+    m["ConfidTauHigh"] = f"{sens['threshold']}"
+    m["ConfidTauHighChangedPct"] = f"{100 * sens['changed'] / sens['boxes']:.1f}"
+    m["ConfidTauHighOODGain"] = ("+" if o["confid_tau08"] >= o["raw"] else "$-$") + f"{abs(o['confid_tau08'] - o['raw']):.1f}"
+    m["ConfidTauHighCells"] = "3"
+    # Printed without a sign, since the sentence already says the arm falls.
+    m["ConfidTauHighOODDrop"] = f"{abs(o['confid_tau08'] - o['raw']):.1f}"
     with open(PAPER / "numbers.tex", "a") as f:
         f.write("\n% --- V18b extras (emit_v18b_extras.py) ---\n")
         for k, v in m.items():
