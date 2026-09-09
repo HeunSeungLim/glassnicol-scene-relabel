@@ -19,7 +19,7 @@ evaluation on the official manual test splits, and every number printed in the p
 | `receipts/` | every JSON the tables and sentences are built from: verdicts, bootstrap intervals, association statistics, ablation grid, manual-split checks, confusion matrix |
 | `preregistration/` | the sealed protocol, its SHA-256, and an errata note on two clock strings typed inside it |
 | `labels/` | `scene_vote_train.tar.gz`: the relabelled training type ids (YOLO format; boxes identical to the release) |
-| `figures/` | scripts and source data of Fig. 1 and Fig. 2 |
+| `figures/` | scripts and source data of Fig. 1 and Fig. 2; `figures/overview/composite_v5.py` redraws Fig. 1 from `skeleton.png` and the panel crops |
 | `baselines/` | the arms compared in Table 2 (label smoothing, out-of-fold detector-confidence relabelling, roster change counts) and the scripts behind Fig. 3 and the Section 4 loss analysis |
 | `paper/` | LaTeX source of the submitted manuscript (`main_v18.tex`, `numbers.tex`, table rows, references) |
 
