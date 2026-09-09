@@ -24,13 +24,24 @@ def _resolve():
     return PAPER / "scenes_v1" / "evals_official"
 
 
-EV = _resolve()
+_ROOTS = [d for d in (HERE.parent / "receipts" / "gate_ablation_cells",
+                      HERE.parent / "receipts" / "table1_cells",
+                      PAPER / "scenes_v1" / "evals_official") if d.is_dir()]
+EV = _ROOTS[0]
 CELLS = [1337, 3407, 4567]           # accelerator A
 
 
+def _cell(split, tag, seed, name):
+    """The gated cells ship in one receipt directory and the arms they are compared with in another."""
+    for root in _ROOTS:
+        q = root / f"{split}_scene_{tag}_s{seed}" / name
+        if q.is_file():
+            return q
+    raise SystemExit(f"missing {split}_scene_{tag}_s{seed}/{name}")
+
+
 def six(tag, split, seed):
-    p = EV / f"{split}_scene_{tag}_s{seed}" / "RESULT.json"
-    return 100 * json.loads(p.read_text())["six_class"]["ap50_95"]
+    return 100 * json.loads(_cell(split, tag, seed, "RESULT.json").read_text())["six_class"]["ap50_95"]
 
 
 def sign(x):
@@ -91,7 +102,7 @@ def main():
     def _type_gain(tag, split, seed, by):
         out2 = {}
         for name in (tag, "transparent"):
-            pr = json.loads((EV / f"{split}_scene_{name}_s{seed}" / "predictions_six_class.json").read_text())
+            pr = json.loads(_cell(split, name, seed, "predictions_six_class.json").read_text())
             pim = collections.defaultdict(list)
             for q in pr: pim[q["image_id"]].append(q)
             out2[name] = {i: _match(by[i], pim.get(i, [])) for i in by}
