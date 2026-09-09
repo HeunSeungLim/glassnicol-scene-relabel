@@ -157,6 +157,30 @@ def draw(ax, img, box, anns, got, is_gt):
                 bbox=dict(fc="white", ec="none", alpha=0.7, pad=0.35))
 
 
+def _trim_blank_rows(path, keep=2):
+    """Drop the all-white rows the panel grid leaves between the two scene rows.
+
+    They cost about a tenth of an inch of page for nothing.  Cropping the file rather than the layout keeps
+    every printed point size, and doing it here rather than by hand keeps the shipped figure reproducible.
+    """
+    import numpy as np
+    im = Image.open(path).convert("RGB")
+    a = np.array(im)
+    blank = (np.array(Image.fromarray(a).convert("L")) > 244).all(axis=1)
+    runs, s = [], None
+    for i, b in enumerate(blank):
+        if b and s is None:
+            s = i
+        elif not b and s is not None:
+            if i - s > keep * 3:
+                runs.append((s + keep, i - keep))
+            s = None
+    if not runs:
+        return
+    drop = {i for lo, hi in runs for i in range(lo, hi)}
+    Image.fromarray(a[[i for i in range(im.height) if i not in drop]]).save(path, optimize=True)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--neutral", type=int, default=1,
@@ -216,6 +240,7 @@ def main():
                     color="black", bbox=dict(fc="white", ec="none", alpha=0.78, pad=0.6))
     out = Path(a.out); out.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(out, dpi=620, bbox_inches="tight", pad_inches=0.004)
+    _trim_blank_rows(out)
     print("wrote", out)
     receipt = {"schema": "apsr-qualitative-v18", "cell": f"A_s{SEED}", "split": "ood",
                "match": {"iou": 0.5, "conf": 0.25},
