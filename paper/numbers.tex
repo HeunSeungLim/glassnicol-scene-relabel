@@ -15,6 +15,7 @@
 \newcommand{\BaseTrkOODPos}{2}
 \newcommand{\ChainBoxes}{4,336}
 \newcommand{\ChainFramePairsReg}{1,748}
+\newcommand{\ClsStdBeer}{+5.7}
 \newcommand{\ClsStdShot}{+12.4}
 \newcommand{\ClsStdWater}{$-$12.3}
 \newcommand{\ClsStdWhisky}{$-$14.6}
@@ -38,11 +39,15 @@
 \newcommand{\FlipNeighbourPct}{87}
 \newcommand{\FlipPairsReg}{2,775}
 \newcommand{\FlipRateReg}{18.1}
+\newcommand{\GateCells}{3}
 \newcommand{\GateChangedPct}{8.6}
 \newcommand{\GateMargin}{2}
 \newcommand{\GateMinVotes}{3}
+\newcommand{\GateOODTypeA}{+3.5}
 \newcommand{\GateOODVsRaw}{+1.1}
+\newcommand{\GateOODVsRawPos}{2}
 \newcommand{\GateStdVsRaw}{0.0}
+\newcommand{\GateStdVsRawPos}{1}
 \newcommand{\ImagesTrainScene}{1,750}
 \newcommand{\LastCfOODGain}{$-$4.2}
 \newcommand{\LastLsOODGain}{+0.7}
@@ -56,6 +61,8 @@
 \newcommand{\ManStdPairs}{93}
 \newcommand{\ManualChainOOD}{0 of 351}
 \newcommand{\ManualChainStd}{0 of 167}
+\newcommand{\ManualGeThreeOOD}{346 of 351}
+\newcommand{\ManualGeThreeStd}{163 of 167}
 \newcommand{\ManualMedianOOD}{15}
 \newcommand{\ManualMedianStd}{10}
 \newcommand{\QualCommonBoxes}{273}
@@ -97,9 +104,12 @@
 \newcommand{\SvLTypeStdVsRawGainL}{$-$0.6}
 \newcommand{\SvOODAbove}{3}
 \newcommand{\SvOODBelow}{1}
+\newcommand{\SvOODCIA}{[$-$7.8, +20.7]}
+\newcommand{\SvOODCIB}{[$-$9.8, +25.8]}
 \newcommand{\SvOODGainA}{+6.4}
 \newcommand{\SvOODGainB}{+8.0}
 \newcommand{\SvOODStraddle}{1}
+\newcommand{\SvOODTypeA}{+3.9}
 \newcommand{\SvRecStdVsRawCI}{[$-$3.7, $-$0.3]}
 \newcommand{\SvSixOODTrkVsRawGain}{+0.7}
 \newcommand{\SvSixOODVsRawCI}{[+1.8, +12.3]}
@@ -110,6 +120,7 @@
 \newcommand{\SvSixStdVsRawGain}{$-$1.9}
 \newcommand{\SvSixStdVsRawPos}{2}
 \newcommand{\SvStdCIA}{[$-$23.1, +9.1]}
+\newcommand{\SvStdCIB}{[$-$2.7, +14.3]}
 \newcommand{\SvStdGainA}{$-$7.0}
 \newcommand{\SvStdGainB}{+5.8}
 \newcommand{\SvTypeOODTrkVsRawGain}{+5.0}
@@ -219,7 +230,6 @@
 \newcommand{\ClsOODWater}{+17.6}
 \newcommand{\ClsOODWhisky}{+4.6}
 \newcommand{\ClsOODWine}{+17.2}
-\newcommand{\ClsStdBeer}{+5.7}
 \newcommand{\ClsStdHigh}{$-$3.8}
 \newcommand{\ClsStdWine}{+1.3}
 \newcommand{\CoatAllCells}{18}
@@ -278,12 +288,10 @@
 \newcommand{\FlipWhiskyWaterUnreg}{42}
 \newcommand{\FlipWineHighReg}{42}
 \newcommand{\FlipWineHighUnreg}{29}
-\newcommand{\GateCells}{3}
 \newcommand{\GateChanged}{373}
-\newcommand{\GateOODVsRawPos}{2}
+\newcommand{\GateOODTypeAPos}{2}
 \newcommand{\GateOODVsSv}{$-$5.4}
 \newcommand{\GateOODVsSvPos}{1}
-\newcommand{\GateStdVsRawPos}{1}
 \newcommand{\GateStdVsSv}{+7.0}
 \newcommand{\GateStdVsSvPos}{3}
 \newcommand{\GenSelMaxAbs}{3.27}
@@ -309,8 +317,6 @@
 \newcommand{\ImagesHeld}{625}
 \newcommand{\LastCfOODPos}{1}
 \newcommand{\LastLsOODPos}{3}
-\newcommand{\ManualGeThreeOOD}{346 of 351}
-\newcommand{\ManualGeThreeStd}{163 of 167}
 \newcommand{\MsdGenOODGain}{+1.2}
 \newcommand{\MsdGenOODRawHMean}{66.1}
 \newcommand{\MsdGenOODRawHSD}{0.88}
@@ -686,8 +692,7 @@
 \newcommand{\SvLTypeStdVsRawPosL}{2}
 \newcommand{\SvLTypeStdVsTrkGain}{+0.5}
 \newcommand{\SvLTypeStdVsTrkPos}{2}
-\newcommand{\SvOODCIA}{[$-$7.8, +20.7]}
-\newcommand{\SvOODCIB}{[$-$9.8, +25.8]}
+\newcommand{\SvOODTypeAPos}{2}
 \newcommand{\SvRecOODTrkVsRawGain}{+0.5}
 \newcommand{\SvRecOODTrkVsRawPos}{3}
 \newcommand{\SvRecOODVsRawCI}{[$-$3.7, +1.2]}
@@ -721,7 +726,6 @@
 \newcommand{\SvSixStdVsTrkSD}{3.7}
 \newcommand{\SvStdAbove}{1}
 \newcommand{\SvStdBelow}{1}
-\newcommand{\SvStdCIB}{[$-$2.7, +14.3]}
 \newcommand{\SvTypeOODTrkVsRawPos}{4}
 \newcommand{\SvTypeOODVsRawSD}{12.0}
 \newcommand{\SvTypeOODVsTrkCI}{[$-$8.8, +16.8]}
