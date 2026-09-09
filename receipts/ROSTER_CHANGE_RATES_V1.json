@@ -1,0 +1,21 @@
+{
+ "arms": {
+  "confid": {
+   "boxes": 3271,
+   "changed": 737,
+   "pct": 22.531
+  },
+  "relabel": {
+   "boxes": 3271,
+   "changed": 257,
+   "pct": 7.857
+  },
+  "scene": {
+   "boxes": 3271,
+   "changed": 382,
+   "pct": 11.678
+  }
+ },
+ "roster_scenes": 70,
+ "schema": "apsr-roster-change-rate-v1"
+}

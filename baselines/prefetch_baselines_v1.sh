@@ -11,22 +11,24 @@
 # sit in one table without a device caveat.
 set -Eeuo pipefail
 P=${WORKDIR}
-SV=$P/seed_v1; SC=$P/scenes_v1; PW=REMOTE_KEY; H=REMOTE_HOST
-R=${APSR_ROOT}/runs
-SCP="scp -q -o StrictHostKeyChecking=no -o ConnectTimeout=15"
+SV=$P/seed_v1; SC=$P/scenes_v1
+# Set REMOTE to the host that ran the accelerator-A cells, or leave it empty to score local runs only.
+REMOTE=${REMOTE:-}
+R=${REMOTE_RUNS:-/path/to/runs}
+SCP="scp -q -o ConnectTimeout=15"
 
 A_RUNS="scene_lsmooth_s1337 scene_lsmooth_s3407 scene_lsmooth_s4567 scene_confid_s1337 scene_confid_s3407 scene_confid_s4567"
 B_RUNS="scene136_lsmooth_s1337 scene136_lsmooth_s5678 scene136_confid_s1337 scene136_confid_s5678"
 
 for n in $A_RUNS; do
-  if ! ssh -o ConnectTimeout=15 -o StrictHostKeyChecking=no "$H" "test -f $R/$n/FINAL_RESULT.json" 2>/dev/null; then
+  if [ -z "$REMOTE" ] || ! ssh -o ConnectTimeout=15 "$REMOTE" "test -f $R/$n/FINAL_RESULT.json" 2>/dev/null; then
     echo "NOT READY $n"; continue
   fi
   mkdir -p "$SV/runs/$n/train/weights"
   for jf in FINAL_RESULT.json CONTRACT.json; do
-    [ -f "$SV/runs/$n/$jf" ] || $SCP "$H:$R/$n/$jf" "$SV/runs/$n/"
+    [ -f "$SV/runs/$n/$jf" ] || $SCP "$REMOTE:$R/$n/$jf" "$SV/runs/$n/"
   done
-  [ -f "$SV/runs/$n/train/weights/best.pt" ] || $SCP "$H:$R/$n/train/weights/best.pt" "$SV/runs/$n/train/weights/"
+  [ -f "$SV/runs/$n/train/weights/best.pt" ] || $SCP "$REMOTE:$R/$n/train/weights/best.pt" "$SV/runs/$n/train/weights/"
   echo "PULLED $n"
 done
 

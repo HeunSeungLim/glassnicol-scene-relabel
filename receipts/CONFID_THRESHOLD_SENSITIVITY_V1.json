@@ -1,0 +1,13 @@
+{
+ "accelerator": "A only, 3 cells",
+ "boxes": 3271,
+ "changed": 420,
+ "ood_six_ap": {
+  "confid_tau05": 37.46845107011039,
+  "confid_tau08": 42.53895339035519,
+  "raw": 53.75718308726491,
+  "scene_vote": 60.18383146217175
+ },
+ "schema": "apsr-confid-threshold-sensitivity-v1",
+ "threshold": 0.8
+}

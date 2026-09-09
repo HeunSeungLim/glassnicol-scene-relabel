@@ -7,7 +7,7 @@ Re-derives, from the released artefacts rather than from our own notes:
   (c) how many boxes each released annotation variant carries,
   (d) how large the hop/tolerance grid actually was, from the sealed preregistration and the stored logs.
 Writes AUDIT_SOURCE_CLAIMS_V1.json.  Nothing here reuses the relabelling code."""
-import json, re, subprocess
+import json, os, re, subprocess
 from collections import Counter
 from pathlib import Path
 
@@ -16,7 +16,8 @@ GLA = HERE.parents[3]                                    # .../gla
 CODE = GLA / "<workspace>"
 ANN_NO = GLA / "<workspace>"
 ANN_WITH = GLA / "work/glassnicol_detection_v1/official_test_v1/annotations/coco_train_head_with_base_points.json"
-PAPER_PDF = Path("WORKDIR")  # arXiv:2503.04308
+# The dataset paper, downloaded next to this script when the check is run (arXiv:2503.04308).
+PAPER_PDF = Path(os.environ.get("GLASSNICOL_PAPER_PDF", HERE / "glassnicol_paper.pdf"))
 out = {}
 
 # (a) constants: released code vs paper text
