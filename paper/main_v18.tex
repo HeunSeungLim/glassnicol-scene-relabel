@@ -8,15 +8,15 @@
 % Float placement: full-width floats otherwise drift past the technical pages.
 \setcounter{topnumber}{3}\setcounter{bottomnumber}{2}\setcounter{totalnumber}{4}
 \setcounter{dbltopnumber}{3}
-\setlength{\abovecaptionskip}{3pt}\setlength{\belowcaptionskip}{1pt}
-\setlength{\floatsep}{7pt plus 1pt minus 2pt}\setlength{\textfloatsep}{6pt plus 1pt minus 3pt}\setlength{\dblfloatsep}{7pt plus 1pt minus 2pt}\setlength{\dbltextfloatsep}{6pt plus 1pt minus 3pt}
+\setlength{\abovecaptionskip}{2pt}\setlength{\belowcaptionskip}{1pt}
+\setlength{\floatsep}{6pt plus 1pt minus 2pt}\setlength{\textfloatsep}{6pt plus 1pt minus 3pt}\setlength{\dblfloatsep}{6pt plus 1pt minus 2pt}\setlength{\dbltextfloatsep}{6pt plus 1pt minus 3pt}
 \renewcommand{\topfraction}{0.92}\renewcommand{\bottomfraction}{0.7}
 \renewcommand{\textfraction}{0.04}\renewcommand{\floatpagefraction}{0.72}
 \renewcommand{\dbltopfraction}{0.92}\renewcommand{\dblfloatpagefraction}{0.72}
 
 \title{SCENE-LEVEL TYPE-CONSISTENT RELABELLING FOR TRANSPARENT GLASS DETECTION}
-\name{Heunseung Lim$^{*}$, Jinhoi Kim, Youngmin Son, Jihyeon Ryu, Seongwoong Kim, and Gichul Yoo$^{*}$%
-\thanks{$^{*}$Corresponding authors: Heunseung Lim and Gichul Yoo.}}
+\name{Heunseung Lim$^{*\dagger}$, Jihyeon Ryu$^{\dagger}$, Jinhoi Kim, Youngmin Son, Seongwoong Kim, and Gichul Yoo$^{*}$%
+\thanks{$^{\dagger}$Equal contribution. $^{*}$Corresponding authors: Heunseung Lim and Gichul Yoo.}}
 \address{SK intellix}
 
 \begin{document}
@@ -47,7 +47,7 @@ Contributions: (i) a measurement of type-label inconsistency in a released bench
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\textwidth]{figures/figure_overview.png}
-\caption{Overview. Views of a static scene are registered through the table plane by background features; each box is carried by its base point, which lies on that plane, and linked to the box it lands on; union-find merges the links into one chain per glass, whose most frequent type replaces every type id in it; the relabelled set trains a detector scored on the hand-labelled splits. Photographs: views 6, 8 and 10 of one training scene with released boxes and types; inliers of the view 6 to 8 homography as displacement vectors; base points of view 6 carried into view 8 (open) and linked to those of view 8 (filled); view 6 with one colour per chain and a dashed box where the vote replaced the type; a scene-vote detector on a manual OOD test frame, manual boxes dashed, in a frame where every manual box is detected with the correct type and nothing else. Photographs and overlays are real; the stage symbols are schematic.}
+\caption{Overview. Views of a static scene are registered through the table plane by background features; each box is carried by its base point, which lies on that plane, and linked to the box it lands on; union-find merges the links into one chain per glass, whose most frequent type replaces every type id in it; the relabelled set trains a detector scored on the hand-labelled splits. Photographs: views 6, 8 and 10 of one training scene with released boxes and types; inliers of the view 6 to 8 homography as displacement vectors; base points of view 6 carried into view 8 (open) and linked to its own (filled); view 6 with one colour per chain and a dashed box where the vote replaced the type; a scene-vote detector on a manual OOD test frame, manual boxes dashed, chosen where every manual box is detected with the correct type and nothing else. Photographs and overlays are real; the stage symbols are schematic.}
 \label{fig:flow}
 \end{figure*}
 
@@ -167,18 +167,18 @@ Table~\ref{tab:arms} pools the seeds per accelerator; the per-cell table with it
 
 \subsection{Comparison with existing methods}
 \label{sec:pairs}
-Table~\ref{tab:baselines} sets the two standard answers to label noise, and our earlier vote, beside ours. Label smoothing leaves the detector where the released labels leave it, \BaseLsOODGain{} points out of distribution and positive in \BaseLsOODPos{} of \SvCells: absorbing the noise does not recover a wrong type id. Detector confidence moves the labels the most and the scores furthest the wrong way, \BaseCfOODGain{} points out of distribution in \BaseCfOODPos{} of \SvCells{} cells. It rewrites \ConfidChangedPct\% of the ids, and \ConfidVsSceneDisagreePct\% of those disagree with the type the geometry votes for: a detector trained on the released labels is not an independent witness. Under the preregistered rule the scene vote alone gains out of distribution in every cell, \BaseSvOODGain{} points in \BaseSvOODPos{} of \SvCells, against \BaseTrkOODGain{} in \BaseTrkOODPos{} for the adjacent-frame vote. At threshold \ConfidTauHigh{} (post hoc, accelerator A only) it changes \ConfidTauHighChangedPct\% of the ids, about as many as our vote, and still falls \ConfidTauHighOODDrop{} points out of distribution in all \ConfidTauHighCells{} cells while beating us on the standard split: fewer edits soften the loss without turning it into a gain. Smoothing is the better choice on the standard split, ahead of us in every cell, so the case for relabelling is the out-of-distribution one. The last epoch keeps the order: \LastLsOODGain{} for smoothing, \LastCfOODGain{} for detector confidence, \TrkLSixOODVsRawGainL{} for the tracklet vote and \LastSvOODGain{} for ours in \LastSvOODPos{} of \SvCells.
+Table~\ref{tab:baselines} sets the two standard answers to label noise, and our earlier vote, beside ours. Label smoothing leaves the detector where the released labels leave it, \BaseLsOODGain{} points out of distribution and positive in \BaseLsOODPos{} of \SvCells: absorbing the noise does not recover a wrong type id. Detector confidence moves the labels the most and the scores furthest the wrong way, \BaseCfOODGain{} points out of distribution in \BaseCfOODPos{} of \SvCells. It rewrites \ConfidChangedPct\% of the ids, and \ConfidVsSceneDisagreePct\% of those disagree with the type the geometry votes for: a detector trained on the released labels is not an independent witness. Under the preregistered rule the scene vote alone gains out of distribution in every cell, \BaseSvOODGain{} points in \BaseSvOODPos{} of \SvCells, against \BaseTrkOODGain{} in \BaseTrkOODPos{} for the adjacent-frame vote. At threshold \ConfidTauHigh{} (post hoc, accelerator A only) it changes \ConfidTauHighChangedPct\% of the ids, about as many as our vote, and still falls \ConfidTauHighOODDrop{} points out of distribution in all \ConfidTauHighCells{} cells while beating us on the standard split: fewer edits soften the loss without turning it into a gain. Smoothing is the better choice on the standard split, ahead of us in every cell, so the case for relabelling is the out-of-distribution one. The last epoch keeps the order: \LastLsOODGain{} for smoothing, \LastCfOODGain{} for detector confidence, \TrkLSixOODVsRawGainL{} for the tracklet vote and \LastSvOODGain{} for ours in \LastSvOODPos{} of \SvCells.
 
 \section{Discussion and limitations}
 \label{sec:limits}
-The vote does not bring class shares closer to the tests: the shot:whisky ratio is \RatioRawTrain{} in raw labels and \RatioSceneTrain{} after the vote, against \RatioManualStd{} and \RatioManualOOD{} in the tests. Decoding the chains under the confusion of Table~\ref{tab:conf} moves the ratio no closer; separating the labeller's contribution from the staging's needs the per-box height, which the release omits.
+The vote does not bring class shares closer to the tests: the shot:whisky ratio is \RatioRawTrain{} in raw labels and \RatioSceneTrain{} after it, against \RatioManualStd{} and \RatioManualOOD{} in the tests. Decoding the chains under the confusion of Table~\ref{tab:conf} moves the ratio no closer; separating the labeller's contribution from the staging's needs the per-box height, which the release omits.
 
-The association is only as good as the table: frames without enough background features stay unlinked, and the \DupFrames{} frames with two boxes on one glass are voted twice.
+The association is only as good as the table: frames without enough background features stay unlinked, and the \DupFrames{} frames with two boxes on one glass are counted twice.
 
 One seed on A loses on both splits and the type-accuracy mean sits inside the seed spread, so six-class AP carries the claim; the tracklet contrast rerun on B for seed 1337 moved by \XHostTypeStd/\XHostTypeOOD{} type-accuracy points, a caution for single-cell results. Checkpoint selection by validation generic AP ($r^2=\SelRsq$ with test six-class AP) is shared across arms; only labels change.
 
 \section{Conclusion}
-GlassNICOL's automatic labels disagree on the same glass in \FlipRateReg\% of adjacent-view pairs; its hand labels almost never do. Voting over a scene's views changes \SceneChangedPct\% of type ids without moving a box, and under the preregistered rule ours alone gains in every cell out of distribution, \SvSixOODVsRawGain{} six-class AP.
+A released benchmark can disagree with itself, and the disagreement is measurable without a model: GlassNICOL's automatic types differ on the same glass in \FlipRateReg\% of adjacent-view pairs, where its hand labels almost never do. The geometry that produced them also repairs them: a scene is static, so a homography of the table plane carries base points between views, union-find chains them, and a plurality settles the type. Only \SceneChangedPct\% of ids move, and no box does. The repair pays out of distribution, where ours alone gains in every cell, \SvSixOODVsRawGain{} six-class AP, while smoothing leaves the detector where it was and a detector-written rewrite costs \BaseCfOODGain. Where a pipeline leaves a redundancy unused, that redundancy is a repair.
 
 \bibliographystyle{IEEEbib}
 \bibliography{references}
