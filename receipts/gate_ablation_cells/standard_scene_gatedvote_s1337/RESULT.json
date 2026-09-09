@@ -1,0 +1,46 @@
+{
+  "checkpoint_sha256": "1bb91fc492ffd24082d3b1baccfe55158b77a0f78ea6f074019b72541271b4a1",
+  "collapsed_general": {
+    "ap50": 0.9248911331274003,
+    "ap50_95": 0.851133176814247
+  },
+  "elapsed_s": 2.105300188064575,
+  "images": 66,
+  "inference": {
+    "confidence_floor": 0.001,
+    "image_size": 640,
+    "max_detections": 300,
+    "nms_iou": 0.7,
+    "tta": false
+  },
+  "official_test_member_payload_reads": 0,
+  "predictions": 454,
+  "schema": "apsr-official-eval-scene-v1",
+  "six_class": {
+    "ap50": 0.7403195068153242,
+    "ap50_95": 0.6659325269457296,
+    "per_class": {
+      "1": {
+        "ap50_95": 0.5795836260414166
+      },
+      "2": {
+        "ap50_95": 0.7421134031146945
+      },
+      "3": {
+        "ap50_95": 0.7711531960264849
+      },
+      "4": {
+        "ap50_95": 0.7807698818434597
+      },
+      "5": {
+        "ap50_95": 0.8521837898075522
+      },
+      "6": {
+        "ap50_95": 0.2697912648407698
+      }
+    }
+  },
+  "split": "standard",
+  "tag": "scene_gatedvote_s1337",
+  "val_annotations_sha256": "72121e008a8d647500ce9b0df67eb190b75aa87f7ab31d07793a1b934fc64310"
+}

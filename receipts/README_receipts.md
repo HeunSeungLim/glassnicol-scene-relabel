@@ -22,6 +22,8 @@ the file name finds in one step; not all of them carry a `schema` field.
 | `AUDIT_QUALITATIVE_V18.json` | `baselines/audit_qualitative_v18.py` (independent recount of Fig. 3) |
 | `HIGHLIGHT_IDENTITY_V18.json` | `baselines/emit_v18_highlight_rows.py` (the table's bold/blue marks change no value) |
 | `qualitative_v18/` | the ten frozen prediction files and the OOD annotations Fig. 3 is drawn from |
+| `SCENE_RELABEL_STATS_GATED_V1.json` | `relabel/relabel_scene_gated_v1.py` (the gated vote of the Section 4 ablation) |
+| `GATE_ABLATION_V18F.json`, `gate_ablation_cells/` | `baselines/emit_v18f_gate.py` and the three cells it reads |
 | `table1_cells/` | the fifty scored cells behind Table 1: predictions and COCO results for five arms x five cells x two splits, with both annotation files |
 
 The macros the manuscript prints are emitted from these by `baselines/emit_v18*.py`; run

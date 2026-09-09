@@ -50,6 +50,11 @@ Not included: the GlassNICOL images and released labels (from the dataset author
     (five arms x five cells x two splits, predictions and COCO results) are in `receipts/table1_cells/`
     with both annotation files, so this reproduces every entry of the table from this repository alone.
 
+11. `python relabel/relabel_scene_gated_v1.py --hops 2 --tol 0.5` writes the gated label set of the
+    Section 4 ablation: the same association, but a chain votes only with three views and a plurality
+    leading by two. `python baselines/emit_v18f_gate.py` turns the three scored cells in
+    `receipts/gate_ablation_cells/` into the macros the sentence prints.
+
 `APSR_QUAL_DATA` overrides where steps 7 and 8 look for the predictions and the OOD annotation file.
 
 Seeds, budgets and the checkpoint rule are those of `preregistration/PREREGISTRATION_SCENEVOTE_V1.md`.

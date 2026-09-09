@@ -1,0 +1,259 @@
+{
+  "schema": "apsr-scene-relabel-v1",
+  "hops": 2,
+  "tol_of_width": 0.5,
+  "cue": "base",
+  "splits": {
+    "train": {
+      "boxes": 4336,
+      "chains": 786,
+      "chain_length_hist": [
+        [
+          1,
+          219
+        ],
+        [
+          2,
+          82
+        ],
+        [
+          3,
+          54
+        ],
+        [
+          4,
+          45
+        ],
+        [
+          5,
+          38
+        ],
+        [
+          6,
+          41
+        ],
+        [
+          7,
+          36
+        ],
+        [
+          8,
+          38
+        ],
+        [
+          9,
+          47
+        ],
+        [
+          10,
+          46
+        ],
+        [
+          11,
+          42
+        ],
+        [
+          12,
+          37
+        ],
+        [
+          13,
+          31
+        ],
+        [
+          14,
+          24
+        ],
+        [
+          15,
+          5
+        ],
+        [
+          16,
+          1
+        ]
+      ],
+      "median_chain_len_of_boxes": 10.0,
+      "boxes_in_chains_ge3": 3953,
+      "frame_pairs_tried": 4465,
+      "frame_pairs_registered": 4097,
+      "links": 6064,
+      "links_refused_same_frame": 64,
+      "gate": {
+        "min_votes": 3,
+        "margin": 2
+      },
+      "gated_short_chain": 347,
+      "gated_thin_margin": 350,
+      "changed_boxes": 373,
+      "changed_pct": 8.6,
+      "tied_boxes": 140,
+      "top_directions": [
+        [
+          "shot->whisky",
+          76
+        ],
+        [
+          "whisky->water",
+          54
+        ],
+        [
+          "water->beer",
+          37
+        ],
+        [
+          "wine->high",
+          30
+        ],
+        [
+          "whisky->shot",
+          26
+        ],
+        [
+          "beer->wine",
+          23
+        ],
+        [
+          "water->whisky",
+          22
+        ],
+        [
+          "beer->water",
+          19
+        ],
+        [
+          "water->wine",
+          11
+        ],
+        [
+          "whisky->wine",
+          11
+        ]
+      ]
+    },
+    "val": {
+      "boxes": 263,
+      "chains": 44,
+      "chain_length_hist": [
+        [
+          1,
+          13
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          7,
+          3
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          9,
+          2
+        ],
+        [
+          10,
+          3
+        ],
+        [
+          11,
+          2
+        ],
+        [
+          12,
+          1
+        ],
+        [
+          13,
+          2
+        ],
+        [
+          14,
+          2
+        ],
+        [
+          15,
+          1
+        ]
+      ],
+      "median_chain_len_of_boxes": 10,
+      "boxes_in_chains_ge3": 246,
+      "frame_pairs_tried": 235,
+      "frame_pairs_registered": 221,
+      "links": 384,
+      "links_refused_same_frame": 3,
+      "gate": {
+        "min_votes": 3,
+        "margin": 2
+      },
+      "gated_short_chain": 15,
+      "gated_thin_margin": 3,
+      "changed_boxes": 29,
+      "changed_pct": 11.03,
+      "tied_boxes": 32,
+      "top_directions": [
+        [
+          "wine->high",
+          7
+        ],
+        [
+          "whisky->water",
+          3
+        ],
+        [
+          "beer->high",
+          3
+        ],
+        [
+          "shot->whisky",
+          3
+        ],
+        [
+          "water->beer",
+          3
+        ],
+        [
+          "water->whisky",
+          2
+        ],
+        [
+          "whisky->beer",
+          2
+        ],
+        [
+          "beer->wine",
+          2
+        ],
+        [
+          "water->wine",
+          1
+        ],
+        [
+          "whisky->wine",
+          1
+        ]
+      ]
+    }
+  },
+  "elapsed_s": 52.3
+}
