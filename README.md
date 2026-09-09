@@ -5,7 +5,7 @@ Code, receipts and paper source for the ICASSP 2027 submission
 
 GlassNICOL assigns each glass a type automatically from a depth-derived height, in every view.
 The released training labels disagree on the same glass in 18.1% of matched adjacent-view pairs,
-while the hand-labelled test splits do not. This repository contains the association that links
+while the hand-labelled test splits almost never do. This repository contains the association that links
 the views of each glass through the table plane, the vote that gives each chain one type, the
 evaluation on the official manual test splits, and every number printed in the paper.
 
@@ -20,7 +20,7 @@ evaluation on the official manual test splits, and every number printed in the p
 | `preregistration/` | the sealed protocol, its SHA-256, and an errata note on two clock strings typed inside it |
 | `labels/` | `scene_vote_train.tar.gz`: the relabelled training type ids (YOLO format; boxes identical to the release) |
 | `figures/` | scripts and source data of Fig. 1 and Fig. 2 |
-| `paper/` | LaTeX source (`main.tex`, `numbers.tex`, table rows, references) |
+| `paper/` | LaTeX source of the submitted manuscript (`main_v18.tex`, `numbers.tex`, table rows, references) |
 
 Not included: the GlassNICOL images and released labels (from the dataset authors), trained weights.
 
