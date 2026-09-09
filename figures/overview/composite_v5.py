@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Final overview from the layout skeleton (skeleton.png, not redistributed): crop the stray bottom caption, detect the pale
+"""Final overview from the stage skeleton: crop the stray bottom caption, detect the pale
 magenta windows, paste the real panels, add exact Times labels above each stage and one sentence below."""
 import cv2, numpy as np
 from pathlib import Path
@@ -25,15 +25,39 @@ def put(win, name, border):
     d.rectangle([x - 3, y - 3, x + w + 2, y + h + 2], fill="white"); ox, oy = x + (w - nw) // 2, y + (h - nh) // 2
     canvas.paste(p.resize((nw, nh), Image.LANCZOS), (ox, oy)); d.rectangle([ox, oy, ox + nw - 1, oy + nh - 1], outline=border, width=6)
     print(f"  {name:12s} {w}x{h} -> {nw}x{nh}  print width {7*nw/W:.2f} in")
+    return ox, oy, nw, nh
 NAVY, TEAL, GREEN, ORANGE = (28, 43, 94), (23, 128, 128), (46, 125, 50), (214, 118, 20)
-for win, name in zip(left, ["pA1.png", "pB_top.png", "pA2.png"]): put(win, name, NAVY)
+fV = ImageFont.truetype(FONT, 113)
+for win, name, tag in zip(left, ["pA1.png", "pB_top.png", "pA2.png"], ["view 6", "view 8", "view 10"]):
+    ox, oy, nw, nh = put(win, name, NAVY)
+    tw = d.textlength(tag, font=fV); tx1 = ox + nw - 8
+    d.rectangle([tx1 - tw - 18, oy + 8, tx1, oy + 128], fill="white")
+    d.text((tx1 - 9, oy + 14), tag, font=fV, fill="black", anchor="ra")
 for win, name, col in zip(mid, ["pB_flow.png", "pC.png", "pD1.png"], [TEAL, GREEN, ORANGE]): put(win, name, col)
 put(right[0], "pE2.png", NAVY)
-fT = ImageFont.truetype(FONTB, 120); fS = ImageFont.truetype(FONT, 96); fI = ImageFont.truetype(FONTI, 96)
-labels = [("Released views", "automatic type ids"), ("Table-plane registration", "H (f → f+k),  k ≤ 2"), ("Base-point association", "‖H b − b'‖ < 0.5 · width"), ("Scene chains", "union-find · most frequent type"), ("Detector", "relabelled ids → manual test")]
+fT = ImageFont.truetype(FONTB, 120); fS = ImageFont.truetype(FONT, 113); fI = ImageFont.truetype(FONTI, 113)
+# the stage subtitles print at 9pt, so they are kept short enough not to run into each other
+labels = [("Released views", "automatic type ids"), ("Table-plane registration", "H (f → f+k),  k ≤ 2"), ("Base-point association", "‖H b − b'‖ < 0.5 w"), ("Scene chains", "union-find, plurality"), ("Detector", "relabelled ids")]
 xs = [left[0][0] + left[0][2] // 2] + [c[0] + c[2] // 2 for c in mid] + [right[0][0] + right[0][2] // 2]
 for (t, sub), cx in zip(labels, xs):
     d.text((cx, 20), t, font=fT, fill="black", anchor="ma"); d.text((cx, 150), sub, font=fS, fill=(40, 40, 40), anchor="ma")
 bx0 = mid[0][0]; bx1 = right[0][0] + right[0][2]; by = TOP + mid[0][1] + mid[0][3] + 150
-d.multiline_text(((bx0 + bx1) // 2, by), "Views of a static scene are linked through the table plane by their base points;\neach chain votes one type per glass, and only type ids change.", font=fI, fill="black", anchor="ma", align="center", spacing=20)
+# the italic line the skeleton carried here repeated the caption; dropped to give the page its space back
+# squeeze the empty band the skeleton leaves between the stage labels and the panels: it is dead print area
+import numpy as _np
+_a = _np.array(canvas.convert("L")) < 245; _empty = ~_a.any(1); _H = canvas.height
+_runs, _st = [], None
+for _y in range(_H):
+    if _empty[_y] and _st is None: _st = _y
+    if not _empty[_y] and _st is not None:
+        _runs.append((_st, _y)); _st = None
+if _st is not None: _runs.append((_st, _H))
+KEEP = 60                                        # px of white left between the labels and the panels
+for _y0, _y1 in _runs:
+    if _y0 > 0 and _y1 < _H and _y1 - _y0 > KEEP:
+        top = canvas.crop((0, 0, canvas.width, _y0 + KEEP)); bot = canvas.crop((0, _y1, canvas.width, _H))
+        out = Image.new("RGB", (canvas.width, top.height + bot.height), "white")
+        out.paste(top, (0, 0)); out.paste(bot, (0, top.height)); canvas = out
+        print(f"  squeezed {_y1 - _y0 - KEEP} px of empty band at y={_y0}")
+        break
 canvas.save(HERE / "figure_overview_v5.png"); canvas.save(HERE.parent / "figure_overview.png"); print("saved", canvas.size, "height at 7in:", round(7 * canvas.height / canvas.width, 2), "in")
