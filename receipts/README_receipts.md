@@ -1,9 +1,9 @@
 # Receipts
 
-Every number the manuscript prints is emitted from a file here. The table below names the receipts whose
-writing script is worth stating; the other 34 JSON files in this directory are intermediate results of the
-same emitters and of earlier drafts. Their provenance is the emitter that reads them, which `git grep` on
-the file name finds in one step; not all of them carry a `schema` field.
+Every number the manuscript prints is emitted from a file here. The first table names the receipts the V18
+emitters read directly. The second lists the other files a script in this repository reads. The remaining
+17 JSON files are receipts of earlier drafts, kept for provenance; nothing in the submitted version
+reads them.
 
 | receipt | written by |
 |---|---|
@@ -28,3 +28,25 @@ the file name finds in one step; not all of them carry a `schema` field.
 
 The macros the manuscript prints are emitted from these by `baselines/emit_v18*.py`; run
 `tables/tidy_numbers.py` afterwards so every printed macro sits in the live block of `numbers.tex`.
+
+## Also read by scripts here
+
+| receipt | reader |
+|---|---|
+| `AUDIT_SCENEVOTE_V1.json` | read by `eval/audit_scenevote_v1.py` |
+| `AUDIT_SCENE_BOOTSTRAP_V1.json` | read by `eval/audit_scene_bootstrap_v1.py` |
+| `AUDIT_SOURCE_CLAIMS_V1.json` | read by `eval/audit_source_claims_v1.py` |
+| `BOOT_TYPEACC_FRAMES_V1.json` | read by `eval/audit_scenevote_v1.py` |
+| `BOOT_TYPEACC_FRAMES_relabel_scenevote.json` | read by `eval/audit_scenevote_v1.py` |
+| `BOOT_TYPEACC_FRAMES_transparent_scenevote.json` | read by `baselines/emit_v18b_extras.py` |
+| `CHAIN_CONFUSION_EM_V1.json` | read by `relabel/chain_confusion_em_v1.py` |
+| `LABEL_NOISE_DIAGNOSTIC_V1.json` | read by `figures/build_source.py` |
+| `RELABEL_STATS_V1.json` | read by `baselines/emit_v18_confid_macros.py` |
+| `RELABEL_VERDICT_V1.json` | read by `tables/bootstrap_typeacc_frames_v1.py` |
+| `SCENEVOTE_VERDICT_V1.json` | read by `eval/audit_scenevote_v1.py` |
+| `SCENEVOTE_VERDICT_V1_LAST.json` | read by `baselines/emit_v18b_extras.py` |
+| `SCENE_ASSOC_MANUAL_CHECK_V1.json` | read by `tables/emit_v14_extras_v1.py` |
+| `SCENE_ASSOC_MANUAL_CHECK_V1_h1_t0.5.json` | read by `baselines/emit_v18_assoc_macros.py` |
+| `SCENE_ASSOC_MANUAL_CHECK_V1_h1_t0.5_iou.json` | read by `tables/emit_v14_extras_v1.py` |
+| `SCENE_ASSOC_MANUAL_CHECK_V1_h2_t0.5_iou.json` | read by `baselines/emit_v18_assoc_macros.py` |
+| `SCENE_RELABEL_STATS_V1.json` | read by `baselines/emit_v18_confid_macros.py` |

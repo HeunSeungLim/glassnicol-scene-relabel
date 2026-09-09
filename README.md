@@ -32,7 +32,11 @@ Not included: the GlassNICOL images and released labels (from the dataset author
 3. `python relabel/check_scene_assoc_manual_v1.py 2 0.5` runs the same association on the manual splits (expects no within-chain disagreement).
 4. `python eval/build_scene_arm_labels_v1.py` builds the training set; `python eval/run_arm.py scenevote <seed> 300 15600 <dataset> <run_dir>` trains one arm; repeat for `transparent` (raw) and `relabel` (tracklet vote).
 5. `python eval/eval_official_v1.py <run_dir> <tag>` scores a run on the manual splits.
-6. `tables/emit_v12_arms_v1.py`, `tables/bootstrap_typeacc_frames_v1.py transparent scenevote`, `tables/emit_v11_pairs_v1.py transparent scenevote PairS pair_v12_rows.tex`, `tables/emit_v13_tables_v1.py`, `tables/emit_v14_extras_v1.py` regenerate the table rows and `numbers.tex`; `tables/audit_scenevote_v1.py` recomputes everything independently.
+6. `python baselines/emit_v18c_master_table.py` regenerates Table 1 and its bold/blue marks, and
+   `python tables/audit_scenevote_v1.py` recomputes the scene-vote verdict independently; both run from
+   this repository alone. The other emitters under `tables/` produced the earlier drafts' tables and read
+   the full evaluation tree of step 5, so they run where that tree is, not here. `python
+   tables/tidy_numbers.py` sorts `paper/numbers.tex` into printed and superseded macros after any emitter.
 
 7. `python baselines/audit_qualitative_v18.py` recounts Fig. 3 from the frozen predictions in
    `receipts/qualitative_v18/` with a matcher written independently of the figure's own: it checks the
