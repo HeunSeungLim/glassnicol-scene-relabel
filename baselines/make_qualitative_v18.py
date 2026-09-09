@@ -117,7 +117,7 @@ def draw(ax, img, box, anns, got, is_gt):
     # A panel that has to carry every glass -- the manual one -- runs out of room at the size the rest print
     # at, so its labels step down one notch rather than overprint each other.
     n_lab = sum(1 for a in anns if is_gt or (got[a["id"]] is not None))
-    FS = 5.0 if n_lab < 5 else 4.1
+    FS = 5.75 if n_lab < 5 else 4.9
     unit = span / (PANEL_W_PT)          # data units per printed point, for label placement
     # the per-panel count badge sits bottom right; reserve it so a label never prints on top of it
     placed = [(x1 - span * 0.11, y1 - (y1 - y0) * 0.07, span * 0.13, (y1 - y0) * 0.09)]
@@ -162,7 +162,7 @@ def main():
     ap.add_argument("--neutral", type=int, default=1,
                     help="frames chosen by the released-label arm's error; the last row is always "
                          "our worst frame. The published figure uses the default, 1.")
-    ap.add_argument("--out", default=str(HERE.parents[1] / "build_v18_paper" / "figures" /
+    ap.add_argument("--out", default=str(HERE.parents[0] / "build_v18_paper" / "figures" /
                                         "figure_qualitative.png"))
     a = ap.parse_args()
     by_img, names, m = load()
@@ -204,7 +204,7 @@ def main():
                 sub = f"{n_common} shared" if c == 0 else f"{split_acc[arm]:.1f}% correct"
                 ax.set_title(PANEL_TITLES[c] + "\n" + sub, fontsize=6.0, pad=1.6, linespacing=1.1)
             if c == 0:
-                ax.set_ylabel(f"sc.{row['scene']}", fontsize=5.2, labelpad=1.2)
+                ax.set_ylabel(f"sc.{row['scene']}", fontsize=5.75, labelpad=1.2)
             n = len(anns)
             if c == 0:
                 txt = f"{n} glasses"
@@ -212,7 +212,7 @@ def main():
                 got = m[arm][row["id"]]
                 ok = sum(1 for x in anns if got[x["id"]] and got[x["id"]][0] == x["category_id"])
                 txt = f"{ok}/{n}"
-            ax.text(0.986, 0.035, txt, transform=ax.transAxes, fontsize=5.2, ha="right", va="bottom",
+            ax.text(0.986, 0.035, txt, transform=ax.transAxes, fontsize=5.75, ha="right", va="bottom",
                     color="black", bbox=dict(fc="white", ec="none", alpha=0.78, pad=0.6))
     out = Path(a.out); out.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(out, dpi=620, bbox_inches="tight", pad_inches=0.004)

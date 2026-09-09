@@ -83,6 +83,20 @@ def main():
         for split, sk in (("ood", "OOD"), ("standard", "Std")):
             g = [_six("scenevote", split, h, s) - _six("transparent", split, h, s) for h, s in cells]
             m[f"Sv{sk}Gain{tag}"] = ("+" if _st.mean(g) >= 0 else "$-$") + f"{abs(_st.mean(g)):.1f}"
+            # the accelerators hold three and two cells, so the per-accelerator mean carries a wide interval
+            if len(g) > 1:
+                import math as _math
+                tcrit = {2: 12.706, 3: 4.303}[len(g)]
+                hw = tcrit * _st.stdev(g) / _math.sqrt(len(g))
+                lo, hi = _st.mean(g) - hw, _st.mean(g) + hw
+                sg = lambda x: ("+" if x >= 0 else "$-$") + f"{abs(x):.1f}"
+                m[f"Sv{sk}CI{tag}"] = f"[{sg(lo)}, {sg(hi)}]"
+    # the conclusion says "costs N points", so it needs the magnitude without the sign the table carries
+    import statistics as _st2
+    cf = [_six("confid", "ood", h, s) - _six("transparent", "ood", h, s)
+          for h, s in [("scene", 1337), ("scene", 3407), ("scene", 4567),
+                       ("scene136", 1337), ("scene136", 5678)]]
+    m["BaseCfOODDrop"] = f"{abs(_st2.mean(cf)):.1f}"
     q = json.loads((HERE / "QUALITATIVE_FIGURE_V18.json").read_text())
     m["QualCommonBoxes"] = str(q["denominator"]["boxes_localised_by_all_arms"])
     (HERE / "VOTE_DIRECTION_V18.json").write_text(json.dumps(

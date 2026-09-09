@@ -1,0 +1,39 @@
+{
+ "schema": "apsr-qualitative-v18",
+ "cell": "A_s1337",
+ "split": "ood",
+ "match": {
+  "iou": 0.5,
+  "conf": 0.25
+ },
+ "split_type_accuracy": {
+  "transparent": 84.62,
+  "lsmooth": 82.42,
+  "confid": 57.14,
+  "relabel": 81.68,
+  "scenevote": 90.84
+ },
+ "denominator": {
+  "boxes_localised_by_all_arms": 273
+ },
+ "rows": [
+  {
+   "id": 6,
+   "name": "072_000026.png",
+   "scene": 501,
+   "boxes": 6,
+   "raw_err": 5,
+   "ours_breaks": 0,
+   "why": "released labels mistype the most here"
+  },
+  {
+   "id": 25,
+   "name": "091_000020.png",
+   "scene": 502,
+   "boxes": 6,
+   "raw_err": 1,
+   "ours_breaks": 3,
+   "why": "our worst frame on this split"
+  }
+ ]
+}
