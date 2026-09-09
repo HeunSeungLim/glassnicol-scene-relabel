@@ -1,7 +1,15 @@
 % ===== macros printed by main.tex. Each value is emitted by a script from a JSON receipt; see the emitters in relabel_v1/ and scenes_v1/. Re-run relabel_v1/tidy_numbers.py after any emitter. =====
 \newcommand{\AdjFramePairs}{2,280}
+\newcommand{\BaseCfOODGain}{$-$15.5}
+\newcommand{\BaseLsOODGain}{$-$0.5}
+\newcommand{\BaseLsOODPos}{3}
+\newcommand{\BaseSvOODGain}{+7.1}
+\newcommand{\BaseTrkOODGain}{+0.7}
+\newcommand{\BaseTrkOODPos}{2}
 \newcommand{\ChainBoxes}{4,336}
 \newcommand{\ChainFramePairsReg}{1,748}
+\newcommand{\ConfidChangedPct}{22.5}
+\newcommand{\ConfidConf}{0.5}
 \newcommand{\DupDiffType}{44}
 \newcommand{\DupFrames}{51}
 \newcommand{\DupPairs}{53}
@@ -30,20 +38,7 @@
 \newcommand{\ManualGeThreeStd}{163 of 167}
 \newcommand{\ManualMedianOOD}{15}
 \newcommand{\ManualMedianStd}{10}
-\newcommand{\PairSShotOODMax}{+52.6}
-\newcommand{\PairSShotOODMean}{+8.2}
-\newcommand{\PairSShotOODMedian}{+1.8}
-\newcommand{\PairSShotOODPos}{3/5}
-\newcommand{\PairSShotStdMean}{$-$4.1}
-\newcommand{\PairSWaterOODMean}{+8.0}
-\newcommand{\PairSWaterOODPos}{4/5}
-\newcommand{\PairSWaterStdMean}{+3.2}
-\newcommand{\PairSWhiskyOODMean}{+14.9}
-\newcommand{\PairSWhiskyOODPos}{4/5}
-\newcommand{\PairSWhiskyStdMean}{$-$6.9}
-\newcommand{\PairSWineOODMean}{+11.1}
-\newcommand{\PairSWineOODPos}{4/5}
-\newcommand{\PairSWineStdMean}{+3.8}
+\newcommand{\RatioConfidTrain}{0.46}
 \newcommand{\RatioManualOOD}{1.83}
 \newcommand{\RatioManualStd}{0.79}
 \newcommand{\RatioRawTrain}{0.58}
@@ -56,6 +51,7 @@
 \newcommand{\SceneChains}{786}
 \newcommand{\SceneChanged}{535}
 \newcommand{\SceneChangedPct}{12.3}
+\newcommand{\SceneChangedRosterPct}{11.7}
 \newcommand{\SceneEpochs}{300}
 \newcommand{\SceneHops}{2}
 \newcommand{\SceneMedianLen}{10}
@@ -113,9 +109,6 @@
 \newcommand{\TrkLSixOODVsRawPosL}{5}
 \newcommand{\TrkMedianVotes}{5.5}
 \newcommand{\TrkSingletons}{878}
-\newcommand{\WhiskyShareOOD}{11.7}
-\newcommand{\WhiskyShareRaw}{25.9}
-\newcommand{\WhiskyShareStd}{17.4}
 \newcommand{\XHostTypeOOD}{14.3}
 \newcommand{\XHostTypeStd}{10.9}
 
@@ -125,8 +118,28 @@
 \newcommand{\AdjTop}{57.6}
 \newcommand{\ApsrEpochs}{300}
 \newcommand{\ApsrUpdates}{21,000}
+\newcommand{\BaseCfOODPos}{0}
+\newcommand{\BaseCfOODSix}{38.2}
+\newcommand{\BaseCfStdGain}{$-$3.1}
+\newcommand{\BaseCfStdPos}{1}
+\newcommand{\BaseCfStdSix}{62.2}
 \newcommand{\BaseEpochs}{553}
+\newcommand{\BaseLsOODSix}{53.1}
+\newcommand{\BaseLsStdGain}{+3.3}
+\newcommand{\BaseLsStdPos}{3}
+\newcommand{\BaseLsStdSix}{68.7}
+\newcommand{\BaseRawOODSix}{53.7}
+\newcommand{\BaseRawStdSix}{65.4}
 \newcommand{\BaseSeedOneStdSix}{77.16}
+\newcommand{\BaseSvOODPos}{5}
+\newcommand{\BaseSvOODSix}{60.7}
+\newcommand{\BaseSvStdGain}{$-$1.9}
+\newcommand{\BaseSvStdPos}{2}
+\newcommand{\BaseSvStdSix}{63.5}
+\newcommand{\BaseTrkOODSix}{54.3}
+\newcommand{\BaseTrkStdGain}{+0.2}
+\newcommand{\BaseTrkStdPos}{3}
+\newcommand{\BaseTrkStdSix}{65.6}
 \newcommand{\BaseTwentyOneOODGen}{3.01}
 \newcommand{\BaseTwentyOneOODSix}{$-$0.62}
 \newcommand{\BaseTwentyOneStdGen}{1.27}
@@ -173,6 +186,8 @@
 \newcommand{\CoatRosterCount}{3}
 \newcommand{\CoatRosterEMean}{6.27}
 \newcommand{\ComparisonCount}{6}
+\newcommand{\ConfidBoxes}{3,271}
+\newcommand{\ConfidChanged}{737}
 \newcommand{\DispBot}{14.59}
 \newcommand{\DispMax}{29.98}
 \newcommand{\DispMin}{0.045}
@@ -310,23 +325,37 @@
 \newcommand{\MsdTypeStdRelRSD}{0.68}
 \newcommand{\PairCandidates}{2,129}
 \newcommand{\PairSOODNegCount}{0}
+\newcommand{\PairSShotOODMax}{+52.6}
+\newcommand{\PairSShotOODMean}{+8.2}
+\newcommand{\PairSShotOODMedian}{+1.8}
+\newcommand{\PairSShotOODPos}{3/5}
 \newcommand{\PairSShotStdMax}{+10.4}
+\newcommand{\PairSShotStdMean}{$-$4.1}
 \newcommand{\PairSShotStdMedian}{$-$9.8}
 \newcommand{\PairSShotStdPos}{1/5}
 \newcommand{\PairSStdNegCount}{2}
 \newcommand{\PairSWaterOODMax}{+23.6}
+\newcommand{\PairSWaterOODMean}{+8.0}
 \newcommand{\PairSWaterOODMedian}{+11.8}
+\newcommand{\PairSWaterOODPos}{4/5}
 \newcommand{\PairSWaterStdMax}{+19.3}
+\newcommand{\PairSWaterStdMean}{+3.2}
 \newcommand{\PairSWaterStdMedian}{$-$1.6}
 \newcommand{\PairSWaterStdPos}{2/5}
 \newcommand{\PairSWhiskyOODMax}{+41.3}
+\newcommand{\PairSWhiskyOODMean}{+14.9}
 \newcommand{\PairSWhiskyOODMedian}{+15.2}
+\newcommand{\PairSWhiskyOODPos}{4/5}
 \newcommand{\PairSWhiskyStdMax}{+14.5}
+\newcommand{\PairSWhiskyStdMean}{$-$6.9}
 \newcommand{\PairSWhiskyStdMedian}{$-$12.7}
 \newcommand{\PairSWhiskyStdPos}{1/5}
 \newcommand{\PairSWineOODMax}{+28.2}
+\newcommand{\PairSWineOODMean}{+11.1}
 \newcommand{\PairSWineOODMedian}{+11.3}
+\newcommand{\PairSWineOODPos}{4/5}
 \newcommand{\PairSWineStdMax}{+13.9}
+\newcommand{\PairSWineStdMean}{+3.8}
 \newcommand{\PairSWineStdMedian}{+2.6}
 \newcommand{\PairSWineStdPos}{4/5}
 \newcommand{\PairSelected}{2,068}
@@ -636,87 +665,15 @@
 \newcommand{\UniStdSixMean}{4.06}
 \newcommand{\UniStdSixMin}{2.49}
 \newcommand{\ValBoxes}{263}
+\newcommand{\WhiskyShareOOD}{11.7}
+\newcommand{\WhiskyShareRaw}{25.9}
 \newcommand{\WhiskyShareScene}{25.9}
+\newcommand{\WhiskyShareStd}{17.4}
 \newcommand{\WhiskyShareTest}{13.5}
 \newcommand{\XHostDiffHeld}{0.77}
 \newcommand{\XHostDiffMax}{4.4}
 \newcommand{\XHostDiffMin}{3.1}
-% ---- v14 extras block (emit_v14_extras_v1.py) ----
-\newcommand{\SvExclPos}{4}
-\newcommand{\SvExclNeg}{2}
-\newcommand{\SvExclCases}{10}
-\newcommand{\SvOODAbove}{3}
-\newcommand{\SvOODBelow}{1}
-\newcommand{\SvOODStraddle}{1}
-\newcommand{\SvStdAbove}{1}
-\newcommand{\SvStdBelow}{1}
-\newcommand{\RatioSceneTrain}{0.51}
-\newcommand{\WhiskyShareScene}{25.9}
-\newcommand{\FlipNeighbourPct}{87}
-\newcommand{\SvTypeOODVsRawSD}{12.0}
-\newcommand{\SvTypeOODVsRawCI}{[$-$5.7, +24.1]}
-\newcommand{\SvSixOODVsRawSD}{4.3}
-\newcommand{\SvSixOODVsRawCI}{[+1.8, +12.3]}
-\newcommand{\SvRecOODVsRawSD}{1.9}
-\newcommand{\SvRecOODVsRawCI}{[$-$3.7, +1.2]}
-\newcommand{\SvGenOODVsRawSD}{2.1}
-\newcommand{\SvGenOODVsRawCI}{[$-$3.0, +2.2]}
-\newcommand{\SvTypeStdVsRawSD}{7.1}
-\newcommand{\SvTypeStdVsRawCI}{[$-$8.1, +9.6]}
-\newcommand{\SvSixStdVsRawSD}{8.4}
-\newcommand{\SvSixStdVsRawCI}{[$-$12.3, +8.5]}
-\newcommand{\SvRecStdVsRawSD}{1.4}
-\newcommand{\SvRecStdVsRawCI}{[$-$3.7, $-$0.3]}
-\newcommand{\SvGenStdVsRawSD}{4.1}
-\newcommand{\SvGenStdVsRawCI}{[$-$6.8, +3.4]}
-\newcommand{\SvTypeOODVsTrkSD}{10.3}
-\newcommand{\SvTypeOODVsTrkCI}{[$-$8.8, +16.8]}
-\newcommand{\SvSixOODVsTrkSD}{4.7}
-\newcommand{\SvSixOODVsTrkCI}{[+0.6, +12.2]}
-\newcommand{\SvRecOODVsTrkSD}{3.8}
-\newcommand{\SvRecOODVsTrkCI}{[$-$6.4, +3.0]}
-\newcommand{\SvGenOODVsTrkSD}{1.8}
-\newcommand{\SvGenOODVsTrkCI}{[$-$3.1, +1.4]}
-\newcommand{\SvTypeStdVsTrkSD}{3.3}
-\newcommand{\SvTypeStdVsTrkCI}{[$-$5.9, +2.4]}
-\newcommand{\SvSixStdVsTrkSD}{3.7}
-\newcommand{\SvSixStdVsTrkCI}{[$-$6.7, +2.6]}
-\newcommand{\SvRecStdVsTrkSD}{3.8}
-\newcommand{\SvRecStdVsTrkCI}{[$-$4.9, +4.4]}
-\newcommand{\SvGenStdVsTrkSD}{2.8}
-\newcommand{\SvGenStdVsTrkCI}{[$-$6.8, +0.2]}
-\newcommand{\SvLTypeStdVsRawGainL}{$-$0.6}
-\newcommand{\SvLTypeStdVsRawPosL}{2}
-\newcommand{\SvLSixStdVsRawGainL}{$-$1.7}
-\newcommand{\SvLSixStdVsRawPosL}{1}
-\newcommand{\SvLRecStdVsRawGainL}{+0.5}
-\newcommand{\SvLRecStdVsRawPosL}{2}
-\newcommand{\SvLGenStdVsRawGainL}{+1.0}
-\newcommand{\SvLGenStdVsRawPosL}{3}
-\newcommand{\SvLTypeOODVsRawGainL}{+11.3}
-\newcommand{\SvLTypeOODVsRawPosL}{5}
-\newcommand{\SvLSixOODVsRawGainL}{+11.1}
-\newcommand{\SvLSixOODVsRawPosL}{5}
-\newcommand{\SvLRecOODVsRawGainL}{$-$1.7}
-\newcommand{\SvLRecOODVsRawPosL}{2}
-\newcommand{\SvLGenOODVsRawGainL}{+0.2}
-\newcommand{\SvLGenOODVsRawPosL}{3}
-\newcommand{\TrkMedianVotes}{5.5}
-\newcommand{\TrkGeThreePct}{71}
-\newcommand{\EmDownShot}{0.0}
-\newcommand{\EmUpShot}{8.9}
-\newcommand{\EmDownWhisky}{9.4}
-\newcommand{\EmUpWhisky}{3.1}
-\newcommand{\EmDownWater}{18.5}
-\newcommand{\EmUpWater}{4.7}
-\newcommand{\EmDownBeer}{15.9}
-\newcommand{\EmUpBeer}{0.9}
-\newcommand{\EmDownWine}{11.0}
-\newcommand{\EmUpWine}{0.8}
-\newcommand{\EmDownHigh}{11.9}
-\newcommand{\EmUpHigh}{0.0}
-\newcommand{\RatioManualStd}{0.79}
-\newcommand{\WhiskyShareStd}{17.4}
-\newcommand{\RatioManualOOD}{1.83}
-\newcommand{\WhiskyShareOOD}{11.7}
-% ---- end v14 extras ----
+
+% --- V18b: confidence baseline diagnostics ---
+\newcommand{\ConfidVsSceneDisagreePct}{81.8}
+\newcommand{\ConfidChangedRatio}{twice}

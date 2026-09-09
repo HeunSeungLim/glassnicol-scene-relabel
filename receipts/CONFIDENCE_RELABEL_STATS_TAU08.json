@@ -1,0 +1,48 @@
+{
+ "changed_pairs": {
+  "beer->high": 44,
+  "beer->shot": 1,
+  "beer->water": 32,
+  "beer->whisky": 9,
+  "beer->wine": 25,
+  "high->beer": 26,
+  "high->water": 1,
+  "high->wine": 15,
+  "shot->beer": 2,
+  "shot->high": 1,
+  "shot->water": 6,
+  "shot->whisky": 67,
+  "shot->wine": 1,
+  "water->beer": 31,
+  "water->high": 14,
+  "water->whisky": 33,
+  "water->wine": 6,
+  "whisky->beer": 2,
+  "whisky->high": 5,
+  "whisky->shot": 12,
+  "whisky->water": 48,
+  "whisky->wine": 4,
+  "wine->beer": 1,
+  "wine->high": 28,
+  "wine->water": 4,
+  "wine->whisky": 2
+ },
+ "changed_pct": 12.84,
+ "confidence_threshold": 0.8,
+ "counts": {
+  "boxes": 3271,
+  "changed": 420,
+  "disagreed_below_threshold": 695,
+  "files": 1750,
+  "held_out_files": 625,
+  "matched": 2907,
+  "unmatched": 364
+ },
+ "fold_split": "training scenes sorted, alternating; each box judged by the other half's model",
+ "iou_threshold": 0.5,
+ "schema": "apsr-confidence-relabel-v1",
+ "weights": {
+  "fold_a": "<workspace>",
+  "fold_b": "<workspace>"
+ }
+}
