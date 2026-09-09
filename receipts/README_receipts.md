@@ -1,8 +1,8 @@
 # Receipts
 
-Every number the manuscript prints is emitted from a file here, and each file names the script that
-wrote it. Files not listed below belong to earlier drafts; they are kept for provenance and nothing in the
-submitted version reads them.
+Every number the manuscript prints is emitted from a file here. The table below names the receipts the
+V18 emitters read directly; the other files in this directory are inputs to those emitters or receipts of
+earlier drafts, and each one records the script that wrote it in its own `schema` field.
 
 | receipt | written by |
 |---|---|
@@ -21,6 +21,7 @@ submitted version reads them.
 | `AUDIT_QUALITATIVE_V18.json` | `baselines/audit_qualitative_v18.py` (independent recount of Fig. 3) |
 | `HIGHLIGHT_IDENTITY_V18.json` | `baselines/emit_v18_highlight_rows.py` (the table's bold/blue marks change no value) |
 | `qualitative_v18/` | the ten frozen prediction files and the OOD annotations Fig. 3 is drawn from |
+| `table1_cells/` | the fifty scored cells behind Table 1: predictions and COCO results for five arms x five cells x two splits, with both annotation files |
 
 The macros the manuscript prints are emitted from these by `baselines/emit_v18*.py`; run
 `tables/tidy_numbers.py` afterwards so every printed macro sits in the live block of `numbers.tex`.

@@ -46,6 +46,10 @@ Not included: the GlassNICOL images and released labels (from the dataset author
    sets, so it runs where steps 2-5 ran, not from this repository alone; its output is
    `receipts/STD_LOSS_ANALYSIS_V18.json` and `receipts/VOTE_DIRECTION_V18.json`.
 
+10. `python baselines/emit_v18c_master_table.py` regenerates Table 1. The fifty scored cells it needs
+    (five arms x five cells x two splits, predictions and COCO results) are in `receipts/table1_cells/`
+    with both annotation files, so this reproduces every entry of the table from this repository alone.
+
 `APSR_QUAL_DATA` overrides where steps 7 and 8 look for the predictions and the OOD annotation file.
 
 Seeds, budgets and the checkpoint rule are those of `preregistration/PREREGISTRATION_SCENEVOTE_V1.md`.

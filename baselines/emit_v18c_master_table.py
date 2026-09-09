@@ -19,9 +19,19 @@ import argparse, collections, json, statistics as st
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+
+
+def _resolve():
+    """Workspace layout, or the copy of the fifty scored cells shipped beside this script."""
+    local = HERE.parent / "receipts" / "table1_cells"
+    if (local / "ood_types_remap_1based.json").is_file():
+        return local, local
+    paper = HERE.parent
+    return paper / "scenes_v1" / "evals_official", paper.parent / "official_test_v1"
+
+
+EV, OFF = _resolve()
 PAPER = HERE.parent
-EV = PAPER / "scenes_v1" / "evals_official"
-OFF = PAPER.parent / "official_test_v1"
 CELLS = [("scene", 1337), ("scene", 3407), ("scene", 4567), ("scene136", 1337), ("scene136", 5678)]
 ARMS = [("transparent", "Released labels"), ("lsmooth", "Label smoothing"),
         ("confid", "Detector confidence"), ("relabel", "Adjacent-frame vote (earlier)"),
