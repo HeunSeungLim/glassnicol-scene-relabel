@@ -141,6 +141,32 @@ def main():
     macros["TblBoxesStd"] = str(sum(len(v) for v in gt_of("standard").values()))
     macros["TblBoxesOOD"] = str(sum(len(v) for v in gt_of("ood").values()))
 
+    # Rank on the unrounded values.  Marking the printed strings made two entries that both round to 84.2
+    # share second place when one is 84.15744 and the other 84.15206.
+    metric_cols = [(1, "s6"), (3, "sgen"), (4, "srec"), (5, "styp"),
+                   (6, "o6"), (8, "ogen"), (9, "orec"), (10, "otyp")]
+    exact = []
+    for arm, _ in ARMS:
+        row = {}
+        for split, pre in (("standard", "s"), ("ood", "o")):
+            d = data[split][arm]
+            row[pre + "6"] = st.mean(x["six"] for x in d)
+            row[pre + "gen"] = st.mean(x["gen"] for x in d)
+            row[pre + "rec"] = st.mean(x["rec"] for x in d)
+            row[pre + "typ"] = st.mean(x["type"] for x in d)
+        exact.append(row)
+    cells_tex = [l[:-3].split(" & ") for l in lines]
+    for col, key in metric_cols:
+        vals = [r[key] for r in exact]
+        best = max(vals)
+        second = max(v for v in vals if v < best)
+        for i, v in enumerate(vals):
+            if v == best:
+                cells_tex[i][col] = "\\textbf{%s}" % cells_tex[i][col]
+            elif v == second:
+                cells_tex[i][col] = "\\second{%s}" % cells_tex[i][col]
+    hl = [" & ".join(c) + " \\\\" for c in cells_tex]
+    Path(str(a.rows).replace("_rows.tex", "_hl_rows.tex")).write_text("\n".join(hl) + "\n")
     Path(a.rows).write_text("\n".join(lines) + "\n")
     print("\n".join(lines))
     print("\ncommon boxes per cell  standard", common["standard"], " ood", common["ood"])

@@ -76,12 +76,13 @@ def main():
     # accelerators, so the split has to be printed somewhere
     import statistics as _st
     EV = PAPER / "scenes_v1" / "evals_official"
-    def _six(arm, h, s):
-        return 100 * json.loads((EV / f"ood_{h}_{arm}_s{s}" / "RESULT.json").read_text())["six_class"]["ap50_95"]
+    def _six(arm, split, h, s):
+        return 100 * json.loads((EV / f"{split}_{h}_{arm}_s{s}" / "RESULT.json").read_text())["six_class"]["ap50_95"]
     for tag, cells in (("A", [("scene", 1337), ("scene", 3407), ("scene", 4567)]),
                        ("B", [("scene136", 1337), ("scene136", 5678)])):
-        gains = [_six("scenevote", h, s) - _six("transparent", h, s) for h, s in cells]
-        m[f"SvOODGain{tag}"] = ("+" if _st.mean(gains) >= 0 else "$-$") + f"{abs(_st.mean(gains)):.1f}"
+        for split, sk in (("ood", "OOD"), ("standard", "Std")):
+            g = [_six("scenevote", split, h, s) - _six("transparent", split, h, s) for h, s in cells]
+            m[f"Sv{sk}Gain{tag}"] = ("+" if _st.mean(g) >= 0 else "$-$") + f"{abs(_st.mean(g)):.1f}"
     q = json.loads((HERE / "QUALITATIVE_FIGURE_V18.json").read_text())
     m["QualCommonBoxes"] = str(q["denominator"]["boxes_localised_by_all_arms"])
     (HERE / "VOTE_DIRECTION_V18.json").write_text(json.dumps(
