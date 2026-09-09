@@ -1,0 +1,608 @@
+{
+ "cell": "scene_s1337",
+ "split": "ood",
+ "iou": 0.5,
+ "conf": 0.25,
+ "frames": [
+  {
+   "image_id": 26,
+   "file_name": "092_000021.png",
+   "boxes": 6,
+   "disagree": 4,
+   "ours_fixes": 0,
+   "ours_breaks": 2
+  },
+  {
+   "image_id": 67,
+   "file_name": "133_000037.png",
+   "boxes": 5,
+   "disagree": 4,
+   "ours_fixes": 0,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 25,
+   "file_name": "091_000020.png",
+   "boxes": 6,
+   "disagree": 3,
+   "ours_fixes": 0,
+   "ours_breaks": 3
+  },
+  {
+   "image_id": 27,
+   "file_name": "093_000022.png",
+   "boxes": 6,
+   "disagree": 3,
+   "ours_fixes": 0,
+   "ours_breaks": 2
+  },
+  {
+   "image_id": 10,
+   "file_name": "076_000030.png",
+   "boxes": 5,
+   "disagree": 3,
+   "ours_fixes": 0,
+   "ours_breaks": 2
+  },
+  {
+   "image_id": 11,
+   "file_name": "077_000031.png",
+   "boxes": 5,
+   "disagree": 3,
+   "ours_fixes": 0,
+   "ours_breaks": 2
+  },
+  {
+   "image_id": 12,
+   "file_name": "078_000032.png",
+   "boxes": 5,
+   "disagree": 3,
+   "ours_fixes": 0,
+   "ours_breaks": 2
+  },
+  {
+   "image_id": 13,
+   "file_name": "079_000033.png",
+   "boxes": 5,
+   "disagree": 3,
+   "ours_fixes": 0,
+   "ours_breaks": 2
+  },
+  {
+   "image_id": 15,
+   "file_name": "081_000035.png",
+   "boxes": 5,
+   "disagree": 3,
+   "ours_fixes": 0,
+   "ours_breaks": 2
+  },
+  {
+   "image_id": 21,
+   "file_name": "087_000041.png",
+   "boxes": 5,
+   "disagree": 3,
+   "ours_fixes": 0,
+   "ours_breaks": 1
+  },
+  {
+   "image_id": 22,
+   "file_name": "088_000042.png",
+   "boxes": 5,
+   "disagree": 3,
+   "ours_fixes": 0,
+   "ours_breaks": 1
+  },
+  {
+   "image_id": 24,
+   "file_name": "090_000044.png",
+   "boxes": 5,
+   "disagree": 3,
+   "ours_fixes": 0,
+   "ours_breaks": 1
+  },
+  {
+   "image_id": 57,
+   "file_name": "123_000027.png",
+   "boxes": 5,
+   "disagree": 3,
+   "ours_fixes": 0,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 58,
+   "file_name": "124_000028.png",
+   "boxes": 5,
+   "disagree": 3,
+   "ours_fixes": 0,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 61,
+   "file_name": "127_000031.png",
+   "boxes": 5,
+   "disagree": 3,
+   "ours_fixes": 0,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 62,
+   "file_name": "128_000032.png",
+   "boxes": 5,
+   "disagree": 3,
+   "ours_fixes": 0,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 64,
+   "file_name": "130_000034.png",
+   "boxes": 5,
+   "disagree": 3,
+   "ours_fixes": 0,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 66,
+   "file_name": "132_000036.png",
+   "boxes": 5,
+   "disagree": 3,
+   "ours_fixes": 0,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 72,
+   "file_name": "138_000042.png",
+   "boxes": 5,
+   "disagree": 3,
+   "ours_fixes": 0,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 74,
+   "file_name": "140_000044.png",
+   "boxes": 5,
+   "disagree": 3,
+   "ours_fixes": 0,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 68,
+   "file_name": "134_000038.png",
+   "boxes": 4,
+   "disagree": 3,
+   "ours_fixes": 0,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 4,
+   "file_name": "070_000024.png",
+   "boxes": 6,
+   "disagree": 2,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 5,
+   "file_name": "071_000025.png",
+   "boxes": 6,
+   "disagree": 2,
+   "ours_fixes": 2,
+   "ours_breaks": 1
+  },
+  {
+   "image_id": 6,
+   "file_name": "072_000026.png",
+   "boxes": 6,
+   "disagree": 2,
+   "ours_fixes": 2,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 7,
+   "file_name": "073_000027.png",
+   "boxes": 6,
+   "disagree": 2,
+   "ours_fixes": 2,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 8,
+   "file_name": "074_000028.png",
+   "boxes": 6,
+   "disagree": 2,
+   "ours_fixes": 2,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 9,
+   "file_name": "075_000029.png",
+   "boxes": 6,
+   "disagree": 2,
+   "ours_fixes": 2,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 3,
+   "file_name": "069_000023.png",
+   "boxes": 5,
+   "disagree": 2,
+   "ours_fixes": 0,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 14,
+   "file_name": "080_000034.png",
+   "boxes": 5,
+   "disagree": 2,
+   "ours_fixes": 0,
+   "ours_breaks": 1
+  },
+  {
+   "image_id": 16,
+   "file_name": "082_000036.png",
+   "boxes": 5,
+   "disagree": 2,
+   "ours_fixes": 0,
+   "ours_breaks": 1
+  },
+  {
+   "image_id": 17,
+   "file_name": "083_000037.png",
+   "boxes": 5,
+   "disagree": 2,
+   "ours_fixes": 0,
+   "ours_breaks": 1
+  },
+  {
+   "image_id": 18,
+   "file_name": "084_000038.png",
+   "boxes": 5,
+   "disagree": 2,
+   "ours_fixes": 0,
+   "ours_breaks": 1
+  },
+  {
+   "image_id": 19,
+   "file_name": "085_000039.png",
+   "boxes": 5,
+   "disagree": 2,
+   "ours_fixes": 0,
+   "ours_breaks": 1
+  },
+  {
+   "image_id": 20,
+   "file_name": "086_000040.png",
+   "boxes": 5,
+   "disagree": 2,
+   "ours_fixes": 0,
+   "ours_breaks": 1
+  },
+  {
+   "image_id": 23,
+   "file_name": "089_000043.png",
+   "boxes": 5,
+   "disagree": 2,
+   "ours_fixes": 0,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 56,
+   "file_name": "122_000026.png",
+   "boxes": 5,
+   "disagree": 2,
+   "ours_fixes": 0,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 59,
+   "file_name": "125_000029.png",
+   "boxes": 5,
+   "disagree": 2,
+   "ours_fixes": 0,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 60,
+   "file_name": "126_000030.png",
+   "boxes": 5,
+   "disagree": 2,
+   "ours_fixes": 0,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 63,
+   "file_name": "129_000033.png",
+   "boxes": 5,
+   "disagree": 2,
+   "ours_fixes": 0,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 65,
+   "file_name": "131_000035.png",
+   "boxes": 5,
+   "disagree": 2,
+   "ours_fixes": 0,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 70,
+   "file_name": "136_000040.png",
+   "boxes": 5,
+   "disagree": 2,
+   "ours_fixes": 0,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 71,
+   "file_name": "137_000041.png",
+   "boxes": 5,
+   "disagree": 2,
+   "ours_fixes": 0,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 73,
+   "file_name": "139_000043.png",
+   "boxes": 5,
+   "disagree": 2,
+   "ours_fixes": 0,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 0,
+   "file_name": "066_000020.png",
+   "boxes": 4,
+   "disagree": 2,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 1,
+   "file_name": "067_000021.png",
+   "boxes": 4,
+   "disagree": 2,
+   "ours_fixes": 0,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 2,
+   "file_name": "068_000022.png",
+   "boxes": 4,
+   "disagree": 2,
+   "ours_fixes": 0,
+   "ours_breaks": 1
+  },
+  {
+   "image_id": 28,
+   "file_name": "094_000023.png",
+   "boxes": 4,
+   "disagree": 2,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 29,
+   "file_name": "095_000024.png",
+   "boxes": 4,
+   "disagree": 2,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 30,
+   "file_name": "096_000025.png",
+   "boxes": 4,
+   "disagree": 2,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 31,
+   "file_name": "097_000026.png",
+   "boxes": 4,
+   "disagree": 2,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 32,
+   "file_name": "098_000027.png",
+   "boxes": 4,
+   "disagree": 2,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 33,
+   "file_name": "099_000028.png",
+   "boxes": 4,
+   "disagree": 2,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 34,
+   "file_name": "100_000029.png",
+   "boxes": 4,
+   "disagree": 2,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 35,
+   "file_name": "101_000030.png",
+   "boxes": 4,
+   "disagree": 2,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 36,
+   "file_name": "102_000031.png",
+   "boxes": 4,
+   "disagree": 2,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 47,
+   "file_name": "113_000042.png",
+   "boxes": 4,
+   "disagree": 2,
+   "ours_fixes": 2,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 48,
+   "file_name": "114_000043.png",
+   "boxes": 4,
+   "disagree": 2,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 49,
+   "file_name": "115_000044.png",
+   "boxes": 4,
+   "disagree": 2,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 50,
+   "file_name": "116_000020.png",
+   "boxes": 4,
+   "disagree": 2,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 51,
+   "file_name": "117_000021.png",
+   "boxes": 4,
+   "disagree": 2,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 52,
+   "file_name": "118_000022.png",
+   "boxes": 4,
+   "disagree": 2,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 53,
+   "file_name": "119_000023.png",
+   "boxes": 4,
+   "disagree": 2,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 54,
+   "file_name": "120_000024.png",
+   "boxes": 4,
+   "disagree": 2,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 55,
+   "file_name": "121_000025.png",
+   "boxes": 4,
+   "disagree": 2,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 37,
+   "file_name": "103_000032.png",
+   "boxes": 4,
+   "disagree": 1,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 38,
+   "file_name": "104_000033.png",
+   "boxes": 4,
+   "disagree": 1,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 39,
+   "file_name": "105_000034.png",
+   "boxes": 4,
+   "disagree": 1,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 40,
+   "file_name": "106_000035.png",
+   "boxes": 4,
+   "disagree": 1,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 41,
+   "file_name": "107_000036.png",
+   "boxes": 4,
+   "disagree": 1,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 42,
+   "file_name": "108_000037.png",
+   "boxes": 4,
+   "disagree": 1,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 43,
+   "file_name": "109_000038.png",
+   "boxes": 4,
+   "disagree": 1,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 44,
+   "file_name": "110_000039.png",
+   "boxes": 4,
+   "disagree": 1,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 45,
+   "file_name": "111_000040.png",
+   "boxes": 4,
+   "disagree": 1,
+   "ours_fixes": 1,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 46,
+   "file_name": "112_000041.png",
+   "boxes": 4,
+   "disagree": 1,
+   "ours_fixes": 2,
+   "ours_breaks": 0
+  },
+  {
+   "image_id": 69,
+   "file_name": "135_000039.png",
+   "boxes": 4,
+   "disagree": 1,
+   "ours_fixes": 0,
+   "ours_breaks": 0
+  }
+ ]
+}
