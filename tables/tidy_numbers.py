@@ -18,7 +18,7 @@ for l in n.read_text().splitlines():
 live = [last[k] for k in sorted(last) if k in used]
 dead = [last[k] for k in sorted(last) if k not in used]
 n.write_text("% ===== macros printed by main.tex. Each value is emitted by a script from a JSON receipt; "
-             "see the emitters in relabel_v1/ and scenes_v1/. Re-run relabel_v1/tidy_numbers.py after any emitter. =====\n"
+             "see the emitters in baselines/ and relabel/. Re-run tables/tidy_numbers.py after any emitter. =====\n"
              + "\n".join(live) + "\n\n% SUPERSEDED. Nothing below is used by main.tex. Kept for provenance of earlier drafts only; "
              "recompute before citing any of it.\n" + "\n".join(dead) + "\n")
 dups = sum(1 for _ in n.read_text().splitlines()) 

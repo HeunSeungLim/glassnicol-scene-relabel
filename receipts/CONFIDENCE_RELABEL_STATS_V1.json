@@ -44,7 +44,7 @@
  "iou_threshold": 0.5,
  "schema": "apsr-confidence-relabel-v1",
  "weights": {
-  "fold_a": "<workspace>",
-  "fold_b": "<workspace>"
+  "fold_a": "<workspace>/best.pt",
+  "fold_b": "<workspace>/best.pt"
  }
 }
