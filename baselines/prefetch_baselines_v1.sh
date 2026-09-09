@@ -10,7 +10,8 @@
 # Scoring runs on the CPU here for every cell, the same environment as the existing arms, so the numbers
 # sit in one table without a device caveat.
 set -Eeuo pipefail
-P=${WORKDIR}
+# Point WORKDIR at the checkout that holds seed_v1/ and scenes_v1/.
+P=${WORKDIR:?set WORKDIR to the working copy}
 SV=$P/seed_v1; SC=$P/scenes_v1
 # Set REMOTE to the host that ran the accelerator-A cells, or leave it empty to score local runs only.
 REMOTE=${REMOTE:-}

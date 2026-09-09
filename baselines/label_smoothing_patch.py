@@ -18,11 +18,13 @@ is label smoothing in the sense of Muller et al., and leaves every other term, t
 schedule untouched.  APSR_LABEL_SMOOTHING sets eps; the runner refuses to start at eps = 0 so a silent
 no-op cannot happen twice.
 """
-import sys
+import os, sys
 from pathlib import Path
 
-SRC = Path('${APSR_ROOT}/code/run_arm.py')
-DST = Path('${APSR_ROOT}/code/run_arm_ls.py')
+# The frozen arm runner and the smoothing variant to write beside it.
+CODE = Path(os.environ.get('APSR_CODE', Path(__file__).resolve().parent))
+SRC = CODE / 'run_arm.py'
+DST = CODE / 'run_arm_ls.py'
 
 PATCH = '''
 
