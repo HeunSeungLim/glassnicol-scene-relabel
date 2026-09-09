@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Final overview from the layout skeleton (skeleton.png): crop the stray bottom caption, detect the pale
+"""Final overview from the layout skeleton (skeleton.png, not redistributed): crop the stray bottom caption, detect the pale
 magenta windows, paste the real panels, add exact Times labels above each stage and one sentence below."""
 import cv2, numpy as np
 from pathlib import Path
