@@ -1,0 +1,211 @@
+{
+ "schema": "apsr-std-loss-v18",
+ "cells": [
+  "scene_s1337",
+  "scene_s3407",
+  "scene_s4567",
+  "scene136_s1337",
+  "scene136_s5678"
+ ],
+ "splits": {
+  "standard": {
+   "six_class": {
+    "raw": 65.37862908485273,
+    "ours": 63.48789192988291,
+    "gain": -1.8907371549698184,
+    "positive_cells": 2,
+    "cells": 5
+   },
+   "generic": {
+    "raw": 84.15744049575089,
+    "ours": 82.43710474337927,
+    "gain": -1.7203357523716334,
+    "positive_cells": 1,
+    "cells": 5
+   },
+   "per_class": {
+    "shot": {
+     "raw": 61.79824466497663,
+     "ours": 74.17721788536605,
+     "gain": 12.378973220389412,
+     "positive_cells": 4,
+     "cells": 5
+    },
+    "whisky": {
+     "raw": 82.51403833094294,
+     "ours": 67.8890183851948,
+     "gain": -14.625019945748132,
+     "positive_cells": 0,
+     "cells": 5
+    },
+    "water": {
+     "raw": 56.62829803463092,
+     "ours": 44.32003130621359,
+     "gain": -12.308266728417324,
+     "positive_cells": 1,
+     "cells": 5
+    },
+    "beer": {
+     "raw": 70.76628880370419,
+     "ours": 76.44067914351264,
+     "gain": 5.674390339808459,
+     "positive_cells": 4,
+     "cells": 5
+    },
+    "wine": {
+     "raw": 82.75820450759781,
+     "ours": 84.07162978370066,
+     "gain": 1.3134252761028562,
+     "positive_cells": 3,
+     "cells": 5
+    },
+    "high": {
+     "raw": 37.806700167263905,
+     "ours": 34.028775075309724,
+     "gain": -3.777925091954176,
+     "positive_cells": 3,
+     "cells": 5
+    }
+   }
+  },
+  "ood": {
+   "six_class": {
+    "raw": 53.65516574696067,
+    "ours": 60.70970844146038,
+    "gain": 7.054542694499706,
+    "positive_cells": 5,
+    "cells": 5
+   },
+   "generic": {
+    "raw": 66.60089066946504,
+    "ours": 66.25107714728534,
+    "gain": -0.34981352217969003,
+    "positive_cells": 2,
+    "cells": 5
+   },
+   "per_class": {
+    "shot": {
+     "raw": 25.333533053045063,
+     "ours": 24.663253779088848,
+     "gain": -0.6702792739562156,
+     "positive_cells": 2,
+     "cells": 5
+    },
+    "whisky": {
+     "raw": 55.27057908220357,
+     "ours": 59.867472883371406,
+     "gain": 4.596893801167835,
+     "positive_cells": 2,
+     "cells": 5
+    },
+    "water": {
+     "raw": 39.35968619587004,
+     "ours": 56.96117195394631,
+     "gain": 17.601485758076276,
+     "positive_cells": 4,
+     "cells": 5
+    },
+    "beer": {
+     "raw": 59.21827589659063,
+     "ours": 61.63689199782395,
+     "gain": 2.4186161012333187,
+     "positive_cells": 4,
+     "cells": 5
+    },
+    "wine": {
+     "raw": 56.91969686922383,
+     "ours": 74.14868551206136,
+     "gain": 17.228988642837535,
+     "positive_cells": 3,
+     "cells": 5
+    },
+    "high": {
+     "raw": 85.82922338483088,
+     "ours": 86.98077452247041,
+     "gain": 1.1515511376395295,
+     "positive_cells": 3,
+     "cells": 5
+    }
+   }
+  }
+ },
+ "edits": {
+  "files": 3288,
+  "boxes": 6462,
+  "unmatched": 0,
+  "changed": 761,
+  "changed_pct": 11.78,
+  "up": 518,
+  "down": 243,
+  "up_pct_of_changed": 68.1,
+  "one_step_pct_of_changed": 79.5,
+  "top": [
+   [
+    "shot",
+    "whisky",
+    142
+   ],
+   [
+    "whisky",
+    "water",
+    102
+   ],
+   [
+    "water",
+    "beer",
+    70
+   ],
+   [
+    "water",
+    "whisky",
+    65
+   ],
+   [
+    "beer",
+    "wine",
+    52
+   ],
+   [
+    "beer",
+    "water",
+    52
+   ],
+   [
+    "whisky",
+    "shot",
+    44
+   ],
+   [
+    "wine",
+    "high",
+    42
+   ]
+  ],
+  "class_shares": {
+   "shot": [
+    952,
+    822
+   ],
+   "whisky": [
+    1619,
+    1648
+   ],
+   "water": [
+    1119,
+    1166
+   ],
+   "beer": [
+    953,
+    947
+   ],
+   "wine": [
+    1053,
+    1085
+   ],
+   "high": [
+    766,
+    794
+   ]
+  }
+ }
+}

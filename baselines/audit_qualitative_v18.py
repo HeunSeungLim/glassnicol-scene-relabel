@@ -12,15 +12,26 @@ Checks:
   3. the two selection rules actually pick those frames.
 """
 from __future__ import annotations
-import json
+import json, os
 from collections import defaultdict
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parents[1]
-EV = ROOT / "paper_work_v4" / "scenes_v1" / "evals_official"
-GTF = ROOT / "official_test_v1" / "ood_types_remap_1based.json"
-RECEIPT = HERE / "QUALITATIVE_FIGURE_V18.json"
+def _resolve():
+    """Locate the receipts in either layout, without importing the code under audit."""
+    env = os.environ.get("APSR_QUAL_DATA")
+    for c in ([Path(env)] if env else []) + [HERE.parent / "receipts" / "qualitative_v18",
+                                             HERE / "qualitative_v18"]:
+        if (c / "ood_types_remap_1based.json").is_file():
+            return c, c / "ood_types_remap_1based.json"
+    root = HERE.parents[1]
+    return (root / "paper_work_v4" / "scenes_v1" / "evals_official",
+            root / "official_test_v1" / "ood_types_remap_1based.json")
+
+
+EV, GTF = _resolve()
+RECEIPT = next(q for q in (HERE / "QUALITATIVE_FIGURE_V18.json",
+                           HERE.parent / "receipts" / "QUALITATIVE_FIGURE_V18.json") if q.is_file())
 ARMS = ["transparent", "lsmooth", "confid", "relabel", "scenevote"]
 TAG, IOU_T, CONF_T = "scene", 0.5, 0.25
 SEED = 1337
@@ -77,16 +88,17 @@ def main():
         res[arm] = {i: assign(per_img[i], pim.get(i, [])) for i in per_img}
 
     fails = []
-    print("== 1. split-level type accuracy ==")
+    print("== 1. type accuracy on the boxes every arm localises ==")
+    common = [(i, a) for i, anns in per_img.items() for a in anns
+              if all(res[arm][i][a["id"]] is not None for arm in ARMS)]
+    n_common = len(common)
+    printed_n = rec["denominator"]["boxes_localised_by_all_arms"]
+    ok = n_common == printed_n
+    fails += [] if ok else [f"shared denominator: audit {n_common} vs printed {printed_n}"]
+    print(f"  shared boxes  audit {n_common}  printed {printed_n}  {'ok' if ok else 'MISMATCH'}")
     for arm in ARMS:
-        loc = cor = 0
-        for i, anns in per_img.items():
-            for a in anns:
-                t = res[arm][i][a["id"]]
-                if t is not None:
-                    loc += 1
-                    cor += t == a["category_id"]
-        mine = 100.0 * cor / max(loc, 1)
+        mine = 100.0 * sum(1 for i, a in common
+                           if res[arm][i][a["id"]] == a["category_id"]) / n_common
         printed = rec["split_type_accuracy"][arm]
         ok = abs(mine - printed) < 0.05
         fails += [] if ok else [f"type accuracy {arm}: audit {mine:.2f} vs printed {printed}"]
@@ -108,13 +120,22 @@ def main():
         breaks[i] = sum(1 for a in anns
                         if res["transparent"][i][a["id"]] == a["category_id"]
                         and res["scenevote"][i][a["id"]] != a["category_id"])
-    top_hard = max(per_img, key=lambda i: (raw_err[i], len(per_img[i]), [-ord(c) for c in names[i]]))
-    top_break = max(per_img, key=lambda i: (breaks[i], len(per_img[i]), [-ord(c) for c in names[i]]))
-    for label, got, want in (("row 1 (released labels mistype most)", names[top_hard], rec["rows"][0]["name"]),
-                             ("row 2 (our worst frame)", names[top_break], rec["rows"][1]["name"])):
+    top = max(raw_err.values())
+    tied = sorted(names[i] for i in per_img if raw_err[i] == top)
+    row1 = tied[0]
+    mb = max(breaks.values())
+    tied_b = sorted(names[i] for i in per_img if breaks[i] == mb)
+    for label, got, want in (("row 1 (released labels wrong most)", row1, rec["rows"][0]["name"]),
+                             ("row 2 (our worst frame)", tied_b[0], rec["rows"][1]["name"])):
         ok = got == want
         fails += [] if ok else [f"{label}: audit picks {got}, figure shows {want}"]
-        print(f"  {label:38s} audit {got}  figure {want}  {'ok' if ok else 'MISMATCH'}")
+        print(f"  {label:36s} audit {got}  figure {want}  {'ok' if ok else 'MISMATCH'}")
+    # the caption states the tie counts, so they are checked too
+    for label, n, want in (("row 1 ties at the maximum", len(tied), 4),
+                           ("row 2 ties at the maximum", len(tied_b), 1)):
+        ok = n == want
+        fails += [] if ok else [f"{label}: audit {n}, caption says {want}"]
+        print(f"  {label:36s} audit {n}  caption {want}  {'ok' if ok else 'MISMATCH'}")
 
     print("\n" + ("PASS: 감사 재계산이 인쇄값과 일치" if not fails else "FAIL:\n  " + "\n  ".join(fails)))
     (HERE / "AUDIT_QUALITATIVE_V18.json").write_text(json.dumps(

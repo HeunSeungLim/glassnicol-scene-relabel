@@ -1,0 +1,144 @@
+{
+ "schema": "apsr-relabel-verdict-v1",
+ "preregistration_sha256": "9e810aefb279e29efcd84242b947d792a37239fd7b324359a798699245bb1908",
+ "selection": "best.pt by validation generic AP (as preregistered)",
+ "P1": false,
+ "P2": false,
+ "P3": true,
+ "P4": true,
+ "supported": false,
+ "cells": {
+  "scene_s1337_standard": {
+   "point_pp": -4.2,
+   "ci95": [
+    -9.09,
+    0.0
+   ],
+   "n": 143
+  },
+  "scene_s1337_ood": {
+   "point_pp": -4.33,
+   "ci95": [
+    -9.39,
+    0.36
+   ],
+   "n": 277
+  },
+  "scene_s3407_standard": {
+   "point_pp": 6.34,
+   "ci95": [
+    -0.37,
+    12.68
+   ],
+   "n": 142
+  },
+  "scene_s3407_ood": {
+   "point_pp": 10.95,
+   "ci95": [
+    4.95,
+    16.96
+   ],
+   "n": 283
+  },
+  "scene_s4567_standard": {
+   "point_pp": -4.32,
+   "ci95": [
+    -10.07,
+    1.44
+   ],
+   "n": 139
+  },
+  "scene_s4567_ood": {
+   "point_pp": 2.34,
+   "ci95": [
+    -1.95,
+    6.64
+   ],
+   "n": 256
+  },
+  "scene136_s1337_standard": {
+   "point_pp": 6.67,
+   "ci95": [
+    -0.67,
+    14.0
+   ],
+   "n": 150
+  },
+  "scene136_s1337_ood": {
+   "point_pp": 9.93,
+   "ci95": [
+    4.78,
+    15.07
+   ],
+   "n": 272
+  }
+ },
+ "seed_sd_type_acc": {
+  "standard": {
+   "raw": 4.15,
+   "relabel": 2.76
+  },
+  "ood": {
+   "raw": 7.28,
+   "relabel": 0.38
+  }
+ },
+ "confusable_pairs_pp": {
+  "definition": "relabel - raw box-level type accuracy on manual boxes of the pair's classes localised by both arms; columns H200 s1337, s3407, s4567, H200 mean, RTX s1337",
+  "rows": [
+   "Std. & shot/whisky & -2.0 & +0.0 & -2.3 & -1.4 & -8.3 \\\\",
+   "Std. & whisky/water & -13.0 & -1.9 & -1.9 & -5.6 & +17.9 \\\\",
+   "Std. & water/beer & -10.9 & +13.0 & +0.0 & +0.7 & +25.8 \\\\",
+   "Std. & wine/high & +2.6 & +5.1 & -12.2 & -1.5 & -5.0 \\\\",
+   "OOD & shot/whisky & -12.7 & -30.9 & +22.0 & -7.2 & -13.8 \\\\",
+   "OOD & whisky/water & -3.8 & +13.8 & +2.5 & +4.2 & +0.0 \\\\",
+   "OOD & water/beer & +6.6 & +36.8 & -2.6 & +13.6 & +24.6 \\\\",
+   "OOD & wine/high & -12.9 & +1.9 & +0.0 & -3.6 & +4.5 \\\\"
+  ]
+ },
+ "per_scene_official": {
+  "note": "official splits have 3 scenes each; relabel - raw type accuracy per scene",
+  "standard": {
+   "H200_s1337": "0/3",
+   "H200_s3407": "2/3",
+   "H200_s4567": "0/3",
+   "RTX_s1337": "2/3"
+  },
+  "ood": {
+   "H200_s1337": "0/3",
+   "H200_s3407": "2/3",
+   "H200_s4567": "2/3",
+   "RTX_s1337": "3/3"
+  }
+ },
+ "reading": "Preregistered all-cells predictions P1/P2 fail (3/6 each). P3 holds: OOD seed SD of type accuracy 7.28 -> 0.38 with mean +2.99 pp; P4 holds 6/6. Standard split: no gain under either checkpoint rule. Post-hoc last-epoch: OOD gains 3/3 H200 seeds (+6.01 type acc, +6.72 six AP) and 4/4 including RTX. Confusable pairs pooled: OOD water/beer +13.6 (2/3), shot/whisky -7.2 as the mechanism predicts; per-seed magnitudes swing widely; standard pairs flat. Seed 3407 carries most of the gain; H200 seed 1337 goes the other way.",
+ "note_rtx_cell": "RTX seed-1337 relabel cell regenerated from the FINAL checkpoint; an earlier evaluation of a mid-training best.pt was discarded.",
+ "P1_count": "3/6",
+ "P2_count": "2/6",
+ "P4_count": "5/6 (seed 4567 OOD: recall +6.9 vs type +2.4)",
+ "correction": "P2 and P4 counts corrected; an earlier version of the analyzer sliced the first six cells of a list that included the RTX row and dropped H200 seed 4567 OOD. The preregistration hash was also re-read from the .sha256 file.",
+ "review_v10_findings": {
+  "relabel_none_ood_typeacc_seed_sd": 11.02,
+  "note": "relabelled labels without repetition give the LARGEST seed spread of any arm; the 'clean labels remove seed dependence' story is contradicted by the project's own data",
+  "p3_definition_sensitivity": {
+   "both_localised": {
+    "raw": 7.28,
+    "relabel": 0.38
+   },
+   "own_localised": {
+    "raw": 7.17,
+    "relabel": 1.53
+   }
+  },
+  "p3_distribution_free_p": "1/20 = 0.05 (minimum attainable with 3+3); 0.125 under within-seed swaps",
+  "p3_timing": "PREREGISTRATION_RELABEL_V1.md sealed 18:50:14; raw-arm official evaluations written 18:49:46-18:50:02; P3 stated no threshold or split",
+  "typeacc_crosshost_swing_of_relabel_contrast": {
+   "standard": 10.86,
+   "ood": 14.26
+  },
+  "section3_pair_prediction": "written 19:25 after the first cell; not in the sealed document; sealed R2 fired",
+  "prior_art": "US 9,342,759 B1 (HRL 2016) claim 1; T-CNN/Seq-NMS tubelet voting",
+  "conclusion": "not a method contribution; a benchmark measurement plus the null result of a known correction"
+ },
+ "ci95_unit_note": "cells.*.ci95 resample BOXES (both-localised manual boxes). The paper quotes FRAME-level intervals from BOOT_TYPEACC_FRAMES_V1.json; the two agree to within ~1 point in every cell."
+}

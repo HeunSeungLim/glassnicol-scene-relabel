@@ -2935,15 +2935,15 @@
  },
  "bootstrap_files_compared": {
   "transparent_scenevote": {
-   "file": "<workspace>/paper_work_v4/relabel_v1/BOOT_TYPEACC_FRAMES_transparent_scenevote.json",
+   "file": "BOOT_TYPEACC_FRAMES_transparent_scenevote.json",
    "present": true
   },
   "relabel_scenevote": {
-   "file": "<workspace>/paper_work_v4/relabel_v1/BOOT_TYPEACC_FRAMES_relabel_scenevote.json",
+   "file": "BOOT_TYPEACC_FRAMES_relabel_scenevote.json",
    "present": true
   },
   "transparent_relabel": {
-   "file": "<workspace>/paper_work_v4/relabel_v1/BOOT_TYPEACC_FRAMES_V1.json",
+   "file": "BOOT_TYPEACC_FRAMES_V1.json",
    "present": true
   }
  },

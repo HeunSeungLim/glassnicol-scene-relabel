@@ -7,11 +7,14 @@
   "conf": 0.25
  },
  "split_type_accuracy": {
-  "transparent": 84.64,
-  "lsmooth": 81.94,
-  "confid": 55.09,
-  "relabel": 79.02,
-  "scenevote": 90.29
+  "transparent": 84.62,
+  "lsmooth": 82.42,
+  "confid": 57.14,
+  "relabel": 81.68,
+  "scenevote": 90.84
+ },
+ "denominator": {
+  "boxes_localised_by_all_arms": 273
  },
  "rows": [
   {

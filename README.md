@@ -20,6 +20,7 @@ evaluation on the official manual test splits, and every number printed in the p
 | `preregistration/` | the sealed protocol, its SHA-256, and an errata note on two clock strings typed inside it |
 | `labels/` | `scene_vote_train.tar.gz`: the relabelled training type ids (YOLO format; boxes identical to the release) |
 | `figures/` | scripts and source data of Fig. 1 and Fig. 2 |
+| `baselines/` | the arms compared in Table 2 (label smoothing, out-of-fold detector-confidence relabelling, roster change counts) and the scripts behind Fig. 3 and the Section 4 loss analysis |
 | `paper/` | LaTeX source of the submitted manuscript (`main_v18.tex`, `numbers.tex`, table rows, references) |
 
 Not included: the GlassNICOL images and released labels (from the dataset authors), trained weights.
@@ -32,5 +33,17 @@ Not included: the GlassNICOL images and released labels (from the dataset author
 4. `python eval/build_scene_arm_labels_v1.py` builds the training set; `python eval/run_arm.py scenevote <seed> 300 15600 <dataset> <run_dir>` trains one arm; repeat for `transparent` (raw) and `relabel` (tracklet vote).
 5. `python eval/eval_official_v1.py <run_dir> <tag>` scores a run on the manual splits.
 6. `tables/emit_v12_arms_v1.py`, `tables/bootstrap_typeacc_frames_v1.py transparent scenevote`, `tables/emit_v11_pairs_v1.py transparent scenevote PairS pair_v12_rows.tex`, `tables/emit_v13_tables_v1.py`, `tables/emit_v14_extras_v1.py` regenerate the table rows and `numbers.tex`; `tables/audit_scenevote_v1.py` recomputes everything independently.
+
+7. `python baselines/audit_qualitative_v18.py` recounts Fig. 3 from the frozen predictions in
+   `receipts/qualitative_v18/` with a matcher written independently of the figure's own: it checks the
+   shared denominator (273 boxes), the five column accuracies, the ten panel counts and both frame
+   selection rules, including the tie counts the caption states. It needs nothing but this repository.
+8. `python baselines/make_qualitative_v18.py` redraws Fig. 3. This one also needs the GlassNICOL test
+   images; point `APSR_TEST_IMAGES` at the directory holding `072_000026.png` and `091_000020.png`.
+   The default arguments produce the published two-row figure.
+9. `python baselines/analyse_std_loss_v18.py` reproduces the Section 4 decomposition of the standard-split
+   loss (six-class against generic AP, per class) and counts which way the vote moves a type id.
+
+`APSR_QUAL_DATA` overrides where steps 7 and 8 look for the predictions and the OOD annotation file.
 
 Seeds, budgets and the checkpoint rule are those of `preregistration/PREREGISTRATION_SCENEVOTE_V1.md`.

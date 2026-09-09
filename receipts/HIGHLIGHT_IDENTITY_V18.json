@@ -1,0 +1,15 @@
+{
+ "schema": "apsr-highlight-identity-v18",
+ "claim": "stripping \\textbf and \\second from the highlighted row files reproduces the receipts' rows byte for byte",
+ "pairs": [
+  [
+   "arms_v13_rows.tex",
+   "arms_v18_hl_rows.tex"
+  ],
+  [
+   "baselines_v18_rows.tex",
+   "baselines_v18_hl_rows.tex"
+  ]
+ ],
+ "identical": true
+}

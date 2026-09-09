@@ -5,17 +5,20 @@ Six panels per frame: the manual annotation, then the detector trained on each l
 the frozen predictions that produced the paper's tables, matched to the manual boxes by the paper's rule,
 so the picture and the numbers cannot drift apart.
 
-Frames are chosen without looking at our arm's output, except for the row that is declared a failure:
+Frames are chosen without looking at our arm's output, except for the row that is declared a failure.  The
+published figure has two rows, which is what this script writes by default:
 
-  rows 1-2  the frame of each of two OOD scenes on which the released-label arm mistypes the most manual
-            boxes (ties: more boxes, then file name);
-  row 3     the frame on which our vote mistypes the most boxes that the released-label arm types
-            correctly, i.e. our worst frame on this split.
+  row 1     the frame on which the released-label arm gets the most manual boxes wrong, whether mistyped or
+            not localised at all (four frames tie at five; the first by file name is taken);
+  row 2     the frame on which our vote mistypes the most boxes that the released-label arm types
+            correctly, i.e. our worst frame on this split (a unique maximum).
+
+--neutral N takes N frames by the first rule, one per scene, before the failure row.
 
     make_qualitative_v18.py [--out FIG.png]
 """
 from __future__ import annotations
-import argparse, collections, json, sys
+import argparse, collections, json, os, sys
 from pathlib import Path
 
 import matplotlib
@@ -24,13 +27,15 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 from PIL import Image
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-from select_qualitative_v18 import ARMS, CELL, EV, GT, ROOT, SEED, match
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+from select_qualitative_v18 import ARMS, CELL, EV, GT, GTDIR, SEED, match
 
-IMAGES = ROOT / "official_test_v1" / "images"
+IMAGES = Path(os.environ.get("APSR_TEST_IMAGES", GTDIR / "images"))
 TYPES = {1: "shot", 2: "whisky", 3: "water", 4: "beer", 5: "wine", 6: "high"}
 COLOUR = {1: "#e41a1c", 2: "#ff9d00", 3: "#1f78b4", 4: "#33a02c", 5: "#6a3d9a", 6: "#00b4c8"}
-PANEL_TITLES = ["Manual annotation"] + [lab for _, lab in ARMS]
+# short column heads: at the size this figure prints, the full arm names collide (the caption spells them out)
+PANEL_TITLES = ["Manual", "Released", "Smoothing", "Confidence", "Adjacent vote", "Ours"]
 PANEL_W_PT = 79.0
 
 
@@ -108,9 +113,14 @@ def draw(ax, img, box, anns, got, is_gt):
     ax.set_xticks([]); ax.set_yticks([])
     for s in ax.spines.values():
         s.set_linewidth(0.4); s.set_color("0.35")
-    span, FS = x1 - x0, 4.3
+    span = x1 - x0
+    # A panel that has to carry every glass -- the manual one -- runs out of room at the size the rest print
+    # at, so its labels step down one notch rather than overprint each other.
+    n_lab = sum(1 for a in anns if is_gt or (got[a["id"]] is not None))
+    FS = 5.0 if n_lab < 5 else 4.1
     unit = span / (PANEL_W_PT)          # data units per printed point, for label placement
-    placed = []                          # (xc, y, half width, half height) of labels already drawn
+    # the per-panel count badge sits bottom right; reserve it so a label never prints on top of it
+    placed = [(x1 - span * 0.11, y1 - (y1 - y0) * 0.07, span * 0.13, (y1 - y0) * 0.09)]
     for a in sorted(anns, key=lambda a: a["bbox"][1]):
         t = a["category_id"] if is_gt else (got[a["id"]][0] if got[a["id"]] else None)
         bx, by, bw, bh = a["bbox"]
@@ -123,17 +133,24 @@ def draw(ax, img, box, anns, got, is_gt):
         lab = TYPES[t] if ok else TYPES[t] + "\u2717"
         hw = 0.5 * len(lab) * 0.58 * FS * unit
         hh = 0.62 * FS * unit
-        # a box near the top of the crop keeps its label inside, so nothing lands on the column title
-        inside = by - span * 0.008 < y0 + span * 0.035
-        ly = by + hh * 1.4 if inside else by - span * 0.008 - hh
-        lx = min(max(bx + bw / 2, x0 + hw + span * 0.004), x1 - hw - span * 0.004)
-        for _ in range(6):               # nudge upward off a label already placed
-            if not any(abs(lx - px) < hw + phw and abs(ly - py) < hh + phh
-                       for px, py, phw, phh in placed):
-                break
-            ly -= hh * 2.15
-        if ly - hh < y0:
-            ly = by + hh * 1.4
+        # Place the label where it neither leaves the panel nor lands on a label already drawn.  Six boxes
+        # in one crowded manual panel used to overprint each other ("shot" over "wine").
+        cx = min(max(bx + bw / 2, x0 + hw + span * 0.004), x1 - hw - span * 0.004)
+        top_ok = by - span * 0.008 - hh > y0
+        cands = []
+        SHIFT = (0.0, -hw * 0.9, hw * 0.9, -hw * 1.8, hw * 1.8)
+        for dy in range(6):              # every upward slot first: above the box reads best
+            for dx in SHIFT:
+                if top_ok:
+                    cands.append((cx + dx, by - span * 0.008 - hh - dy * hh * 2.1))
+        for dy in range(6):
+            for dx in SHIFT:
+                cands.append((cx + dx, by + hh * 1.4 + dy * hh * 2.1))
+        free = [(x, y) for x, y in cands
+                if x0 + hw <= x <= x1 - hw and y0 + hh <= y <= y1 - hh
+                and not any(abs(x - px) < hw + phw and abs(y - py) < hh + phh
+                            for px, py, phw, phh in placed)]
+        lx, ly = free[0] if free else (cx, min(max(by + hh * 1.4, y0 + hh), y1 - hh))
         placed.append((lx, ly, hw, hh))
         ax.text(lx, ly, lab, color=COLOUR[t], fontsize=FS, ha="center", va="center",
                 fontweight="bold" if not ok else "normal",
@@ -142,35 +159,38 @@ def draw(ax, img, box, anns, got, is_gt):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--neutral", type=int, default=2)
-    ap.add_argument("--out", default=str(ROOT / "paper_work_v4" / "build_v18_paper" / "figures" /
+    ap.add_argument("--neutral", type=int, default=1,
+                    help="frames chosen by the released-label arm's error; the last row is always "
+                         "our worst frame. The published figure uses the default, 1.")
+    ap.add_argument("--out", default=str(HERE.parents[1] / "build_v18_paper" / "figures" /
                                         "figure_qualitative.png"))
     a = ap.parse_args()
     by_img, names, m = load()
     rows = pick(by_img, names, m, a.neutral)
 
-    # split-level type accuracy per arm, so three frames are read as examples of a measured whole
-    split_acc = {}
-    for arm, _ in ARMS:
-        loc = cor = 0
-        for i, anns in by_img.items():
-            for x in anns:
-                g = m[arm][i][x["id"]]
-                if g:
-                    loc += 1
-                    cor += g[0] == x["category_id"]
-        split_acc[arm] = 100.0 * cor / max(loc, 1)
+    # One denominator for every column: the manual boxes that all five arms localise.  Scoring each arm on
+    # the boxes it happens to find would give the arm that finds fewest the easiest test, and ours finds
+    # fewest, so the per-arm denominator would flatter us.
+    common = [(i, x) for i, anns in by_img.items() for x in anns
+              if all(m[arm][i][x["id"]] for arm, _ in ARMS)]
+    split_acc = {arm: 100.0 * sum(1 for i, x in common
+                                  if m[arm][i][x["id"]][0] == x["category_id"]) / len(common)
+                 for arm, _ in ARMS}
+    n_common = len(common)
 
     nc = 1 + len(ARMS)
     # Size the canvas so each axes slot has exactly the crop's aspect: any mismatch would come back as a
     # band of white between the rows, which no amount of hspace can remove.
     AR = 16 / 9.0
-    W, L, R, TOP, BOT, WS, HS = 7.0, 0.040, 0.999, 0.872, 0.004, 0.030, 0.050
+    # The page places this figure at \\textwidth, so drawing it on a narrower canvas makes LaTeX scale
+    # everything up, text included: 4.6in of canvas becomes 7in of page and a 5.3pt label prints at 8.1pt.
+    # Rendering at 7in and keeping the same point sizes is what left the labels at 4.4pt in the last draft.
+    W, L, R, TOP, BOT, WS, HS = 4.6, 0.052, 0.999, 0.838, 0.004, 0.030, 0.050
     pw = W * (R - L) / (nc + (nc - 1) * WS)
     globals()["PANEL_W_PT"] = pw * 72.0
     ph = pw / AR
     H = (len(rows) + (len(rows) - 1) * HS) * ph / (TOP - BOT)
-    fig, axes = plt.subplots(len(rows), nc, figsize=(W, H), dpi=400)
+    fig, axes = plt.subplots(len(rows), nc, figsize=(W, H), dpi=620)
     fig.subplots_adjust(left=L, right=R, top=TOP, bottom=BOT, wspace=WS, hspace=HS)
     for r, row in enumerate(rows):
         anns = sorted(by_img[row["id"]], key=lambda x: x["id"])
@@ -181,10 +201,10 @@ def main():
             arm = None if c == 0 else ARMS[c - 1][0]
             draw(ax, img, box, anns, None if c == 0 else m[arm][row["id"]], c == 0)
             if r == 0:
-                sub = "manual types" if c == 0 else f"{split_acc[arm]:.1f}% types on this split"
-                ax.set_title(PANEL_TITLES[c] + "\n" + sub, fontsize=4.9, pad=1.4, linespacing=1.12)
+                sub = f"{n_common} shared" if c == 0 else f"{split_acc[arm]:.1f}% correct"
+                ax.set_title(PANEL_TITLES[c] + "\n" + sub, fontsize=6.0, pad=1.6, linespacing=1.1)
             if c == 0:
-                ax.set_ylabel(f"scene {row['scene']}", fontsize=4.6, labelpad=1.3)
+                ax.set_ylabel(f"sc.{row['scene']}", fontsize=5.2, labelpad=1.2)
             n = len(anns)
             if c == 0:
                 txt = f"{n} glasses"
@@ -192,14 +212,15 @@ def main():
                 got = m[arm][row["id"]]
                 ok = sum(1 for x in anns if got[x["id"]] and got[x["id"]][0] == x["category_id"])
                 txt = f"{ok}/{n}"
-            ax.text(0.986, 0.035, txt, transform=ax.transAxes, fontsize=4.3, ha="right", va="bottom",
+            ax.text(0.986, 0.035, txt, transform=ax.transAxes, fontsize=5.2, ha="right", va="bottom",
                     color="black", bbox=dict(fc="white", ec="none", alpha=0.78, pad=0.6))
     out = Path(a.out); out.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(out, dpi=400, bbox_inches="tight", pad_inches=0.004)
+    fig.savefig(out, dpi=620, bbox_inches="tight", pad_inches=0.004)
     print("wrote", out)
     receipt = {"schema": "apsr-qualitative-v18", "cell": f"A_s{SEED}", "split": "ood",
                "match": {"iou": 0.5, "conf": 0.25},
                "split_type_accuracy": {arm: round(v, 2) for arm, v in split_acc.items()},
+               "denominator": {"boxes_localised_by_all_arms": n_common},
                "rows": rows}
     (Path(__file__).parent / "QUALITATIVE_FIGURE_V18.json").write_text(
         json.dumps(receipt, indent=1) + "\n")
