@@ -6,7 +6,10 @@ SUPERSEDED banner and everything else below it."""
 import re
 from pathlib import Path
 P = Path(__file__).resolve().parents[1]
-n = P / "numbers.tex"; tex = (P / (sys.argv[1] if len(sys.argv) > 1 else "main.tex")).read_text()
+# In the workspace the manuscript sits beside numbers.tex; in this repository both live under paper/.
+_default = "main.tex" if (P / "main.tex").is_file() else "paper/main_v18.tex"
+n = (P / "numbers.tex") if (P / "numbers.tex").is_file() else (P / "paper" / "numbers.tex")
+tex = (P / (sys.argv[1] if len(sys.argv) > 1 else _default)).read_text()
 used = set(re.findall(r'\\([A-Za-z]+)(?=[^A-Za-z]|$)', tex))
 last = {}
 for l in n.read_text().splitlines():

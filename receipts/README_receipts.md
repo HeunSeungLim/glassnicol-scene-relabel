@@ -1,8 +1,9 @@
 # Receipts
 
-Every number the manuscript prints is emitted from a file here. The table below names the receipts the
-V18 emitters read directly; the other files in this directory are inputs to those emitters or receipts of
-earlier drafts, and each one records the script that wrote it in its own `schema` field.
+Every number the manuscript prints is emitted from a file here. The table below names the receipts whose
+writing script is worth stating; the other 34 JSON files in this directory are intermediate results of the
+same emitters and of earlier drafts. Their provenance is the emitter that reads them, which `git grep` on
+the file name finds in one step; not all of them carry a `schema` field.
 
 | receipt | written by |
 |---|---|
