@@ -40,6 +40,9 @@ import numpy as np
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 RELABEL = ROOT / "paper_work_v4" / "relabel_v1"
+if not RELABEL.is_dir():
+    raise SystemExit("build_source.py rebuilds source_data.json from the workspace that ran steps 1-5; "
+                     "it is not runnable from this repository alone. The file it writes is shipped here.")
 sys.path.insert(0, str(RELABEL))
 import relabel_multiview_v1 as R  # noqa: E402  (frame_affine, warp_box, iou, NAMES, IOU_LINK, paths)
 

@@ -38,6 +38,16 @@ PARENT = HERE.parent
 sys.path.insert(0, str(PARENT))
 from _style import apply  # noqa: E402
 
+
+def _frame(name):
+    """source_data.json names frames without a directory; point APSR_TRAIN_IMAGES at the dataset copy."""
+    import os
+    p = Path(name)
+    if p.is_file():
+        return p
+    root = os.environ.get("APSR_TRAIN_IMAGES")
+    return (Path(root) / p.name) if root else p
+
 SOURCE = HERE / "source_data.json"
 MATRIX_KEY = "train_registered"          # the paper's procedure (see build_source.py)
 COLUMN_MM = 86.0                          # spconf: (178 - 6) / 2 mm
@@ -61,7 +71,12 @@ def text_inches(fig, x, y, s, **kw):
 
 
 def crop_view(v):
-    img = cv2.cvtColor(cv2.imread(v["image"]), cv2.COLOR_BGR2RGB)
+    src = _frame(v["image"])
+    raw = cv2.imread(str(src))
+    if raw is None:
+        raise SystemExit(f"cannot read {src}. Set APSR_TRAIN_IMAGES to the directory holding the "
+                         f"GlassNICOL training frames named in source_data.json.")
+    img = cv2.cvtColor(raw, cv2.COLOR_BGR2RGB)
     x0, y0, x1, y1 = v["crop_xyxy_px"]
     return img[y0:y1, x0:x1], (x0, y0)
 
