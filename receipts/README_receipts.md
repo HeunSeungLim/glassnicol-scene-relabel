@@ -1,9 +1,8 @@
 # Receipts
 
 Every number the manuscript prints is emitted from a file here. The first table names the receipts the V18
-emitters read directly. The second lists the other files a script in this repository reads. The remaining
-17 JSON files are receipts no script here opens by name: twelve of them are the hop-and-tolerance grid
-that Section 2.3 reports choosing from, and the rest belong to earlier drafts.
+emitters read directly. The second lists the other files a script in this repository reads. The remaining 17 JSON files are receipts no script here opens by name: most are the
+hop-and-tolerance grid that Section 2.3 reports choosing from, and the rest belong to earlier drafts.
 
 | receipt | written by |
 |---|---|

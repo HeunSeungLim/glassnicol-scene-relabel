@@ -4,6 +4,29 @@ magenta windows, paste the real panels, add exact Times labels above each stage 
 import cv2, numpy as np
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
+
+
+def _place(im, width=2800):
+    """Return the figure as the paper places it: 400 dpi at \\textwidth, with the blank bands removed.
+
+    The full-resolution composite is 904 dpi, which put 8 MB of pixels no printer uses into the PDF.
+    Doing the reduction here rather than by hand keeps the shipped figure reproducible from this file.
+    """
+    import numpy as _n
+    a = _n.array(im.convert("L")) < 245
+    rows = _n.where(a.any(1))[0]
+    blank, s, drop = ~a.any(1), None, set()
+    for i, b in enumerate(blank):
+        if b and s is None:
+            s = i
+        elif not b and s is not None:
+            if i - s > 12:
+                drop |= set(range(s + 4, i - 4))
+            s = None
+    drop |= set(range(0, rows.min())) | set(range(rows.max() + 1, im.height))
+    keep = [i for i in range(im.height) if i not in drop]
+    im = Image.fromarray(_n.array(im.convert("RGB"))[keep])
+    return im.resize((width, round(im.height * width / im.width)), Image.LANCZOS)
 HERE = Path(__file__).resolve().parent
 FONT = "/usr/share/texmf/fonts/opentype/public/tex-gyre/texgyretermes-regular.otf"; FONTB = "/usr/share/texmf/fonts/opentype/public/tex-gyre/texgyretermes-bold.otf"; FONTI = "/usr/share/texmf/fonts/opentype/public/tex-gyre/texgyretermes-italic.otf"
 im = cv2.imread(str(HERE / "skeleton.png")); Hh, W = im.shape[:2]
@@ -60,4 +83,4 @@ for _y0, _y1 in _runs:
         out.paste(top, (0, 0)); out.paste(bot, (0, top.height)); canvas = out
         print(f"  squeezed {_y1 - _y0 - KEEP} px of empty band at y={_y0}")
         break
-canvas.save(HERE / "figure_overview_v5.png"); canvas.save(HERE.parent / "figure_overview.png"); print("saved", canvas.size, "height at 7in:", round(7 * canvas.height / canvas.width, 2), "in")
+_place(canvas).save(HERE / "figure_overview_v5.png"); _place(canvas).save(HERE.parent / "figure_overview.png"); print("saved", canvas.size, "height at 7in:", round(7 * canvas.height / canvas.width, 2), "in")

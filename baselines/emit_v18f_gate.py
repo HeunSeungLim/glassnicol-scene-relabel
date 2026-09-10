@@ -14,19 +14,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 PAPER = HERE.parent
-
-
-def _resolve():
-    """Workspace layout, or the six scored cells shipped beside this script."""
-    local = HERE.parent / "receipts" / "gate_ablation_cells"
-    if local.is_dir():
-        return local
-    return PAPER / "scenes_v1" / "evals_official"
-
-
-_ROOTS = [d for d in (HERE.parent / "receipts" / "gate_ablation_cells",
-                      HERE.parent / "receipts" / "table1_cells",
-                      PAPER / "scenes_v1" / "evals_official") if d.is_dir()]
+_ROOTS = [PAPER / "scenes_v1" / "evals_official"]
 EV = _ROOTS[0]
 CELLS = [1337, 3407, 4567]           # accelerator A
 
@@ -52,9 +40,8 @@ def sign(x):
 
 
 def main():
-    _r = HERE if (HERE / "SCENE_RELABEL_STATS_GATED_V1.json").is_file() else HERE.parent / "receipts"
-    stats = json.loads((_r / "SCENE_RELABEL_STATS_GATED_V1.json").read_text())["splits"]["train"]
-    ungated = json.loads((_r / "SCENE_RELABEL_STATS_V1.json").read_text())["splits"]["train"]
+    stats = json.loads((HERE / "SCENE_RELABEL_STATS_GATED_V1.json").read_text())["splits"]["train"]
+    ungated = json.loads((HERE / "SCENE_RELABEL_STATS_V1.json").read_text())["splits"]["train"]
     m = {"GateMinVotes": str(stats["gate"]["min_votes"]), "GateMargin": str(stats["gate"]["margin"]),
          "GateChanged": f"{stats['changed_boxes']:,}", "GateChangedPct": f"{stats['changed_pct']:.1f}",
          "GateCells": str(len(CELLS))}
@@ -76,7 +63,7 @@ def main():
     # type accuracy of the gated arm, on the boxes it and the raw arm both localise: the paper's pairwise
     # convention.  Six-class AP alone would say the gate costs the whole out-of-distribution gain.
     import collections
-    OFF = (HERE.parent / "receipts" / "table1_cells") if (HERE.parent / "receipts" / "table1_cells" / "ood_types_remap_1based.json").is_file() else (PAPER.parent / "official_test_v1")
+    OFF = PAPER.parent / "official_test_v1"
     IOU_T, CONF_T = 0.5, 0.25
 
     def _iou(a, b):
@@ -115,14 +102,36 @@ def main():
     by = collections.defaultdict(list)
     for an in gt["annotations"]:
         if 1 <= an["category_id"] <= 6: by[an["image_id"]].append(an)
+    # localisation recall of the gated arm: the conclusion says a gate removes the standard-split cost, and
+    # recall is half of that cost, so the number has to have a receipt like every other printed contrast
+    def _recall(tag, split, seed, by2):
+        pr = json.loads(_cell(split, tag, seed, "predictions_six_class.json").read_text())
+        pim = collections.defaultdict(list)
+        for q in pr:
+            pim[q["image_id"]].append(q)
+        m2 = {i: _match(by2[i], pim.get(i, [])) for i in by2}
+        tot = sum(len(v) for v in by2.values())
+        loc = sum(1 for i, anns in by2.items() for g2 in anns if m2[i][g2["id"]] is not None)
+        return 100.0 * loc / tot
+
+    gt_std = json.loads((OFF / "standard_types_remap_1based.json").read_text())
+    by_std = collections.defaultdict(list)
+    for an in gt_std["annotations"]:
+        if 1 <= an["category_id"] <= 6:
+            by_std[an["image_id"]].append(an)
+    for tag, key in (("gatedvote", "Gate"), ("scenevote", "Sv")):
+        d2 = [_recall(tag, "standard", s, by_std) - _recall("transparent", "standard", s, by_std)
+              for s in CELLS]
+        m[f"{key}StdRec"] = sign(st.mean(d2))
+        m[f"{key}StdRecPos"] = str(sum(x > 0 for x in d2))
+        out.setdefault("standard_recall_vs_raw", {})[tag] = d2
     for tag, key in (("gatedvote", "Gate"), ("scenevote", "Sv")):
         g = [_type_gain(tag, "ood", s, by) for s in CELLS]
         m[f"{key}OODTypeA"] = sign(st.mean(g))
         m[f"{key}OODTypeAPos"] = str(sum(x > 0 for x in g))
         out.setdefault("ood_type_accuracy_vs_raw", {})[tag] = g
     (HERE / "GATE_ABLATION_V18F.json").write_text(json.dumps(out, indent=1) + "\n")
-    nb = PAPER / "numbers.tex" if (PAPER / "numbers.tex").is_file() else PAPER / "paper" / "numbers.tex"
-    with open(nb, "a") as f:
+    with open(PAPER / "numbers.tex", "a") as f:
         f.write("\n% --- V18f gated-vote ablation (emit_v18f_gate.py) ---\n")
         for k, v in m.items():
             f.write("\\newcommand{\\%s}{%s}\n" % (k, v))

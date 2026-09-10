@@ -19,8 +19,8 @@ evaluation on the official manual test splits, and every number printed in the p
 | `receipts/` | every JSON the tables and sentences are built from: verdicts, bootstrap intervals, association statistics, ablation grid, manual-split checks, confusion matrix |
 | `preregistration/` | the sealed protocol, its SHA-256, and an errata note on two clock strings typed inside it |
 | `labels/` | `scene_vote_train.tar.gz`: the relabelled training type ids (YOLO format; boxes identical to the release) |
-| `figures/` | `figures/overview/composite_v5.py` redraws Fig. 1 from `skeleton.png` and the seven panel crops beside it, with nothing else needed. `figures/script.py` redraws Fig. 2, but it crops the frames themselves, so it needs the GlassNICOL images of step 1; point `APSR_TRAIN_IMAGES` at the directory holding the frames `source_data.json` names. Both fall back to a free serif when Times New Roman is absent |
-| `baselines/` | the arms compared in Table 2 (label smoothing, out-of-fold detector-confidence relabelling, roster change counts) and the scripts behind Fig. 3 and the Section 4 loss analysis |
+| `figures/` | `figures/overview/composite_v5.py` redraws Fig. 1 from `skeleton.png` and the seven panel crops beside it, with nothing else needed; it writes the figure at the size the paper places it. `figures/script.py` redraws Fig. 2, but it crops the frames themselves, so it needs the GlassNICOL images of step 1; point `APSR_TRAIN_IMAGES` at the directory holding the frames `source_data.json` names. Both fall back to a free serif when Times New Roman is absent |
+| `baselines/` | the arms compared in Table 1 (label smoothing, out-of-fold detector-confidence relabelling, roster change counts) and the scripts behind Fig. 3 and the Section 4 loss analysis |
 | `paper/` | LaTeX source of the submitted manuscript (`main_v18.tex`, `numbers.tex`, table rows, references) |
 
 Not included: the GlassNICOL images and released labels (from the dataset authors), trained weights, and the Times New Roman file the figures were originally drawn with.
